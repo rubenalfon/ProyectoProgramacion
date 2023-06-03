@@ -19,6 +19,11 @@ public class ConexionBD {
     private final String MYSQL_USER = "root";
     private final String MYSQL_PASSWORD = "";
 
+    public ConexionBD() {
+    }
+    
+    
+
     public Connection getConnection() throws SQLException {
         this.conn = DriverManager.getConnection(this.MYSQL_BD_URL, this.MYSQL_USER, this.MYSQL_PASSWORD);
         return this.conn;
