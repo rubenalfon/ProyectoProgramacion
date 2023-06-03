@@ -42,11 +42,11 @@ public class Vista extends javax.swing.JFrame {
         this.setSize(800, 500);
         this.setVisible(true);
         this.setLocationRelativeTo(null);
-        
+
         ImageIcon imagen = new ImageIcon("./src/files/Gui_principal.png");
         Image imagenEscalada = imagen.getImage().getScaledInstance(this.getWidth(), this.getHeight(), Image.SCALE_SMOOTH);
         this.JLabelFondo.setIcon(new ImageIcon(imagenEscalada));
-        
+
         this.JLabelFondo.setSize(new Dimension(this.getWidth(), this.getHeight()));
     }
 
@@ -63,6 +63,11 @@ public class Vista extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        addComponentListener(new java.awt.event.ComponentAdapter() {
+            public void componentResized(java.awt.event.ComponentEvent evt) {
+                formComponentResized(evt);
+            }
+        });
         getContentPane().setLayout(null);
         getContentPane().add(JLabelFondo);
         JLabelFondo.setBounds(-1, 0, 550, 391);
@@ -83,6 +88,13 @@ public class Vista extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void formComponentResized(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentResized
+        ImageIcon imagen = new ImageIcon("./src/files/Gui_principal.png");
+        this.JLabelFondo.setSize(this.getWidth(), this.getHeight());
+        Image imagenEscalada = imagen.getImage().getScaledInstance(this.getWidth(), this.getHeight(), Image.SCALE_SMOOTH);
+        this.JLabelFondo.setIcon(new ImageIcon(imagenEscalada));
+    }//GEN-LAST:event_formComponentResized
 
     /**
      * @param args the command line arguments
