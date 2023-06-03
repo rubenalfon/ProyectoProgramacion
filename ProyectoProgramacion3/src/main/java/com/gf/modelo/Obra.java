@@ -21,6 +21,14 @@ public class Obra {
     public Obra() {
     }
 
+    public Obra(int idObra, String nombreObra, String descripcionObra, String disciplinaObra, String urlObra) {
+        this.idObra = idObra;
+        this.nombreObra = nombreObra;
+        this.descripcionObra = descripcionObra;
+        this.disciplinaObra = disciplinaObra;
+        this.urlObra = urlObra;
+    }
+
     public Obra(int idObra, String nombreObra, String descripcionObra, String disciplinaObra, String urlObra, Autor autor, Museo museo) {
         this.idObra = idObra;
         this.nombreObra = nombreObra;
@@ -86,5 +94,12 @@ public class Obra {
     public void setMuseo(Museo museo) {
         this.museo = museo;
     }
+
+    @Override
+    public String toString() {
+        return "Obra{" + "idObra=" + idObra + ", nombreObra=" + nombreObra + ", descripcionObra=" + descripcionObra + ", disciplinaObra=" + disciplinaObra + ", urlObra=" + urlObra + ", autor=" + autor + ", museo=" + museo + '}';
+    }
+    
+    
 
 }

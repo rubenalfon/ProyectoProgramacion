@@ -9,6 +9,7 @@ import java.awt.Image;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
+import javax.swing.JPanel;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
@@ -48,6 +49,8 @@ public class Vista extends javax.swing.JFrame {
         this.JLabelFondo.setIcon(new ImageIcon(imagenEscalada));
 
         this.JLabelFondo.setSize(new Dimension(this.getWidth(), this.getHeight()));
+        
+        
     }
 
     /**
