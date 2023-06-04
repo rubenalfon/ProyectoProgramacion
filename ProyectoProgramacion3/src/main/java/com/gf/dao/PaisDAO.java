@@ -17,7 +17,9 @@ import java.sql.SQLException;
  */
 public class PaisDAO {
 
+
     public Pais obtenerPaisPorId(int idPais) {
+
         Pais pais = null;
         String sql = "SELECT * FROM pais WHERE id_pais = ?";
 

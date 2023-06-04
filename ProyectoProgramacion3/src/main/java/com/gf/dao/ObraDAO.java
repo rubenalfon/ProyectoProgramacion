@@ -30,6 +30,7 @@ import java.util.Arrays;
  */
 public class ObraDAO {
 
+
     public Obra obtenerObraAleatoria(ArrayList<Integer> lista) {
         Obra obra = null;
         String sql;
@@ -41,6 +42,7 @@ public class ObraDAO {
                 + " ORDER BY RAND () LIMIT 1"; // Obtener una pintura aleatoria.
         }
         
+
 
         try {
             PreparedStatement ps = DatabaseManager.getConnection().prepareStatement(sql);
@@ -66,9 +68,10 @@ public class ObraDAO {
         return obra;
     }
     public Obra obtenerPinturaAleatoria(ArrayList<Integer> lista) {
+
         Obra obra = null;
 
-        String sql = "SELECT * FROM obra where disciplina like 'Pintura' and id_obra not in "
+        String sql = "SELECT * FROM obra where id_obra not in "
                 + ConvertirArrayListACadena.convertir(lista)
                 + " ORDER BY RAND () LIMIT 1"; // Obtener una pintura aleatoria.
 

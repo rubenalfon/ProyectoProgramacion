@@ -15,7 +15,9 @@ public class ConvertirArrayListACadena {
 
     public static String convertir(ArrayList<Integer> lista) {
         String cadena = "";
+
         if(lista!=null&& !lista.isEmpty()){
+
             for (Integer numero : lista) {
                 cadena += " ," + String.valueOf(numero);
             }

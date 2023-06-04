@@ -4,9 +4,13 @@
  */
 package com.gf.vista;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 
 /**
  *
@@ -23,10 +27,99 @@ public class VistaQuienLoHizo extends javax.swing.JFrame {
     }
 
     private void setFrame() {
-        ImageIcon imagen = new ImageIcon("./src/files/Fondo.png");
-        Image imagenEscalada = imagen.getImage().getScaledInstance(200, 200, Image.SCALE_SMOOTH);
-        this.jLabelImagen.setIcon(new ImageIcon(imagenEscalada));
+        this.setSize(500, 500);
+        this.setVisible(true);
     }
+
+    public JButton getjButtonOp1() {
+        return jButtonOp1;
+    }
+
+    public void setjButtonOp1(JButton jButtonOp1) {
+        this.jButtonOp1 = jButtonOp1;
+    }
+
+    public JButton getjButtonOp2() {
+        return jButtonOp2;
+    }
+
+    public void setjButtonOp2(JButton jButtonOp2) {
+        this.jButtonOp2 = jButtonOp2;
+    }
+
+    public JButton getjButtonOp3() {
+        return jButtonOp3;
+    }
+
+    public void setjButtonOp3(JButton jButtonOp3) {
+        this.jButtonOp3 = jButtonOp3;
+    }
+
+    public JButton getjButtonOp4() {
+        return jButtonOp4;
+    }
+
+    public void setjButtonOp4(JButton jButtonOp4) {
+        this.jButtonOp4 = jButtonOp4;
+    }
+
+    public JLabel getjLabelImagen() {
+        return jLabelImagen;
+    }
+
+    public void setjLabelImagen(JLabel jLabelImagen) {
+        this.jLabelImagen = jLabelImagen;
+    }
+
+    public JLabel getjLabelPregunta() {
+        return jLabelPregunta;
+    }
+
+    public void setjLabelPregunta(JLabel jLabelPregunta) {
+        this.jLabelPregunta = jLabelPregunta;
+    }
+
+    public JPanel getjPanel1() {
+        return jPanel1;
+    }
+
+    public void setjPanel1(JPanel jPanel1) {
+        this.jPanel1 = jPanel1;
+    }
+
+    public JPanel getjPanelBotones() {
+        return jPanelBotones;
+    }
+
+    public void setjPanelBotones(JPanel jPanelBotones) {
+        this.jPanelBotones = jPanelBotones;
+    }
+
+    public JPanel getjPanelImagen() {
+        return jPanelImagen;
+    }
+
+    public void setjPanelImagen(JPanel jPanelImagen) {
+        this.jPanelImagen = jPanelImagen;
+    }
+
+    public JPanel getjPanelPregunta() {
+        return jPanelPregunta;
+    }
+
+    public void setjPanelPregunta(JPanel jPanelPregunta) {
+        this.jPanelPregunta = jPanelPregunta;
+    }
+
+    public JPanel getjPanelPreguntaBotones() {
+        return jPanelPreguntaBotones;
+    }
+
+    public void setjPanelPreguntaBotones(JPanel jPanelPreguntaBotones) {
+        this.jPanelPreguntaBotones = jPanelPreguntaBotones;
+    }
+    
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -44,7 +137,10 @@ public class VistaQuienLoHizo extends javax.swing.JFrame {
         jPanelPregunta = new javax.swing.JPanel();
         jLabelPregunta = new javax.swing.JLabel();
         jPanelBotones = new javax.swing.JPanel();
-        jButton4 = new javax.swing.JButton();
+        jButtonOp1 = new javax.swing.JButton();
+        jButtonOp2 = new javax.swing.JButton();
+        jButtonOp3 = new javax.swing.JButton();
+        jButtonOp4 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(300, 300));
@@ -68,23 +164,39 @@ public class VistaQuienLoHizo extends javax.swing.JFrame {
 
         jPanelPreguntaBotones.add(jPanelPregunta);
 
-        jButton4.setText("jButtonMuestra");
+        jButtonOp1.setText("1");
+
+        jButtonOp2.setText("2");
+
+        jButtonOp3.setText("3");
+
+        jButtonOp4.setText("4");
 
         javax.swing.GroupLayout jPanelBotonesLayout = new javax.swing.GroupLayout(jPanelBotones);
         jPanelBotones.setLayout(jPanelBotonesLayout);
         jPanelBotonesLayout.setHorizontalGroup(
             jPanelBotonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelBotonesLayout.createSequentialGroup()
-                .addContainerGap(105, Short.MAX_VALUE)
-                .addComponent(jButton4)
-                .addGap(134, 134, 134))
+                .addContainerGap(122, Short.MAX_VALUE)
+                .addGroup(jPanelBotonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButtonOp4)
+                    .addComponent(jButtonOp2)
+                    .addComponent(jButtonOp3)
+                    .addComponent(jButtonOp1))
+                .addGap(117, 117, 117))
         );
         jPanelBotonesLayout.setVerticalGroup(
             jPanelBotonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelBotonesLayout.createSequentialGroup()
-                .addContainerGap(240, Short.MAX_VALUE)
-                .addComponent(jButton4)
-                .addGap(61, 61, 61))
+            .addGroup(jPanelBotonesLayout.createSequentialGroup()
+                .addGap(163, 163, 163)
+                .addComponent(jButtonOp1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jButtonOp2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jButtonOp3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jButtonOp4)
+                .addContainerGap(223, Short.MAX_VALUE))
         );
 
         jPanelPreguntaBotones.add(jPanelBotones);
@@ -96,43 +208,11 @@ public class VistaQuienLoHizo extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(VistaQuienLoHizo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(VistaQuienLoHizo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(VistaQuienLoHizo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(VistaQuienLoHizo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new VistaQuienLoHizo().setVisible(true);
-            }
-        });
-    }
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButtonOp1;
+    private javax.swing.JButton jButtonOp2;
+    private javax.swing.JButton jButtonOp3;
+    private javax.swing.JButton jButtonOp4;
     private javax.swing.JLabel jLabelImagen;
     private javax.swing.JLabel jLabelPregunta;
     private javax.swing.JPanel jPanel1;
