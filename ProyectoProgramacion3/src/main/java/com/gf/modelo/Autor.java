@@ -12,15 +12,15 @@ public class Autor {
 
     private int idAutor;
     private String nombreAutor;
-    private int idPais;
+    private Pais pais;
 
     public Autor() {
     }
 
-    public Autor(int idAutor, String nombreAutor, int paisAutor) {
+    public Autor(int idAutor, String nombreAutor, Pais pais) {
         this.idAutor = idAutor;
         this.nombreAutor = nombreAutor;
-        this.idPais = paisAutor;
+        this.pais = pais;
     }
 
     public int getIdAutor() {
@@ -39,17 +39,18 @@ public class Autor {
         this.nombreAutor = nombreAutor;
     }
 
-    public int getPaisAutor() {
-        return idPais;
+    public Pais getPais() {
+        return pais;
     }
 
-    public void setPaisAutor(int paisAutor) {
-        this.idPais = paisAutor;
+    public void setPais(Pais pais) {
+        this.pais = pais;
     }
 
     @Override
     public String toString() {
-        return "Autor{" + "idAutor=" + idAutor + ", nombreAutor=" + nombreAutor + ", paisAutor=" + idPais + '}';
+        return "Autor{" + "idAutor=" + idAutor + ", nombreAutor=" + nombreAutor + ", pais=" + pais + '}';
     }
 
+    
 }

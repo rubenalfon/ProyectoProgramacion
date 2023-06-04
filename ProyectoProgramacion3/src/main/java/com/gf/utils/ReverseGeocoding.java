@@ -1,20 +1,20 @@
 package com.gf.utils;
+
 import com.google.maps.GeoApiContext;
 import com.google.maps.GeocodingApi;
 import com.google.maps.model.AddressType;
 import com.google.maps.model.GeocodingResult;
 
 public class ReverseGeocoding {
+
     public static String getCountryName(double latitude, double longitude) {
         String countryName = "";
-        if(longitude>180){
-            longitude-=360;
-        }
-        else if(longitude<-180){
-            longitude+=360;
+        if (longitude > 180) {
+            longitude -= 360;
+        } else if (longitude < -180) {
+            longitude += 360;
         }
         try {
-            
             // Inicializa el contexto de la API de Google Maps
             GeoApiContext context = new GeoApiContext.Builder()
                     .apiKey("AIzaSyBIxZoOuYHvyLWiiKfoeK29D8unL0Wv02Q") // Reemplaza con tu propia API Key de Google Maps
@@ -27,10 +27,9 @@ public class ReverseGeocoding {
             if (results.length > 0) {
                 countryName = results[0].formattedAddress;
             }
-        } catch(Exception e){
-           e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-
         return countryName;
     }
 }

@@ -6,7 +6,6 @@ package com.gf.controlador;
 
 import com.gf.dao.ObraDAO;
 import com.gf.modelo.Obra;
-import com.gf.utils.ConexionBD;
 import com.gf.vista.VistaQuienLoHizo;
 import java.awt.Color;
 import java.awt.Image;

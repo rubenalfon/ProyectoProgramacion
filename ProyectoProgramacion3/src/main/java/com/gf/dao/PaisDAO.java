@@ -17,14 +17,13 @@ import java.sql.SQLException;
  */
 public class PaisDAO {
 
-
     public Pais obtenerPaisPorId(int idPais) {
 
         Pais pais = null;
         String sql = "SELECT * FROM pais WHERE id_pais = ?";
 
-        try {
-            PreparedStatement ps = DatabaseManager.getConnection().prepareStatement(sql);
+        try (Connection con = DatabaseManager.getConnection()) {
+            PreparedStatement ps = con.prepareStatement(sql);
             ps.setInt(1, idPais);
             ResultSet rs = ps.executeQuery();
 
@@ -33,8 +32,6 @@ public class PaisDAO {
             }
         } catch (SQLException ex) {
             ex.printStackTrace();
-        } finally {
-            DatabaseManager.closeConnection();
         }
         return pais;
     }
