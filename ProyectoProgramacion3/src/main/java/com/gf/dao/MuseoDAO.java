@@ -5,11 +5,12 @@
 package com.gf.dao;
 
 import com.gf.modelo.Museo;
-import com.gf.modelo.Pais;
+import com.gf.utils.ConvertirArrayListACadena;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 /**
  *
@@ -17,7 +18,7 @@ import java.sql.SQLException;
  */
 public class MuseoDAO {
 
-    private Connection con;
+    private final Connection con;
 
     public MuseoDAO(Connection con) {
         this.con = con;
@@ -37,4 +38,19 @@ public class MuseoDAO {
         return museo;
     }
 
+    public Museo obtenerMuseoAleatorio(ArrayList lista) throws SQLException {
+        Museo museo = null;
+
+        String sql = "SELECT * FROM museo where id_museo not in "
+                + ConvertirArrayListACadena.convertir(lista)
+                + " ORDER BY RAND () LIMIT 1";
+        PreparedStatement ps = con.prepareStatement(sql);
+        ResultSet rs = ps.executeQuery();
+
+        if (rs.next()) {
+            PaisDAO pdao = new PaisDAO(con);
+            museo = new Museo(rs.getInt("id_museo"), rs.getString("nombre_museo"), pdao.obtenerPaisPorId(rs.getInt("id_pais")));
+        }
+        return museo;
+    }
 }

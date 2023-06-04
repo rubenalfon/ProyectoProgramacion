@@ -16,7 +16,7 @@ import java.sql.SQLException;
  */
 public class PaisDAO {
 
-    private Connection con;
+    private final Connection con;
 
     public PaisDAO(Connection con) {
         this.con = con;

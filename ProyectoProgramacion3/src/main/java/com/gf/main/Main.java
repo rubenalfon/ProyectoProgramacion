@@ -4,9 +4,11 @@
  */
 package com.gf.main;
 
+import com.gf.controlador.ControladorVistaQuienLoHizo;
 import com.gf.dao.ObraDAO;
 import com.gf.utils.ConexionBD;
 import com.gf.utils.ConvertirArrayListACadena;
+import com.gf.vista.VistaQuienLoHizo;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -21,22 +23,22 @@ import java.util.logging.Logger;
 public class Main {
 
     public static void main(String[] args) {
-        try {
-            System.out.println("Hola mundo!");
-
-            ConexionBD conBD = new ConexionBD();
-
-            Connection con = conBD.getConnection();
-
-            ObraDAO odao = new ObraDAO(con);
-
-            System.out.println(odao.obtenerPinturaAleatoria(new ArrayList<>(Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18,19, 20))).toString());
-
-        } catch (SQLException ex) {
-            System.out.println("No se han encontrado");
-        } catch (Exception ex) {
-            System.out.println("No se han encontrado");
-        }
+//        try {
+//            System.out.println("Hola mundo!");
+//
+//            ConexionBD conBD = new ConexionBD();
+//
+//            Connection con = conBD.getConnection();
+//
+//            ObraDAO odao = new ObraDAO(con);
+//
+//            System.out.println(odao.obtenerPinturaAleatoria(new ArrayList<>(Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18,19, 20))).toString());
+//
+//        } catch (SQLException ex) {
+//            System.out.println("No se han encontrado");
+//        } catch (Exception ex) {
+//            System.out.println("No se han encontrado");
+//        }
 //        ArrayList<Integer> lista = new ArrayList<>();
 //        
 //        lista.add(2);
@@ -45,6 +47,8 @@ public class Main {
 //        
 //
 //        System.out.println(ConvertirArrayListCadena.convertir(lista));
+
+        ControladorVistaQuienLoHizo cvqlh = new ControladorVistaQuienLoHizo(new VistaQuienLoHizo(), 3);
 
     }
 

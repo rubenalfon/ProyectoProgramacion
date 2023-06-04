@@ -5,11 +5,13 @@
 package com.gf.dao;
 
 import com.gf.modelo.Autor;
+import com.gf.utils.ConvertirArrayListACadena;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.ResultSet;
+import java.util.ArrayList;
 
 /**
  *
@@ -17,7 +19,7 @@ import java.sql.ResultSet;
  */
 public class AutorDAO {
 
-    private Connection con;
+    private final Connection con;
 
     public AutorDAO(Connection con) {
         this.con = con;
@@ -34,6 +36,22 @@ public class AutorDAO {
         if (rs.next()) {
             PaisDAO pdao = new PaisDAO(con);
             autor = new Autor(idAutor, rs.getString("nombre_autor"), pdao.obtenerPaisPorId(rs.getInt("id_pais")));
+        }
+        return autor;
+    }
+
+    public Autor obtenerAutorAleatorio(ArrayList lista) throws SQLException {
+        Autor autor = null;
+
+        String sql = "SELECT * FROM autor where id_autor not in "
+                + ConvertirArrayListACadena.convertir(lista)
+                + " ORDER BY RAND () LIMIT 1";
+        PreparedStatement ps = con.prepareStatement(sql);
+        ResultSet rs = ps.executeQuery();
+
+        if (rs.next()) {
+            PaisDAO pdao = new PaisDAO(con);
+            autor = new Autor(rs.getInt("id_autor"), rs.getString("nombre_autor"), pdao.obtenerPaisPorId(rs.getInt("id_pais")));
         }
         return autor;
     }

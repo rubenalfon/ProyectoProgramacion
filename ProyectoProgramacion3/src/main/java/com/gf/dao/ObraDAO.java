@@ -28,16 +28,16 @@ import java.util.ArrayList;
  */
 public class ObraDAO {
 
-    Connection con;
+    private final Connection con;
 
     public ObraDAO(Connection con) {
         this.con = con;
     }
 
-    public Obra obtenerPinturaAleatoria(ArrayList lista) throws SQLException {
+    public Obra obtenerObraAleatoria(ArrayList lista) throws SQLException {
         Obra obra = null;
 
-        String sql = "SELECT * FROM obra where disciplina like 'Pintura' and id_obra not in "
+        String sql = "SELECT * FROM obra where id_obra not in "
                 + ConvertirArrayListACadena.convertir(lista)
                 + " ORDER BY RAND () LIMIT 1"; // Obtener una pintura aleatoria.
         PreparedStatement ps = con.prepareStatement(sql);
