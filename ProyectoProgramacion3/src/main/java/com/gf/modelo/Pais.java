@@ -9,7 +9,7 @@ package com.gf.modelo;
  * @author Ruben
  */
 public class Pais {
-    
+
     private int idPais;
     private String NombrePais;
 
@@ -41,6 +41,4 @@ public class Pais {
     public String toString() {
         return "Pais{" + "idPais=" + idPais + ", NombrePais=" + NombrePais + '}';
     }
-    
-    
 }

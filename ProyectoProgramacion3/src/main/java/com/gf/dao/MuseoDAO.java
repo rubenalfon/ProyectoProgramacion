@@ -5,12 +5,8 @@
 package com.gf.dao;
 
 import com.gf.modelo.Museo;
-
 import com.gf.utils.ConvertirArrayListACadena;
-
-import com.gf.modelo.Pais;
 import com.gf.utils.DatabaseManager;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -23,41 +19,41 @@ import java.util.ArrayList;
  */
 public class MuseoDAO {
 
-    public Museo obtenerMuseoPorId(int idMuseo){
-
+    public Museo obtenerMuseoPorId(int idMuseo) {
         Museo museo = null;
         String sql = "SELECT * FROM museo WHERE id_museo = ?";
 
-        try {
-            PreparedStatement ps = DatabaseManager.getConnection().prepareStatement(sql);
+        try (Connection con = DatabaseManager.getConnection()) {
+            PreparedStatement ps = con.prepareStatement(sql);
             ps.setInt(1, idMuseo);
             ResultSet rs = ps.executeQuery();
 
             if (rs.next()) {
                 PaisDAO pdao = new PaisDAO();
-                museo = new Museo(idMuseo, rs.getString("nombre_museo"), rs.getInt("id_pais"));
+                museo = new Museo(rs.getInt("id_museo"), rs.getString("nombre_museo"), pdao.obtenerPaisPorId(rs.getInt("id_pais")));
             }
-
         } catch (SQLException ex) {
             ex.printStackTrace();
-        } finally {
-            DatabaseManager.closeConnection();
         }
         return museo;
     }
 
-    public Museo obtenerMuseoAleatorio(ArrayList lista) throws SQLException {
+    public Museo obtenerMuseoAleatorio(ArrayList lista) {
         Museo museo = null;
-
         String sql = "SELECT * FROM museo where id_museo not in "
                 + ConvertirArrayListACadena.convertir(lista)
                 + " ORDER BY RAND () LIMIT 1";
-        PreparedStatement ps = con.prepareStatement(sql);
-        ResultSet rs = ps.executeQuery();
 
-        if (rs.next()) {
-            PaisDAO pdao = new PaisDAO(con);
-            museo = new Museo(rs.getInt("id_museo"), rs.getString("nombre_museo"), pdao.obtenerPaisPorId(rs.getInt("id_pais")));
+        try (Connection con = DatabaseManager.getConnection()) {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                PaisDAO pdao = new PaisDAO();
+                museo = new Museo(rs.getInt("id_museo"), rs.getString("nombre_museo"), pdao.obtenerPaisPorId(rs.getInt("id_pais")));
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
         }
         return museo;
     }

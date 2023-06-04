@@ -15,23 +15,21 @@ public class Obra {
     private String descripcionObra;
     private String disciplinaObra;
     private String urlObra;
-    private int idAutor;
-    private int idMuseo;
+    private Autor autor;
+    private Museo museo;
 
     public Obra() {
     }
 
-    public Obra(int idObra, String nombreObra, String descripcionObra, String disciplinaObra, String urlObra, int idAutor, int idMuseo) {
+    public Obra(int idObra, String nombreObra, String descripcionObra, String disciplinaObra, String urlObra, Autor autor, Museo museo) {
         this.idObra = idObra;
         this.nombreObra = nombreObra;
         this.descripcionObra = descripcionObra;
         this.disciplinaObra = disciplinaObra;
         this.urlObra = urlObra;
-        this.idAutor = idAutor;
-        this.idMuseo = idMuseo;
+        this.autor = autor;
+        this.museo = museo;
     }
-
-    
 
     public int getIdObra() {
         return idObra;
@@ -73,29 +71,24 @@ public class Obra {
         this.urlObra = urlObra;
     }
 
-    public int getIdAutor() {
-        return idAutor;
+    public Autor getAutor() {
+        return autor;
     }
 
-    public void setIdAutor(int idAutor) {
-        this.idAutor = idAutor;
+    public void setAutor(Autor autor) {
+        this.autor = autor;
     }
 
-    public int getIdMuseo() {
-        return idMuseo;
+    public Museo getMuseo() {
+        return museo;
     }
 
-    public void setIdMuseo(int idMuseo) {
-        this.idMuseo = idMuseo;
+    public void setMuseo(Museo museo) {
+        this.museo = museo;
     }
 
     @Override
     public String toString() {
-        return "Obra{" + "idObra=" + idObra + ", nombreObra=" + nombreObra + ", descripcionObra=" + descripcionObra + ", disciplinaObra=" + disciplinaObra + ", urlObra=" + urlObra + ", idAutor=" + idAutor + ", idMuseo=" + idMuseo + '}';
+        return "Obra{" + "idObra=" + idObra + ", nombreObra=" + nombreObra + ", descripcionObra=" + descripcionObra + ", disciplinaObra=" + disciplinaObra + ", urlObra=" + urlObra + ", autor=" + autor + ", museo=" + museo + '}';
     }
-
-    
-    
-    
-
 }
