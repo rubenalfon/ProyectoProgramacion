@@ -15,29 +15,23 @@ public class Obra {
     private String descripcionObra;
     private String disciplinaObra;
     private String urlObra;
-    private Autor autor;
-    private Museo museo;
+    private int idAutor;
+    private int idMuseo;
 
     public Obra() {
     }
 
-    public Obra(int idObra, String nombreObra, String descripcionObra, String disciplinaObra, String urlObra) {
+    public Obra(int idObra, String nombreObra, String descripcionObra, String disciplinaObra, String urlObra, int idAutor, int idMuseo) {
         this.idObra = idObra;
         this.nombreObra = nombreObra;
         this.descripcionObra = descripcionObra;
         this.disciplinaObra = disciplinaObra;
         this.urlObra = urlObra;
+        this.idAutor = idAutor;
+        this.idMuseo = idMuseo;
     }
 
-    public Obra(int idObra, String nombreObra, String descripcionObra, String disciplinaObra, String urlObra, Autor autor, Museo museo) {
-        this.idObra = idObra;
-        this.nombreObra = nombreObra;
-        this.descripcionObra = descripcionObra;
-        this.disciplinaObra = disciplinaObra;
-        this.urlObra = urlObra;
-        this.autor = autor;
-        this.museo = museo;
-    }
+    
 
     public int getIdObra() {
         return idObra;
@@ -79,26 +73,28 @@ public class Obra {
         this.urlObra = urlObra;
     }
 
-    public Autor getAutor() {
-        return autor;
+    public int getIdAutor() {
+        return idAutor;
     }
 
-    public void setAutor(Autor autor) {
-        this.autor = autor;
+    public void setIdAutor(int idAutor) {
+        this.idAutor = idAutor;
     }
 
-    public Museo getMuseo() {
-        return museo;
+    public int getIdMuseo() {
+        return idMuseo;
     }
 
-    public void setMuseo(Museo museo) {
-        this.museo = museo;
+    public void setIdMuseo(int idMuseo) {
+        this.idMuseo = idMuseo;
     }
 
     @Override
     public String toString() {
-        return "Obra{" + "idObra=" + idObra + ", nombreObra=" + nombreObra + ", descripcionObra=" + descripcionObra + ", disciplinaObra=" + disciplinaObra + ", urlObra=" + urlObra + ", autor=" + autor + ", museo=" + museo + '}';
+        return "Obra{" + "idObra=" + idObra + ", nombreObra=" + nombreObra + ", descripcionObra=" + descripcionObra + ", disciplinaObra=" + disciplinaObra + ", urlObra=" + urlObra + ", idAutor=" + idAutor + ", idMuseo=" + idMuseo + '}';
     }
+
+    
     
     
 

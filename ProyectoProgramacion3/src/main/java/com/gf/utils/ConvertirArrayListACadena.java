@@ -15,11 +15,13 @@ public class ConvertirArrayListACadena {
 
     public static String convertir(ArrayList<Integer> lista) {
         String cadena = "";
-        for (Integer numero : lista) {
-            cadena += " ," + String.valueOf(numero);
+        if(lista!=null&& !lista.isEmpty()){
+            for (Integer numero : lista) {
+                cadena += " ," + String.valueOf(numero);
+            }
+
+            cadena = "(" + cadena.substring(2) + ")";
         }
-        
-        cadena = "(" + cadena.substring(2) + ")";
         return cadena;
     }
 

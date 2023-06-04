@@ -5,6 +5,7 @@
 package com.gf.dao;
 
 import com.gf.modelo.Pais;
+import com.gf.utils.DatabaseManager;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -16,22 +17,22 @@ import java.sql.SQLException;
  */
 public class PaisDAO {
 
-    private Connection con;
-
-    public PaisDAO(Connection con) {
-        this.con = con;
-    }
-
-    public Pais obtenerPaisPorId(int idPais) throws SQLException {
+    public Pais obtenerPaisPorId(int idPais) {
         Pais pais = null;
-
         String sql = "SELECT * FROM pais WHERE id_pais = ?";
-        PreparedStatement ps = con.prepareStatement(sql);
-        ps.setInt(1, idPais);
-        ResultSet rs = ps.executeQuery();
 
-        if (rs.next()) {
-            pais = new Pais(idPais, rs.getString("nombre_pais"));
+        try {
+            PreparedStatement ps = DatabaseManager.getConnection().prepareStatement(sql);
+            ps.setInt(1, idPais);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                pais = new Pais(idPais, rs.getString("nombre_pais"));
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } finally {
+            DatabaseManager.closeConnection();
         }
         return pais;
     }

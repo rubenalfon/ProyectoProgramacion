@@ -5,6 +5,7 @@
 package com.gf.dao;
 
 import com.gf.modelo.Autor;
+import com.gf.utils.DatabaseManager;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -17,24 +18,24 @@ import java.sql.ResultSet;
  */
 public class AutorDAO {
 
-    private Connection con;
-
-    public AutorDAO(Connection con) {
-        this.con = con;
-    }
-
-    public Autor obtenerAutorPorId(int idAutor) throws SQLException {
+    public Autor obtenerAutorPorId(int idAutor) {
         Autor autor = null;
-
         String sql = "SELECT * FROM autor WHERE id_autor = ?";
-        PreparedStatement ps = con.prepareStatement(sql);
-        ps.setInt(1, idAutor);
-        ResultSet rs = ps.executeQuery();
+        try {
+            PreparedStatement ps = DatabaseManager.getConnection().prepareStatement(sql);
+            ps.setInt(1, idAutor);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                PaisDAO pdao = new PaisDAO();
+                autor = new Autor(idAutor, rs.getString("nombre_autor"), rs.getInt("id_pais"));
+            }
 
-        if (rs.next()) {
-            PaisDAO pdao = new PaisDAO(con);
-            autor = new Autor(idAutor, rs.getString("nombre_autor"), pdao.obtenerPaisPorId(rs.getInt("id_pais")));
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } finally {
+            DatabaseManager.closeConnection();
         }
         return autor;
+        
     }
 }

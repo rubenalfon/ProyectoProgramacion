@@ -12,15 +12,15 @@ public class Museo {
 
     private int idMuseo;
     private String nombreMuseo;
-    private Pais paisMuseo;
+    private int idPais;
 
     public Museo() {
     }
 
-    public Museo(int idMuseo, String nombreMuseo, Pais paisMuseo) {
+    public Museo(int idMuseo, String nombreMuseo, int paisMuseo) {
         this.idMuseo = idMuseo;
         this.nombreMuseo = nombreMuseo;
-        this.paisMuseo = paisMuseo;
+        this.idPais = paisMuseo;
     }
 
     public int getIdMuseo() {
@@ -39,12 +39,17 @@ public class Museo {
         this.nombreMuseo = nombreMuseo;
     }
 
-    public Pais getPaisMuseo() {
-        return paisMuseo;
+    public int getPaisMuseo() {
+        return idPais;
     }
 
-    public void setPaisMuseo(Pais paisMuseo) {
-        this.paisMuseo = paisMuseo;
+    public void setPaisMuseo(int paisMuseo) {
+        this.idPais = paisMuseo;
+    }
+
+    @Override
+    public String toString() {
+        return "Museo{" + "idMuseo=" + idMuseo + ", nombreMuseo=" + nombreMuseo + ", paisMuseo=" + idPais + '}';
     }
 
 }

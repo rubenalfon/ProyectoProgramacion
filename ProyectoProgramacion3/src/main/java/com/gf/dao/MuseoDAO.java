@@ -6,6 +6,7 @@ package com.gf.dao;
 
 import com.gf.modelo.Museo;
 import com.gf.modelo.Pais;
+import com.gf.utils.DatabaseManager;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -17,22 +18,24 @@ import java.sql.SQLException;
  */
 public class MuseoDAO {
 
-    private Connection con;
-
-    public MuseoDAO(Connection con) {
-        this.con = con;
-    }
-
-    public Museo obtenerMuseoPorId(int idMuseo) throws SQLException {
+    public Museo obtenerMuseoPorId(int idMuseo){
         Museo museo = null;
         String sql = "SELECT * FROM museo WHERE id_museo = ?";
-        PreparedStatement ps = con.prepareStatement(sql);
-        ps.setInt(1, idMuseo);
-        ResultSet rs = ps.executeQuery();
 
-        if (rs.next()) {
-            PaisDAO pdao = new PaisDAO(con);
-            museo = new Museo(idMuseo, rs.getString("nombre_museo"), pdao.obtenerPaisPorId(rs.getInt("id_pais")));
+        try {
+            PreparedStatement ps = DatabaseManager.getConnection().prepareStatement(sql);
+            ps.setInt(1, idMuseo);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                PaisDAO pdao = new PaisDAO();
+                museo = new Museo(idMuseo, rs.getString("nombre_museo"), rs.getInt("id_pais"));
+            }
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } finally {
+            DatabaseManager.closeConnection();
         }
         return museo;
     }
