@@ -5,7 +5,6 @@
 package com.gf.main;
 
 import com.gf.dao.ObraDAO;
-import com.gf.utils.ConexionBD;
 import com.gf.utils.ConvertirArrayListACadena;
 import com.gf.utils.DatabaseManager;
 import java.sql.Connection;

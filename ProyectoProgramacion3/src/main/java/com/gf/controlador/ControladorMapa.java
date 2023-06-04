@@ -55,8 +55,8 @@ public class ControladorMapa implements MouseListener, ActionListener {
         this.vista = vista;
         this.numImagenes = numImagenes;
         this.odao = new ObraDAO();
-//        this.vista.setMinimumSize(new Dimension(((this.vista.getSize().width / 12) * numImagenes), (this.vista.getSize().width / 12) * numImagenes));
-        this.vista.getPanelContenedorImagenes().setPreferredSize(new Dimension(this.vista.getSize().width, this.vista.getSize().height/10+10));
+        this.vista.setMinimumSize(new Dimension(((Toolkit.getDefaultToolkit().getScreenSize().width / 12) * numImagenes), Toolkit.getDefaultToolkit().getScreenSize().height/3));
+        this.vista.getPanelContenedorImagenes().setPreferredSize(new Dimension(this.vista.getSize().width, Toolkit.getDefaultToolkit().getScreenSize().height/13+10));        
         setMapListeners();
         crearImagenes();
         this.vista.setExtendedState(JFrame.MAXIMIZED_BOTH);
@@ -83,10 +83,10 @@ public class ControladorMapa implements MouseListener, ActionListener {
             JButton button = new JButton();
             button.setBackground(Color.red);
             button.setForeground(Color.red);
-            button.setPreferredSize(new Dimension(Toolkit.getDefaultToolkit().getScreenSize().width/13,Toolkit.getDefaultToolkit().getScreenSize().height/10));
-            button.setSize(new Dimension(Toolkit.getDefaultToolkit().getScreenSize().width/13,Toolkit.getDefaultToolkit().getScreenSize().height/10));
-            button.setMinimumSize(new Dimension(Toolkit.getDefaultToolkit().getScreenSize().width/13,Toolkit.getDefaultToolkit().getScreenSize().height/10));
-            button.setMaximumSize(new Dimension(Toolkit.getDefaultToolkit().getScreenSize().width/13,Toolkit.getDefaultToolkit().getScreenSize().height/10));
+            button.setPreferredSize(new Dimension(Toolkit.getDefaultToolkit().getScreenSize().width/13,Toolkit.getDefaultToolkit().getScreenSize().height/13));
+            button.setSize(new Dimension(Toolkit.getDefaultToolkit().getScreenSize().width/13,Toolkit.getDefaultToolkit().getScreenSize().height/13));
+            button.setMinimumSize(new Dimension(Toolkit.getDefaultToolkit().getScreenSize().width/13,Toolkit.getDefaultToolkit().getScreenSize().height/13));
+            button.setMaximumSize(new Dimension(Toolkit.getDefaultToolkit().getScreenSize().width/13,Toolkit.getDefaultToolkit().getScreenSize().height/13));
             System.out.println(button.getSize());
             button.setFocusPainted(false);
             button.setContentAreaFilled(false);
@@ -106,7 +106,6 @@ public class ControladorMapa implements MouseListener, ActionListener {
         }
         
         this.vista.getPanelContenedorImagenes().setBackground(Color.GRAY);
-        
         
     }
 
