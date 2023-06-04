@@ -36,6 +36,11 @@ public class Pais {
     public void setNombrePais(String NombrePais) {
         this.NombrePais = NombrePais;
     }
+
+    @Override
+    public String toString() {
+        return "Pais{" + "idPais=" + idPais + ", NombrePais=" + NombrePais + '}';
+    }
     
     
 }
