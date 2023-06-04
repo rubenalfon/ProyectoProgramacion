@@ -46,13 +46,15 @@ public class Prueba extends JFrame {
     
     
     public static void main(String[] args) {
-        ObraDAO mdao = new ObraDAO();
+        ObraDAO odao = new ObraDAO();
+        MuseoDAO mdao = new MuseoDAO();
         
         ArrayList<Integer> lista = new ArrayList<>();
         
             lista.add(2);
             lista.add(5);
             lista.add(6);
-        System.out.println(mdao.obtenerObraAleatoria(lista).getMuseo().getPais());
+        System.out.println(mdao.obtenerMuseoAleatorio(lista).getPais());
+//        System.out.println(odao.obtenerObraAleatoria(lista).getMuseo().getPais());
     }
 }

@@ -30,6 +30,7 @@ public class MuseoDAO {
 
             if (rs.next()) {
                 PaisDAO pdao = new PaisDAO();
+                
                 museo = new Museo(rs.getInt("id_museo"), rs.getString("nombre_museo"), pdao.obtenerPaisPorId(rs.getInt("id_pais")));
             }
         } catch (SQLException ex) {

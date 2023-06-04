@@ -41,8 +41,9 @@ public class ObraDAO {
                     + ConvertirArrayListACadena.convertir(lista)
                     + " ORDER BY RAND () LIMIT 1";
         }
-
-        try (Connection con = DatabaseManager.getConnection()) {
+        Connection con;
+        try {
+            con = DatabaseManager.getConnection();
             PreparedStatement ps = con.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
 
@@ -56,14 +57,16 @@ public class ObraDAO {
                 int idMuseo = rs.getInt("id_museo");
 
                 AutorDAO adao = new AutorDAO();
-                Autor autor = adao.obtenerAutorPorId(idAutor);
                 MuseoDAO mdao = new MuseoDAO();
+                Autor autor = adao.obtenerAutorPorId(idAutor);
                 Museo museo = mdao.obtenerMuseoPorId(idMuseo);
 
                 obra = new Obra(idObra, nombreObra, descripcionObra, disciplina, urlObra, autor, museo);
             }
         } catch (SQLException ex) {
             ex.printStackTrace();
+        } finally {
+            DatabaseManager.closeConnection();
         }
         return obra;
     }
@@ -88,8 +91,8 @@ public class ObraDAO {
                 int idMuseo = rs.getInt("id_museo");
 
                 AutorDAO adao = new AutorDAO();
-                Autor autor = adao.obtenerAutorPorId(idAutor);
                 MuseoDAO mdao = new MuseoDAO();
+                Autor autor = adao.obtenerAutorPorId(idAutor);
                 Museo museo = mdao.obtenerMuseoPorId(idMuseo);
 
                 obra = new Obra(idObra, nombreObra, descripcionObra, disciplina, urlObra, autor, museo);
@@ -122,8 +125,8 @@ public class ObraDAO {
                 int idMuseo = rs.getInt("id_museo");
 
                 AutorDAO adao = new AutorDAO();
-                Autor autor = adao.obtenerAutorPorId(idAutor);
                 MuseoDAO mdao = new MuseoDAO();
+                Autor autor = adao.obtenerAutorPorId(idAutor);
                 Museo museo = mdao.obtenerMuseoPorId(idMuseo);
 
                 obra = new Obra(idObra, nombreObra, descripcionObra, disciplina, urlObra, autor, museo);
@@ -154,8 +157,8 @@ public class ObraDAO {
                 int idMuseo = rs.getInt("id_museo");
 
                 AutorDAO adao = new AutorDAO();
-                Autor autor = adao.obtenerAutorPorId(idAutor);
                 MuseoDAO mdao = new MuseoDAO();
+                Autor autor = adao.obtenerAutorPorId(idAutor);
                 Museo museo = mdao.obtenerMuseoPorId(idMuseo);
 
                 obra = new Obra(idObra, nombreObra, descripcionObra, disciplina, urlObra, autor, museo);
