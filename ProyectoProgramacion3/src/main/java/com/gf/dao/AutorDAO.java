@@ -45,4 +45,27 @@ public class AutorDAO {
         }
         return autor;
     }
+
+    public Autor obtenerAutorAleatorio(ArrayList lista) {
+        Autor autor = null;
+
+        String sql = "SELECT * FROM autor where id_autor not in "
+                + ConvertirArrayListACadena.convertir(lista)
+                + " ORDER BY RAND () LIMIT 1"; // Obtener una pintura aleatoria.
+        try {
+            Connection con = DatabaseManager.getConnection();
+            PreparedStatement ps = con.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                PaisDAO pdao = new PaisDAO();
+                autor = new Autor(rs.getInt("id_autor"), rs.getString("nombre_autor"), pdao.obtenerPaisPorId(rs.getInt("id_pais")));
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } finally {
+            DatabaseManager.closeConnection();
+        }
+        return autor;
+    }
 }

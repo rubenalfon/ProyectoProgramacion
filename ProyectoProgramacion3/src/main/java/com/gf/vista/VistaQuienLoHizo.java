@@ -31,38 +31,6 @@ public class VistaQuienLoHizo extends javax.swing.JFrame {
         this.setVisible(true);
     }
 
-    public JButton getjButtonOp1() {
-        return jButtonOp1;
-    }
-
-    public void setjButtonOp1(JButton jButtonOp1) {
-        this.jButtonOp1 = jButtonOp1;
-    }
-
-    public JButton getjButtonOp2() {
-        return jButtonOp2;
-    }
-
-    public void setjButtonOp2(JButton jButtonOp2) {
-        this.jButtonOp2 = jButtonOp2;
-    }
-
-    public JButton getjButtonOp3() {
-        return jButtonOp3;
-    }
-
-    public void setjButtonOp3(JButton jButtonOp3) {
-        this.jButtonOp3 = jButtonOp3;
-    }
-
-    public JButton getjButtonOp4() {
-        return jButtonOp4;
-    }
-
-    public void setjButtonOp4(JButton jButtonOp4) {
-        this.jButtonOp4 = jButtonOp4;
-    }
-
     public JLabel getjLabelImagen() {
         return jLabelImagen;
     }
@@ -118,8 +86,6 @@ public class VistaQuienLoHizo extends javax.swing.JFrame {
     public void setjPanelPreguntaBotones(JPanel jPanelPreguntaBotones) {
         this.jPanelPreguntaBotones = jPanelPreguntaBotones;
     }
-    
-    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -137,10 +103,6 @@ public class VistaQuienLoHizo extends javax.swing.JFrame {
         jPanelPregunta = new javax.swing.JPanel();
         jLabelPregunta = new javax.swing.JLabel();
         jPanelBotones = new javax.swing.JPanel();
-        jButtonOp1 = new javax.swing.JButton();
-        jButtonOp2 = new javax.swing.JButton();
-        jButtonOp3 = new javax.swing.JButton();
-        jButtonOp4 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(300, 300));
@@ -164,41 +126,8 @@ public class VistaQuienLoHizo extends javax.swing.JFrame {
 
         jPanelPreguntaBotones.add(jPanelPregunta);
 
-        jButtonOp1.setText("1");
-
-        jButtonOp2.setText("2");
-
-        jButtonOp3.setText("3");
-
-        jButtonOp4.setText("4");
-
-        javax.swing.GroupLayout jPanelBotonesLayout = new javax.swing.GroupLayout(jPanelBotones);
-        jPanelBotones.setLayout(jPanelBotonesLayout);
-        jPanelBotonesLayout.setHorizontalGroup(
-            jPanelBotonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelBotonesLayout.createSequentialGroup()
-                .addContainerGap(122, Short.MAX_VALUE)
-                .addGroup(jPanelBotonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButtonOp4)
-                    .addComponent(jButtonOp2)
-                    .addComponent(jButtonOp3)
-                    .addComponent(jButtonOp1))
-                .addGap(117, 117, 117))
-        );
-        jPanelBotonesLayout.setVerticalGroup(
-            jPanelBotonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelBotonesLayout.createSequentialGroup()
-                .addGap(163, 163, 163)
-                .addComponent(jButtonOp1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButtonOp2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButtonOp3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButtonOp4)
-                .addContainerGap(223, Short.MAX_VALUE))
-        );
-
+        jPanelBotones.setPreferredSize(new java.awt.Dimension(500, 514));
+        jPanelBotones.setLayout(new java.awt.GridLayout(0, 1));
         jPanelPreguntaBotones.add(jPanelBotones);
 
         jPanel1.add(jPanelPreguntaBotones);
@@ -209,10 +138,6 @@ public class VistaQuienLoHizo extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButtonOp1;
-    private javax.swing.JButton jButtonOp2;
-    private javax.swing.JButton jButtonOp3;
-    private javax.swing.JButton jButtonOp4;
     private javax.swing.JLabel jLabelImagen;
     private javax.swing.JLabel jLabelPregunta;
     private javax.swing.JPanel jPanel1;

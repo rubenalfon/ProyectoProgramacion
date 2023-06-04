@@ -64,7 +64,7 @@ public class Main {
 //
 //        System.out.println(ConvertirArrayListCadena.convertir(lista));
 
-        ControladorVistaQuienLoHizo cvqlh = new ControladorVistaQuienLoHizo(new VistaQuienLoHizo(), 3);
+        ControladorVistaQuienLoHizo cvqlh = new ControladorVistaQuienLoHizo(new VistaQuienLoHizo(), 5,4);
 
     }
 

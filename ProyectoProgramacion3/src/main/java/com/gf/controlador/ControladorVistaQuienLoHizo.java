@@ -4,112 +4,152 @@
  */
 package com.gf.controlador;
 
-import com.gf.dao.ObraDAO;
-import com.gf.modelo.Obra;
+import com.gf.dao.*;
+import com.gf.modelo.*;
 import com.gf.vista.VistaQuienLoHizo;
-import java.awt.Color;
-import java.awt.Image;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.image.BufferedImage;
-import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.imageio.ImageIO;
+import java.awt.*;
+import java.awt.event.*;
+import java.net.*;
+import java.sql.*;
+import java.util.*;
+import java.util.logging.*;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JPanel;
 
 /**
  *
  * @author Ruben
  */
-public class ControladorVistaQuienLoHizo implements MouseListener {
+public class ControladorVistaQuienLoHizo implements MouseListener, ActionListener {
 
     private final VistaQuienLoHizo vista;
     private Connection con = null;
+    private ArrayList<JButton> listaBotones;
 
     private int indiceObraActual;
+    private int numeroBotones;
     private ArrayList<Obra> listaObras;
+    private ArrayList<Autor> listaAutores;
 
-    public ControladorVistaQuienLoHizo(VistaQuienLoHizo vista, int numeroObras) {
+    private ObraDAO odao;
+    private AutorDAO adao;
+
+    public ControladorVistaQuienLoHizo(VistaQuienLoHizo vista, int numeroObras, int numeroBotones) {
         this.vista = vista;
+        this.odao = new ObraDAO();
+        this.adao = new AutorDAO();
+        this.numeroBotones = numeroBotones;
 
-//        vista.getjPanelImagen().setBackground(Color.red);
-//        ImageIcon imagen = new ImageIcon("./src/files/Fondo.png");
-//        Image imagenEscalada = imagen.getImage().getScaledInstance(200, 200, Image.SCALE_SMOOTH);
-//        vista.getjLabelImagen().setIcon(new ImageIcon(imagenEscalada));
-        URL url;
-//        try {
-////            url = new URL("https://upload.wikimedia.org/wikipedia/commons/thumb/4/48/The_Legend_of_Zelda_Ocarina_of_Time.svg/1920px-The_Legend_of_Zelda_Ocarina_of_Time.svg.png");
-////            BufferedImage img = ImageIO.read(url);
-////            vista.getjLabelImagen().setIcon(new ImageIcon(img));
-//        } catch (MalformedURLException ex) {
-//            Logger.getLogger(ControladorVistaQuienLoHizo.class.getName()).log(Level.SEVERE, null, ex);
-//        } catch (IOException ex) {
-//            Logger.getLogger(ControladorVistaQuienLoHizo.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-
-        ConexionBD cbd = new ConexionBD();
-        try {
-            this.con = cbd.getConnection(); // Cambiar -----------------------------------
-        } catch (SQLException ex) {
-            Logger.getLogger(ControladorVistaQuienLoHizo.class.getName()).log(Level.SEVERE, null, ex);
-        }
         iniciar(numeroObras);
         siguienteImagen();
 
         for (Obra obra : listaObras) {
-            System.out.println(obra.toString());
+            System.out.println("  " + obra.toString());
         }
+        
+        this.vista.addComponentListener(new ComponentAdapter() {
+            @Override
+            public void componentResized(ComponentEvent e) {
+                try {
+                    ponerImagen();
+                } catch (MalformedURLException ex) {
+                    Logger.getLogger(ControladorVistaQuienLoHizo.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        });
     }
 
     private void iniciar(int numeroObras) {
-        ObraDAO odao = new ObraDAO(con);
         this.listaObras = new ArrayList<>();
+        this.listaBotones = new ArrayList<>();
+
         ArrayList<Integer> listaIdUsados = new ArrayList<>();
-        Obra obra;
+
+        for (int i = 0; i < this.numeroBotones; i++) {
+            JButton boton = new JButton(String.valueOf(i + 1));
+            boton.setPreferredSize(new Dimension(100, 40));
+//            boton.setSize(new Dimension(100, 40));
+//            boton.setMinimumSize(new Dimension(100, 40));
+//            boton.setMaximumSize(new Dimension(100, 40));
+            boton.addActionListener(this);
+            vista.getjPanelBotones().add(boton);
+            this.listaBotones.add(boton);
+        }
 
         for (int i = 0; i < numeroObras; i++) {
-            try {
-                obra = odao.obtenerObraAleatoria(listaIdUsados);
-                this.listaObras.add(obra);
-                listaIdUsados.add(obra.getIdObra());
-
-            } catch (SQLException ex) {
-                Logger.getLogger(ControladorVistaQuienLoHizo.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            Obra obra = odao.obtenerObraAleatoria(listaIdUsados);
+            this.listaObras.add(obra);
+            listaIdUsados.add(obra.getIdObra());
         }
     }
 
     private void siguienteImagen() {
         try {
-            URL url;
-            System.err.println(this.listaObras.get(this.indiceObraActual).getUrlObra());
-            url = new URL(this.listaObras.get(this.indiceObraActual).getUrlObra());
-            BufferedImage img = ImageIO.read(url);
-            vista.getjLabelImagen().setIcon(new ImageIcon(img));
+            ponerImagen();
+            this.listaAutores = null;
+            recogerAutores(this.numeroBotones);
+            System.out.println(this.listaAutores.size());
+            ponerBotones();
 
-            this.indiceObraActual++;
         } catch (MalformedURLException ex) {
-            Logger.getLogger(ControladorVistaQuienLoHizo.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
             Logger.getLogger(ControladorVistaQuienLoHizo.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
+    private void ponerImagen() throws MalformedURLException {
+        try {
+            Dimension d = new Dimension(vista.getjLabelImagen().getSize());
+            URL url = new URL(this.listaObras.get(this.indiceObraActual).getUrlObra());
+
+            this.vista.getjLabelImagen().setIcon(new ImageIcon(imagenRescalada(url, d)));
+
+        } catch (MalformedURLException ex) {
+            Logger.getLogger(ControladorVistaQuienLoHizo.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    private Image imagenRescalada(URL url, Dimension dimension) {
+        ImageIcon imagen = new ImageIcon(url);
+
+        double escala1 = dimension.getWidth() / imagen.getIconWidth();
+        double escala2 = dimension.getHeight() / imagen.getIconHeight();
+        double escala = Math.min(escala1, escala2);
+
+        Image imagenEscalada = imagen.getImage().getScaledInstance((int) (imagen.getIconWidth() * escala), (int) (imagen.getIconHeight() * escala), Image.SCALE_DEFAULT);
+        return imagenEscalada;
+    }
+
+    private void ponerBotones() {
+        for (int i = 0; i < listaBotones.size(); i++) {
+            listaBotones.get(i).setText(this.listaAutores.get(i).getNombreAutor());
+        }
+    }
+
+    private void recogerAutores(int numAutores) {
+        this.listaAutores = new ArrayList<>();
+        ArrayList<Integer> listaNoUsar = new ArrayList<>(Arrays.asList(this.listaObras.get(this.indiceObraActual).getAutor().getIdAutor()));
+        listaAutores.add(this.listaObras.get(this.indiceObraActual).getAutor());
+        for (int i = 1; i < numAutores; i++) {
+            Autor autor = this.adao.obtenerAutorAleatorio(listaNoUsar);
+
+            listaNoUsar.add(autor.getIdAutor());
+            listaAutores.add(autor);
+        }
+        Collections.shuffle(listaAutores);
+    }
+
+    //
+    //
+    //
     @Override
     public void mouseClicked(MouseEvent e) {
-System.out.println("2");
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
     public void mousePressed(MouseEvent e) {
-        System.out.println("a");
-        siguienteImagen();
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
@@ -127,4 +167,16 @@ System.out.println("2");
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        System.out.println("    _" + this.listaObras.get(this.indiceObraActual).getNombreObra());
+        if (((JButton) e.getSource()).getText().equals(this.listaObras.get(this.indiceObraActual).getAutor().getNombreAutor())) {
+            this.indiceObraActual++;
+            siguienteImagen();
+
+        } else {
+
+            System.out.println(((JButton) e.getSource()).getText() + " -+ " + (this.listaObras.get(this.indiceObraActual).getAutor().getNombreAutor()));
+        }
+    }
 }
