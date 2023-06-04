@@ -23,18 +23,21 @@ public class MuseoDAO {
         Museo museo = null;
         String sql = "SELECT * FROM museo WHERE id_museo = ?";
 
-        try (Connection con = DatabaseManager.getConnection()) {
+        try {
+            Connection con = DatabaseManager.getConnection();
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setInt(1, idMuseo);
             ResultSet rs = ps.executeQuery();
 
             if (rs.next()) {
                 PaisDAO pdao = new PaisDAO();
-                
+
                 museo = new Museo(rs.getInt("id_museo"), rs.getString("nombre_museo"), pdao.obtenerPaisPorId(rs.getInt("id_pais")));
             }
         } catch (SQLException ex) {
             ex.printStackTrace();
+        } finally {
+            DatabaseManager.closeConnection();
         }
         return museo;
     }
@@ -45,7 +48,8 @@ public class MuseoDAO {
                 + ConvertirArrayListACadena.convertir(lista)
                 + " ORDER BY RAND () LIMIT 1";
 
-        try (Connection con = DatabaseManager.getConnection()) {
+        try {
+            Connection con = DatabaseManager.getConnection();
             PreparedStatement ps = con.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
 
@@ -55,6 +59,8 @@ public class MuseoDAO {
             }
         } catch (SQLException ex) {
             ex.printStackTrace();
+        } finally {
+            DatabaseManager.closeConnection();
         }
         return museo;
     }

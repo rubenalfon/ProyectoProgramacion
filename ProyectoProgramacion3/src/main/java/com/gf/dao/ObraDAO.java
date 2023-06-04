@@ -41,9 +41,9 @@ public class ObraDAO {
                     + ConvertirArrayListACadena.convertir(lista)
                     + " ORDER BY RAND () LIMIT 1";
         }
-        Connection con;
+        
         try {
-            con = DatabaseManager.getConnection();
+            Connection con = DatabaseManager.getConnection();
             PreparedStatement ps = con.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
 
@@ -77,7 +77,8 @@ public class ObraDAO {
                 + ConvertirArrayListACadena.convertir(lista)
                 + " ORDER BY RAND () LIMIT 1";
 
-        try (Connection con = DatabaseManager.getConnection()) {
+        try {
+            Connection con = DatabaseManager.getConnection();
             PreparedStatement ps = con.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
 
@@ -111,7 +112,8 @@ public class ObraDAO {
                 + ConvertirArrayListACadena.convertir(lista)
                 + "and id_autor = ? ORDER BY RAND () LIMIT 1";
 
-        try (Connection con = DatabaseManager.getConnection()) {
+        try {
+            Connection con = DatabaseManager.getConnection();
             PreparedStatement ps = con.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
 
@@ -133,6 +135,8 @@ public class ObraDAO {
             }
         } catch (SQLException ex) {
             ex.printStackTrace();
+        } finally {
+            DatabaseManager.closeConnection();
         }
         return obra;
     }
@@ -143,7 +147,8 @@ public class ObraDAO {
                 + ConvertirArrayListACadena.convertir(lista)
                 + "and id_autor != ? ORDER BY RAND () LIMIT 1";
 
-        try (Connection con = DatabaseManager.getConnection()) {
+        try {
+            Connection con = DatabaseManager.getConnection();
             PreparedStatement ps = con.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
 

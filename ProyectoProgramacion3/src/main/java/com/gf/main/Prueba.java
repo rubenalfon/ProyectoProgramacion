@@ -2,6 +2,7 @@ package com.gf.main;
 
 import com.gf.dao.MuseoDAO;
 import com.gf.dao.ObraDAO;
+import com.gf.modelo.Obra;
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
@@ -42,19 +43,19 @@ public class Prueba extends JFrame {
 //            g.drawImage(imagenFondo, 0, 0, getWidth(), getHeight(), this);
 //        }
 //    }
-    
-    
-    
     public static void main(String[] args) {
         ObraDAO odao = new ObraDAO();
         MuseoDAO mdao = new MuseoDAO();
-        
+
         ArrayList<Integer> lista = new ArrayList<>();
-        
-            lista.add(2);
-            lista.add(5);
-            lista.add(6);
-        System.out.println(mdao.obtenerMuseoAleatorio(lista).getPais());
-//        System.out.println(odao.obtenerObraAleatoria(lista).getMuseo().getPais());
+
+        lista.add(2);
+        lista.add(5);
+        lista.add(6);
+//        System.out.println(mdao.obtenerMuseoAleatorio(lista).getPais());
+        System.out.println(odao.obtenerObraAleatoria(lista).getMuseo().getPais());
+        Obra obra = odao.obtenerObraAleatoria(lista);
+        System.out.println(obra.getAutor().getNombreAutor());
+        System.out.println(obra.getMuseo().getNombreMuseo());
     }
 }

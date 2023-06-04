@@ -29,7 +29,8 @@ public class AutorDAO {
         Autor autor = null;
         String sql = "SELECT * FROM autor WHERE id_autor = ?";
 
-        try (Connection con = DatabaseManager.getConnection()) {
+        try {
+            Connection con = DatabaseManager.getConnection();
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setInt(1, idAutor);
             ResultSet rs = ps.executeQuery();
@@ -39,6 +40,8 @@ public class AutorDAO {
             }
         } catch (SQLException ex) {
             ex.printStackTrace();
+        } finally {
+            DatabaseManager.closeConnection();
         }
         return autor;
     }
