@@ -4,7 +4,9 @@
  */
 package com.gf.controlador;
 
+import com.gf.dao.MuseoDAO;
 import com.gf.dao.ObraDAO;
+import com.gf.dao.PaisDAO;
 import com.gf.modelo.Autor;
 import com.gf.modelo.Obra;
 import com.gf.modelo.Pais;
@@ -50,11 +52,14 @@ public class ControladorMapa implements MouseListener, ActionListener {
     private VistaMapa vista;
     private int numImagenes;
     private ObraDAO odao;
-
+    private PaisDAO pdao;
+    private MuseoDAO mdao;
     public ControladorMapa(VistaMapa vista, int numImagenes) {
         this.vista = vista;
         this.numImagenes = numImagenes;
         this.odao = new ObraDAO();
+        this.pdao = new PaisDAO();
+        this.mdao = new MuseoDAO();
         this.vista.setMinimumSize(new Dimension(((Toolkit.getDefaultToolkit().getScreenSize().width / 12) * numImagenes), Toolkit.getDefaultToolkit().getScreenSize().height/3));
         this.vista.getPanelContenedorImagenes().setPreferredSize(new Dimension(this.vista.getSize().width, Toolkit.getDefaultToolkit().getScreenSize().height/13+10));        
         setMapListeners();
@@ -95,7 +100,7 @@ public class ControladorMapa implements MouseListener, ActionListener {
             button.setBorder(null);
             Obra obra = odao.obtenerObraAleatoria(idobras);
             idobras.add(obra.getIdObra());
-            button.setName(String.valueOf(obra.getIdObra()));
+            button.setName(String.valueOf(pdao.obtenerPaisPorId(mdao.obtenerMuseoPorId(obra.getIdMuseo()).getPaisMuseo()).getNombrePais()));
             try {
                 button.setIcon(new ImageIcon(imagenRescalada(new URL(obra.getUrlObra()), button.getSize())));
             } catch (MalformedURLException ex) {
@@ -132,14 +137,21 @@ public class ControladorMapa implements MouseListener, ActionListener {
 
     @Override
     public void mouseClicked(MouseEvent e) {
+        GeoPosition clickedPosition = this.vista.getMapViewer().convertPointToGeoPosition(e.getPoint());
+        String pais= ReverseGeocoding.getCountryName(clickedPosition.getLatitude(), clickedPosition.getLongitude());
         if (e.getClickCount() == 2) {
-            GeoPosition clickedPosition = this.vista.getMapViewer().convertPointToGeoPosition(e.getPoint());
             System.out.println(clickedPosition);
-            System.out.println(ReverseGeocoding.getCountryName(clickedPosition.getLatitude(), clickedPosition.getLongitude()));
+            System.out.println(pais);
         }
         JButton uwu = botonSeleccionado();
         if (uwu != null) {
             uwu.setBorder(null);
+            if(uwu.getName().equals(pais)){
+                System.out.println("siuuuu");
+                uwu.setVisible(false);
+                uwu.setEnabled(false);
+            }
+            
         }
     }
 
