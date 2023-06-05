@@ -67,15 +67,12 @@ public class ControladorVistaQuienLoHizo implements MouseListener, ActionListene
         for (int i = 0; i < this.numeroBotones; i++) {
             JButton boton = new JButton(String.valueOf(i + 1));
             boton.setPreferredSize(new Dimension(100, 40));
-//            boton.setSize(new Dimension(100, 40));
-//            boton.setMinimumSize(new Dimension(100, 40));
-//            boton.setMaximumSize(new Dimension(100, 40));
+            boton.setFocusPainted(false);
             boton.addActionListener(this);
             vista.getjPanelBotones().add(boton);
             this.listaBotones.add(boton);
-
         }
-        System.out.println(listaBotones.size());
+        
         inhabilitarBotones();
 
         for (int i = 0; i < numeroObras; i++) {
@@ -83,7 +80,6 @@ public class ControladorVistaQuienLoHizo implements MouseListener, ActionListene
             this.listaObras.add(obra);
             listaIdUsados.add(obra.getIdObra());
         }
-
     }
 
     private void siguienteImagen() {

@@ -44,9 +44,15 @@ public class MuseoDAO {
 
     public Museo obtenerMuseoAleatorio(ArrayList lista) {
         Museo museo = null;
-        String sql = "SELECT * FROM museo where id_museo not in "
-                + ConvertirArrayListACadena.convertir(lista)
-                + " ORDER BY RAND () LIMIT 1";
+        String sql;
+
+        if (lista == null || lista.isEmpty()) {
+            sql = "SELECT * FROM museo where id_museo ORDER BY RAND () LIMIT 1"; // Obtener una pintura aleatoria.
+        } else {
+            sql = "SELECT * FROM museo where id_museo not in "
+                    + ConvertirArrayListACadena.convertir(lista)
+                    + " ORDER BY RAND () LIMIT 1";
+        }
 
         try {
             Connection con = DatabaseManager.getConnection();
