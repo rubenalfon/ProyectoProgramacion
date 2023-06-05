@@ -15,6 +15,7 @@ import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import org.jxmapviewer.JXMapViewer;
 import org.jxmapviewer.OSMTileFactoryInfo;
+import org.jxmapviewer.VirtualEarthTileFactoryInfo;
 import org.jxmapviewer.viewer.DefaultTileFactory;
 import org.jxmapviewer.viewer.GeoPosition;
 import org.jxmapviewer.viewer.TileFactory;
@@ -44,22 +45,12 @@ public class VistaMapa extends javax.swing.JFrame {
         return puntuacion;
     }
     private void setFrame(){
-        try {
-            UIManager.setLookAndFeel("com.formdev.flatlaf.intellijthemes.FlatCarbonIJTheme");
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(VistaMapa.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            Logger.getLogger(VistaMapa.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            Logger.getLogger(VistaMapa.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (UnsupportedLookAndFeelException ex) {
-            Logger.getLogger(VistaMapa.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        
         
         this.setSize(new Dimension(1200,800));
         this.mapViewer= new JXMapViewer();
         
-        DefaultTileFactory tileFactory= new DefaultTileFactory(new OSMTileFactoryInfo());
+        DefaultTileFactory tileFactory= new DefaultTileFactory( new VirtualEarthTileFactoryInfo(VirtualEarthTileFactoryInfo.MAP));
         this.mapViewer.setTileFactory(tileFactory);
         this.mapViewer.setAddressLocation(new GeoPosition(180, 0));
         this.mapViewer.setZoom(16);
