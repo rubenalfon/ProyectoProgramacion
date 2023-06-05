@@ -13,7 +13,7 @@ import com.gf.vista.VistaQuienLoHizo;
  */
 public class QuienLoHizoMain {
     public static void main(String[] args) {
-          ControladorVistaQuienLoHizo cvqlh = new ControladorVistaQuienLoHizo(new VistaQuienLoHizo(), 10,1);
+          ControladorVistaQuienLoHizo cvqlh = new ControladorVistaQuienLoHizo(new VistaQuienLoHizo(), 30,2);
     }
    
 }
