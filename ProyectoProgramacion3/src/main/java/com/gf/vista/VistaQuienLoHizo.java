@@ -5,13 +5,7 @@
 package com.gf.vista;
 
 import java.awt.Color;
-import java.awt.Graphics;
-import java.awt.Image;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
+import javax.swing.*;
 
 /**
  *
@@ -28,22 +22,18 @@ public class VistaQuienLoHizo extends javax.swing.JFrame {
     }
 
     private void setFrame() {
-        this.setSize(500, 500);
+        this.setSize(900, 500);
         this.setVisible(true);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//        this.jPanel1.setBackground(Color.decode("#f0dab6"));
-////        this.jPanel1.setForeground(Color.decode("#ffcccb"));
-//        getContentPane().setBackground(Color.RED);
-//        System.out.println("Vista uww");
+        this.setLocationRelativeTo(null);
         
-//        this.jPanel1.setBackground(Color.GRAY);
-        
-        
-        this.jPanelImagen.setBackground(Color.decode("#f0dab6"));
-        this.jPanelPreguntaBotones.setBackground(new Color(0, 0, 0, 0));
-        this.jPanelPregunta.setBackground(new Color(0, 0, 0, 0));
-        this.jPanelBotones.setBackground(new Color(0, 0, 0, 0));
-        this.getjPanel1().setBackground(Color.decode("#f0dab6"));
+        Color color = Color.decode("#f0dab6");
+
+        this.jPanelImagen.setBackground(color);
+        this.jPanelPreguntaBotones.setBackground(color);
+        this.jPanelPregunta.setBackground(color);
+        this.jPanelBotones.setBackground(color);
+        this.getjPanel1().setBackground(color);
     }
 
     public JLabel getjLabelImagen() {
@@ -102,6 +92,14 @@ public class VistaQuienLoHizo extends javax.swing.JFrame {
         this.jPanelPreguntaBotones = jPanelPreguntaBotones;
     }
 
+    public JLabel getjLabelPuntuacion() {
+        return jLabelPuntuacion;
+    }
+
+    public void setjLabelPuntuacion(JLabel jLabelPuntuacion) {
+        this.jLabelPuntuacion = jLabelPuntuacion;
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -117,6 +115,7 @@ public class VistaQuienLoHizo extends javax.swing.JFrame {
         jPanelPreguntaBotones = new javax.swing.JPanel();
         jPanelPregunta = new javax.swing.JPanel();
         jLabelPregunta = new javax.swing.JLabel();
+        jLabelPuntuacion = new javax.swing.JLabel();
         jPanelBotones = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -124,13 +123,13 @@ public class VistaQuienLoHizo extends javax.swing.JFrame {
         setPreferredSize(new java.awt.Dimension(700, 600));
         getContentPane().setLayout(new javax.swing.BoxLayout(getContentPane(), javax.swing.BoxLayout.LINE_AXIS));
 
-        jPanel1.setMinimumSize(new java.awt.Dimension(630, 600));
+        jPanel1.setMinimumSize(new java.awt.Dimension(750, 600));
         jPanel1.setName(""); // NOI18N
         jPanel1.setPreferredSize(new java.awt.Dimension(630, 600));
         jPanel1.setLayout(new javax.swing.BoxLayout(jPanel1, javax.swing.BoxLayout.LINE_AXIS));
 
-        jPanelImagen.setMinimumSize(new java.awt.Dimension(300, 500));
-        jPanelImagen.setPreferredSize(new java.awt.Dimension(300, 500));
+        jPanelImagen.setMinimumSize(new java.awt.Dimension(100, 500));
+        jPanelImagen.setPreferredSize(new java.awt.Dimension(100, 500));
         jPanelImagen.setLayout(new java.awt.BorderLayout());
 
         jLabelImagen.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -138,17 +137,24 @@ public class VistaQuienLoHizo extends javax.swing.JFrame {
 
         jPanel1.add(jPanelImagen);
 
-        jPanelPreguntaBotones.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 1, 10, 1));
+        jPanelPreguntaBotones.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 20, 10, 20));
         jPanelPreguntaBotones.setForeground(new java.awt.Color(0, 0, 0));
-        jPanelPreguntaBotones.setMinimumSize(new java.awt.Dimension(330, 64));
-        jPanelPreguntaBotones.setPreferredSize(new java.awt.Dimension(330, 564));
+        jPanelPreguntaBotones.setMaximumSize(new java.awt.Dimension(450, 32851));
+        jPanelPreguntaBotones.setMinimumSize(new java.awt.Dimension(450, 564));
+        jPanelPreguntaBotones.setPreferredSize(new java.awt.Dimension(450, 564));
         jPanelPreguntaBotones.setLayout(new javax.swing.BoxLayout(jPanelPreguntaBotones, javax.swing.BoxLayout.Y_AXIS));
 
-        jPanelPregunta.setLayout(new javax.swing.BoxLayout(jPanelPregunta, javax.swing.BoxLayout.LINE_AXIS));
+        jPanelPregunta.setMaximumSize(new java.awt.Dimension(2147483647, 64));
+        jPanelPregunta.setLayout(new java.awt.BorderLayout());
 
         jLabelPregunta.setFont(new java.awt.Font("Segoe UI", 0, 48)); // NOI18N
+        jLabelPregunta.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabelPregunta.setText("¿Quien lo hizo?");
-        jPanelPregunta.add(jLabelPregunta);
+        jPanelPregunta.add(jLabelPregunta, java.awt.BorderLayout.CENTER);
+
+        jLabelPuntuacion.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabelPuntuacion.setText("10/10");
+        jPanelPregunta.add(jLabelPuntuacion, java.awt.BorderLayout.LINE_END);
 
         jPanelPreguntaBotones.add(jPanelPregunta);
 
@@ -168,6 +174,7 @@ public class VistaQuienLoHizo extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabelImagen;
     private javax.swing.JLabel jLabelPregunta;
+    private javax.swing.JLabel jLabelPuntuacion;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanelBotones;
     private javax.swing.JPanel jPanelImagen;

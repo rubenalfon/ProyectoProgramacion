@@ -13,6 +13,6 @@ import com.gf.vista.vistaVerdaderoFalsoMuseos;
  */
 public class VerdaderoFalsoMuseosMain {
         public static void main(String[] args) {
-            ControladorVerdaderoFalsoMuseos cvqlh = new ControladorVerdaderoFalsoMuseos(new vistaVerdaderoFalsoMuseos(), 10);
+            ControladorVerdaderoFalsoMuseos cvqlh = new ControladorVerdaderoFalsoMuseos(new vistaVerdaderoFalsoMuseos(), 4);
     }   
 }

@@ -27,6 +27,8 @@ public class ControladorVistaQuienLoHizo implements MouseListener, ActionListene
 
     private int indiceObraActual;
     private int numeroBotones;
+    private int UltimaObraFalladaId; // Guarda el id de la ultima obra que el usuario ha fallado
+    private int contadorAciertos;  // Cuenta las veces que el usuario acierta un autor.
     private ArrayList<Obra> listaObras;
     private ArrayList<Autor> listaAutores;
 
@@ -72,7 +74,7 @@ public class ControladorVistaQuienLoHizo implements MouseListener, ActionListene
             vista.getjPanelBotones().add(boton);
             this.listaBotones.add(boton);
         }
-        
+
         inhabilitarBotones();
 
         for (int i = 0; i < numeroObras; i++) {
@@ -89,6 +91,7 @@ public class ControladorVistaQuienLoHizo implements MouseListener, ActionListene
             recogerAutores(this.numeroBotones);
             System.out.println(this.listaAutores.size());
             ponerBotones();
+            mostrarPuntuacion();
             habilitarBotones();
 
         } catch (MalformedURLException ex) {
@@ -141,11 +144,14 @@ public class ControladorVistaQuienLoHizo implements MouseListener, ActionListene
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        System.out.println("    _" + this.listaObras.get(this.indiceObraActual).getNombreObra());
         if (((JButton) e.getSource()).getText().equals(this.listaObras.get(this.indiceObraActual).getAutor().getNombreAutor())) {
+            if (UltimaObraFalladaId != this.listaObras.get(this.indiceObraActual).getIdObra()) { // Si no la ha acertado despues de fallar.
+                this.contadorAciertos++;
+                this.vista.getjLabelPuntuacion().setForeground(Color.green);
+            }
             inhabilitarBotones();
-
             if (this.indiceObraActual + 1 == this.listaObras.size()) {
+                mostrarPuntuacion();
                 JOptionPane.showMessageDialog(vista, "Has completado todas las obras");
             } else {
                 this.indiceObraActual++;
@@ -153,7 +159,8 @@ public class ControladorVistaQuienLoHizo implements MouseListener, ActionListene
             }
         } else {
             ((JButton) e.getSource()).setBackground(Color.decode("#ffcccb"));
-            System.out.println(((JButton) e.getSource()).getText() + " -+ " + (this.listaObras.get(this.indiceObraActual).getAutor().getNombreAutor()));
+            UltimaObraFalladaId = this.listaObras.get(this.indiceObraActual).getIdObra();
+            this.vista.getjLabelPuntuacion().setForeground(null);
         }
     }
 
@@ -171,31 +178,27 @@ public class ControladorVistaQuienLoHizo implements MouseListener, ActionListene
         }
     }
 
-    //
-    //
-    //
+    private void mostrarPuntuacion() {
+        this.vista.getjLabelPuntuacion().setText(this.contadorAciertos + "/" + this.listaObras.size());
+    }
+
     @Override
     public void mouseClicked(MouseEvent e) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
     public void mousePressed(MouseEvent e) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
     public void mouseReleased(MouseEvent e) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
     public void mouseEntered(MouseEvent e) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
     public void mouseExited(MouseEvent e) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 }

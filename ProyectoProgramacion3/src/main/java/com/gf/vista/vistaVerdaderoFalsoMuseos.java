@@ -4,7 +4,8 @@
  */
 package com.gf.vista;
 
-import java.awt.Color;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.*;
 
 /**
@@ -17,16 +18,32 @@ public class vistaVerdaderoFalsoMuseos extends javax.swing.JFrame {
      * Creates new form VistaQuienLoHizo
      */
     public vistaVerdaderoFalsoMuseos() {
+
+        try {
+//            com.formdev.flatlaf.intellijthemes.FlatDarkFlatIJTheme
+            UIManager.setLookAndFeel("com.formdev.flatlaf.intellijthemes.FlatDarkFlatIJTheme");
+
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
+            Logger.getLogger(vistaVerdaderoFalsoMuseos.class.getName()).log(Level.SEVERE, null, ex);
+        }
         initComponents();
         setFrame();
+        System.out.println(jButtonFalso.getBackground().toString());
     }
 
     private void setFrame() {
         this.setSize(500, 500);
         this.setVisible(true);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setLocationRelativeTo(null);
 
-        this.jPanelMuseo.setBackground(new Color(0, 0, 0, 255));
+//        this.jPanel1.setBackground(Color.decode("#1F1F1F"));
+//        this.jPanelMuseo.setBackground(new Color(0, 0, 0, 0));
+//        this.jPanelPreguntaBotones.setBackground(new Color(0, 0, 0, 0));
+//        this.jPanelBotones.setBackground(new Color(0, 0, 0, 0));
+//        this.jPanelPregunta.setBackground(new Color(0, 0, 0, 0));
+//        this.jButtonFalso.setBackground(new Color(30,30,30, 255));
+//        this.jButtonVerdadero.setBackground(new Color(0, 0, 0, 0));
     }
 
     public JButton getjButtonFalso() {
@@ -101,6 +118,24 @@ public class vistaVerdaderoFalsoMuseos extends javax.swing.JFrame {
         this.jPanelPreguntaBotones = jPanelPreguntaBotones;
     }
 
+    public JLabel getjLabelPuntuacion() {
+        return jLabelPuntuacion;
+    }
+
+    public void setjLabelPuntuacion(JLabel jLabelPuntuacion) {
+        this.jLabelPuntuacion = jLabelPuntuacion;
+    }
+
+    public JPanel getjPanel2() {
+        return jPanel2;
+    }
+
+    public void setjPanel2(JPanel jPanel2) {
+        this.jPanel2 = jPanel2;
+    }
+    
+    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -111,6 +146,8 @@ public class vistaVerdaderoFalsoMuseos extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
+        jPanel2 = new javax.swing.JPanel();
+        jLabelPuntuacion = new javax.swing.JLabel();
         jPanelMuseo = new javax.swing.JPanel();
         jLabelMuseo = new javax.swing.JLabel();
         jPanelPreguntaBotones = new javax.swing.JPanel();
@@ -129,33 +166,45 @@ public class vistaVerdaderoFalsoMuseos extends javax.swing.JFrame {
         jPanel1.setPreferredSize(new java.awt.Dimension(630, 600));
         jPanel1.setLayout(new javax.swing.BoxLayout(jPanel1, javax.swing.BoxLayout.Y_AXIS));
 
-        jPanelMuseo.setMinimumSize(new java.awt.Dimension(300, 200));
-        jPanelMuseo.setPreferredSize(new java.awt.Dimension(300, 350));
+        jPanel2.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 0, 0, 20));
+        jPanel2.setLayout(new java.awt.BorderLayout());
+
+        jLabelPuntuacion.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabelPuntuacion.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        jLabelPuntuacion.setText("Puntuación/Obras");
+        jPanel2.add(jLabelPuntuacion, java.awt.BorderLayout.CENTER);
+
+        jPanel1.add(jPanel2);
+
+        jPanelMuseo.setMinimumSize(new java.awt.Dimension(300, 150));
+        jPanelMuseo.setPreferredSize(new java.awt.Dimension(300, 250));
         jPanelMuseo.setLayout(new java.awt.BorderLayout());
 
-        jLabelMuseo.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        jLabelMuseo.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabelMuseo.setForeground(new java.awt.Color(240, 240, 240));
         jLabelMuseo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabelMuseo.setText("Ejemplo");
         jPanelMuseo.add(jLabelMuseo, java.awt.BorderLayout.CENTER);
 
         jPanel1.add(jPanelMuseo);
 
         jPanelPreguntaBotones.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 1, 10, 1));
         jPanelPreguntaBotones.setForeground(new java.awt.Color(0, 0, 0));
+        jPanelPreguntaBotones.setMaximumSize(new java.awt.Dimension(32769, 250));
         jPanelPreguntaBotones.setMinimumSize(new java.awt.Dimension(330, 64));
-        jPanelPreguntaBotones.setPreferredSize(new java.awt.Dimension(330, 564));
+        jPanelPreguntaBotones.setPreferredSize(new java.awt.Dimension(330, 250));
         jPanelPreguntaBotones.setLayout(new javax.swing.BoxLayout(jPanelPreguntaBotones, javax.swing.BoxLayout.Y_AXIS));
 
-        jPanelBotones.setBorder(javax.swing.BorderFactory.createEmptyBorder(50, 50, 50, 50));
+        jPanelBotones.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 50, 0, 50));
         jPanelBotones.setForeground(new java.awt.Color(255, 255, 255));
-        jPanelBotones.setPreferredSize(new java.awt.Dimension(250, 450));
+        jPanelBotones.setPreferredSize(new java.awt.Dimension(250, 20));
         jPanelBotones.setLayout(new java.awt.GridLayout(1, 0, 10, 10));
 
-        jButtonVerdadero.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
+        jButtonVerdadero.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
         jButtonVerdadero.setText("Verdadero");
         jPanelBotones.add(jButtonVerdadero);
 
-        jButtonFalso.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
+        jButtonFalso.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
         jButtonFalso.setText("Falso");
         jPanelBotones.add(jButtonFalso);
 
@@ -163,8 +212,9 @@ public class vistaVerdaderoFalsoMuseos extends javax.swing.JFrame {
 
         jPanelPregunta.setLayout(new javax.swing.BoxLayout(jPanelPregunta, javax.swing.BoxLayout.LINE_AXIS));
 
-        jLabelPregunta.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabelPregunta.setText("Selecciona si es falso o verdadero");
+        jLabelPregunta.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabelPregunta.setForeground(new java.awt.Color(240, 240, 240));
+        jLabelPregunta.setText("¿Crees que el museo es Real o inventado?");
         jPanelPregunta.add(jLabelPregunta);
 
         jPanelPreguntaBotones.add(jPanelPregunta);
@@ -177,11 +227,39 @@ public class vistaVerdaderoFalsoMuseos extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     public static void main(String args[]) {
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
+
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(vistaVerdaderoFalsoMuseos.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            Logger.getLogger(vistaVerdaderoFalsoMuseos.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(vistaVerdaderoFalsoMuseos.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (UnsupportedLookAndFeelException ex) {
+            Logger.getLogger(vistaVerdaderoFalsoMuseos.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        //</editor-fold>
+
+        /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
+
             public void run() {
                 new vistaVerdaderoFalsoMuseos().setVisible(true);
             }
-        });
+        }
+        );
     }
 
 
@@ -190,7 +268,9 @@ public class vistaVerdaderoFalsoMuseos extends javax.swing.JFrame {
     private javax.swing.JButton jButtonVerdadero;
     private javax.swing.JLabel jLabelMuseo;
     private javax.swing.JLabel jLabelPregunta;
+    private javax.swing.JLabel jLabelPuntuacion;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanelBotones;
     private javax.swing.JPanel jPanelMuseo;
     private javax.swing.JPanel jPanelPregunta;
