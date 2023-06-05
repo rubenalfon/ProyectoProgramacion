@@ -103,6 +103,7 @@ public class ControladorMapa implements MouseListener, ActionListener {
             button.setBorder(null);
             Obra obra = odao.obtenerObraAleatoria(idobras);
             idobras.add(obra.getIdObra());
+            button.setToolTipText(obra.getNombreObra());
             button.setName(obra.getMuseo().getPais().getNombrePais());
             System.out.println(obra.getUrlObra());
             System.out.println(obra.getNombreObra());

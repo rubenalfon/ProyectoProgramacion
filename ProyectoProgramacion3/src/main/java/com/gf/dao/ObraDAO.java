@@ -115,6 +115,7 @@ public class ObraDAO {
         try {
             Connection con = DatabaseManager.getConnection();
             PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, autorDado.getIdAutor());
             ResultSet rs = ps.executeQuery();
 
             if (rs.next()) {
@@ -150,6 +151,7 @@ public class ObraDAO {
         try {
             Connection con = DatabaseManager.getConnection();
             PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, autorDado.getIdAutor());
             ResultSet rs = ps.executeQuery();
 
             if (rs.next()) {
