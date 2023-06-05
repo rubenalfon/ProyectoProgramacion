@@ -6,8 +6,13 @@ package com.gf.vista;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 import org.jxmapviewer.JXMapViewer;
 import org.jxmapviewer.OSMTileFactoryInfo;
 import org.jxmapviewer.viewer.DefaultTileFactory;
@@ -35,19 +40,30 @@ public class VistaMapa extends javax.swing.JFrame {
     public JXMapViewer getMapViewer() {
         return mapViewer;
     }
-    
+    public JLabel getPuntuacion(){
+        return puntuacion;
+    }
     private void setFrame(){
+        try {
+            UIManager.setLookAndFeel("com.formdev.flatlaf.intellijthemes.FlatCarbonIJTheme");
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(VistaMapa.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            Logger.getLogger(VistaMapa.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(VistaMapa.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (UnsupportedLookAndFeelException ex) {
+            Logger.getLogger(VistaMapa.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
         this.setSize(new Dimension(1200,800));
         this.mapViewer= new JXMapViewer();
         
         DefaultTileFactory tileFactory= new DefaultTileFactory(new OSMTileFactoryInfo());
         this.mapViewer.setTileFactory(tileFactory);
         this.mapViewer.setAddressLocation(new GeoPosition(180, 0));
-        this.mapViewer.setVisible(true);
         this.mapViewer.setZoom(16);
         this.jPanel2.add(mapViewer,BorderLayout.CENTER);
-        
-        this.setVisible(true);
         
 
     }
@@ -62,7 +78,9 @@ public class VistaMapa extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
+        jPanel5 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
+        puntuacion = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
 
@@ -71,9 +89,19 @@ public class VistaMapa extends javax.swing.JFrame {
         jPanel1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jPanel1.setLayout(new java.awt.BorderLayout());
 
-        jLabel1.setFont(new java.awt.Font("Showcard Gothic", 0, 36)); // NOI18N
+        jPanel4.setLayout(new java.awt.GridLayout(1, 0));
+        jPanel4.add(jPanel5);
+
+        jLabel1.setFont(new java.awt.Font("Stencil", 0, 36)); // NOI18N
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Mapa");
+        jLabel1.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
         jPanel4.add(jLabel1);
+
+        puntuacion.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        puntuacion.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        puntuacion.setText("Puntuacion");
+        jPanel4.add(puntuacion);
 
         jPanel1.add(jPanel4, java.awt.BorderLayout.PAGE_START);
 
@@ -130,5 +158,7 @@ public class VistaMapa extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel5;
+    private javax.swing.JLabel puntuacion;
     // End of variables declaration//GEN-END:variables
 }

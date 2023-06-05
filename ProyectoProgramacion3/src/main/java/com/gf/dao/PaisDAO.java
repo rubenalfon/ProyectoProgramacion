@@ -32,6 +32,8 @@ public class PaisDAO {
             }
         } catch (SQLException ex) {
             ex.printStackTrace();
+        }finally{
+            DatabaseManager.closeConnection();
         }
         return pais;
     }
