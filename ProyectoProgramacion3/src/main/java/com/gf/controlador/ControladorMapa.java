@@ -29,9 +29,13 @@ import org.jxmapviewer.input.PanMouseInputListener;
 import org.jxmapviewer.input.ZoomMouseWheelListenerCenter;
 import org.jxmapviewer.viewer.GeoPosition;
 import com.gf.utils.ReverseGeocoding;
+import com.gf.vista.PantallaDeCarga;
 import com.gf.vista.VistaMapa;
+import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Toolkit;
+import java.awt.event.MouseWheelListener;
+import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -42,6 +46,7 @@ import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+import org.jxmapviewer.input.ZoomMouseWheelListenerCursor;
 
 /**
  *
@@ -51,21 +56,20 @@ public class ControladorMapa implements MouseListener, ActionListener {
 
     private VistaMapa vista;
     private int numImagenes;
+    private int puntuacion;
     private ObraDAO odao;
-    private PaisDAO pdao;
-    private MuseoDAO mdao;
+    private PantallaDeCarga pantalla;
+
     public ControladorMapa(VistaMapa vista, int numImagenes) {
         this.vista = vista;
+        this.vista.setMinimumSize(new Dimension(((Toolkit.getDefaultToolkit().getScreenSize().width / 10) * numImagenes), Toolkit.getDefaultToolkit().getScreenSize().height / 3));
+        this.vista.getPanelContenedorImagenes().setPreferredSize(new Dimension(this.vista.getSize().width, Toolkit.getDefaultToolkit().getScreenSize().height / 12 + 10));
+        this.pantalla= new PantallaDeCarga(this.vista);
         this.numImagenes = numImagenes;
         this.odao = new ObraDAO();
-        this.pdao = new PaisDAO();
-        this.mdao = new MuseoDAO();
-        this.vista.setMinimumSize(new Dimension(((Toolkit.getDefaultToolkit().getScreenSize().width / 12) * numImagenes), Toolkit.getDefaultToolkit().getScreenSize().height/3));
-        this.vista.getPanelContenedorImagenes().setPreferredSize(new Dimension(this.vista.getSize().width, Toolkit.getDefaultToolkit().getScreenSize().height/13+10));        
         setMapListeners();
         crearImagenes();
-        this.vista.setExtendedState(JFrame.MAXIMIZED_BOTH);
-
+        this.vista.getPuntuacion().setText("0/" + numImagenes);
     }
 
     private void setMapListeners() {
@@ -73,26 +77,25 @@ public class ControladorMapa implements MouseListener, ActionListener {
         this.vista.getMapViewer().addMouseListener(mm);
         this.vista.getMapViewer().addMouseMotionListener(mm);
         this.vista.getMapViewer().addMouseListener(this);
+        this.vista.getMapViewer().addMouseWheelListener(new ZoomMouseWheelListenerCursor(this.vista.getMapViewer()));
     }
 
-    private Image imagenRescalada(URL url, Dimension dimension){
+    private Image imagenRescalada(URL url, Dimension dimension) {
         ImageIcon imagen = new ImageIcon(url);
-        Image imagenEscalada = imagen.getImage().getScaledInstance(dimension.width,dimension.height, Image.SCALE_DEFAULT);
+        Image imagenEscalada = imagen.getImage().getScaledInstance(dimension.width, dimension.height, Image.SCALE_SMOOTH);
         return imagenEscalada;
     }
-    private void crearImagenes(){
+
+    private void crearImagenes() {
         ArrayList<Integer> idobras = new ArrayList<>();
         for (int i = 0; i < numImagenes; i++) {
-            
-            
             JButton button = new JButton();
             button.setBackground(Color.red);
             button.setForeground(Color.red);
-            button.setPreferredSize(new Dimension(Toolkit.getDefaultToolkit().getScreenSize().width/13,Toolkit.getDefaultToolkit().getScreenSize().height/13));
-            button.setSize(new Dimension(Toolkit.getDefaultToolkit().getScreenSize().width/13,Toolkit.getDefaultToolkit().getScreenSize().height/13));
-            button.setMinimumSize(new Dimension(Toolkit.getDefaultToolkit().getScreenSize().width/13,Toolkit.getDefaultToolkit().getScreenSize().height/13));
-            button.setMaximumSize(new Dimension(Toolkit.getDefaultToolkit().getScreenSize().width/13,Toolkit.getDefaultToolkit().getScreenSize().height/13));
-            System.out.println(button.getSize());
+            button.setPreferredSize(new Dimension(Toolkit.getDefaultToolkit().getScreenSize().width / 11, Toolkit.getDefaultToolkit().getScreenSize().height / 12));
+            button.setSize(new Dimension(Toolkit.getDefaultToolkit().getScreenSize().width / 11, Toolkit.getDefaultToolkit().getScreenSize().height / 12));
+            button.setMinimumSize(new Dimension(Toolkit.getDefaultToolkit().getScreenSize().width / 11, Toolkit.getDefaultToolkit().getScreenSize().height / 12));
+            button.setMaximumSize(new Dimension(Toolkit.getDefaultToolkit().getScreenSize().width / 11, Toolkit.getDefaultToolkit().getScreenSize().height / 12));
             button.setFocusPainted(false);
             button.setContentAreaFilled(false);
             button.setOpaque(true);
@@ -100,7 +103,9 @@ public class ControladorMapa implements MouseListener, ActionListener {
             button.setBorder(null);
             Obra obra = odao.obtenerObraAleatoria(idobras);
             idobras.add(obra.getIdObra());
-            button.setName(String.valueOf(pdao.obtenerPaisPorId(mdao.obtenerMuseoPorId(obra.getIdMuseo()).getPaisMuseo()).getNombrePais()));
+            button.setName(obra.getMuseo().getPais().getNombrePais());
+            System.out.println(obra.getUrlObra());
+            System.out.println(obra.getNombreObra());
             try {
                 button.setIcon(new ImageIcon(imagenRescalada(new URL(obra.getUrlObra()), button.getSize())));
             } catch (MalformedURLException ex) {
@@ -109,8 +114,10 @@ public class ControladorMapa implements MouseListener, ActionListener {
             System.out.println("nyah");
             this.vista.getPanelContenedorImagenes().add(button);
         }
-        
-        this.vista.getPanelContenedorImagenes().setBackground(Color.GRAY);
+        this.vista.setBounds(this.pantalla.getBounds());
+        this.vista.setLocation(this.pantalla.getLocation());
+        this.vista.setVisible(true);
+        this.pantalla.dispose();
         
     }
 
@@ -123,7 +130,7 @@ public class ControladorMapa implements MouseListener, ActionListener {
             }
         }
     }
-
+    
     private JButton botonSeleccionado() {
         for (Component component : this.vista.getPanelContenedorImagenes().getComponents()) {
             if (component instanceof JButton) {
@@ -134,27 +141,45 @@ public class ControladorMapa implements MouseListener, ActionListener {
         }
         return null;
     }
-
+    public int getPuntuacion(){
+        return puntuacion;
+    }
     @Override
     public void mouseClicked(MouseEvent e) {
         GeoPosition clickedPosition = this.vista.getMapViewer().convertPointToGeoPosition(e.getPoint());
-        String pais= ReverseGeocoding.getCountryName(clickedPosition.getLatitude(), clickedPosition.getLongitude());
+        String pais = ReverseGeocoding.getCountryName(clickedPosition.getLatitude(), clickedPosition.getLongitude());
         if (e.getClickCount() == 2) {
             System.out.println(clickedPosition);
             System.out.println(pais);
         }
         JButton uwu = botonSeleccionado();
         if (uwu != null) {
+            numImagenes--;
             uwu.setBorder(null);
-            if(uwu.getName().equals(pais)){
+            if (uwu.getName().equals(pais)) {
+                uwu.setForeground(Color.red);
                 System.out.println("siuuuu");
-                uwu.setVisible(false);
-                uwu.setEnabled(false);
+                puntuacion++;
+            } else {
+                uwu.setForeground(Color.red);
             }
-            
+            uwu.setEnabled(false);
+            ajustarPuntuacionPantalla();
+        }
+        if (numImagenes == 0) {
+            this.vista.dispose();
+            this.vista=null;
         }
     }
 
+    public int getNumImagenes() {
+        return numImagenes;
+    }
+
+    private void ajustarPuntuacionPantalla() {
+        this.vista.getPuntuacion().setText(puntuacion + "" + this.vista.getPuntuacion().getText().substring(this.vista.getPuntuacion().getText().indexOf('/'), this.vista.getPuntuacion().getText().indexOf('/') + 2));
+    }
+    
     @Override
     public void mousePressed(MouseEvent e) {
     }

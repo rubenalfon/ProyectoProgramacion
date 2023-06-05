@@ -13,6 +13,6 @@ import com.gf.vista.VistaMapa;
  */
 public class MapaMain {
     public static void main(String[] args) {
-        ControladorMapa controler= new ControladorMapa(new VistaMapa(),6);
+        ControladorMapa  controler= new ControladorMapa(new VistaMapa(),6);
     }
 }
