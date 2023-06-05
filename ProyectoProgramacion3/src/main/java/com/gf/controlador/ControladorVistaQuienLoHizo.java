@@ -13,9 +13,7 @@ import java.net.*;
 import java.sql.*;
 import java.util.*;
 import java.util.logging.*;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JPanel;
+import javax.swing.*;
 
 /**
  *
@@ -47,7 +45,7 @@ public class ControladorVistaQuienLoHizo implements MouseListener, ActionListene
         for (Obra obra : listaObras) {
             System.out.println("  " + obra.toString());
         }
-        
+
         this.vista.addComponentListener(new ComponentAdapter() {
             @Override
             public void componentResized(ComponentEvent e) {
@@ -75,13 +73,17 @@ public class ControladorVistaQuienLoHizo implements MouseListener, ActionListene
             boton.addActionListener(this);
             vista.getjPanelBotones().add(boton);
             this.listaBotones.add(boton);
+
         }
+        System.out.println(listaBotones.size());
+        inhabilitarBotones();
 
         for (int i = 0; i < numeroObras; i++) {
             Obra obra = odao.obtenerObraAleatoria(listaIdUsados);
             this.listaObras.add(obra);
             listaIdUsados.add(obra.getIdObra());
         }
+
     }
 
     private void siguienteImagen() {
@@ -91,6 +93,7 @@ public class ControladorVistaQuienLoHizo implements MouseListener, ActionListene
             recogerAutores(this.numeroBotones);
             System.out.println(this.listaAutores.size());
             ponerBotones();
+            habilitarBotones();
 
         } catch (MalformedURLException ex) {
             Logger.getLogger(ControladorVistaQuienLoHizo.class.getName()).log(Level.SEVERE, null, ex);
@@ -103,6 +106,7 @@ public class ControladorVistaQuienLoHizo implements MouseListener, ActionListene
             URL url = new URL(this.listaObras.get(this.indiceObraActual).getUrlObra());
 
             this.vista.getjLabelImagen().setIcon(new ImageIcon(imagenRescalada(url, d)));
+            this.vista.getjPanel1().setBackground(Color.decode("#f0dab6"));
 
         } catch (MalformedURLException ex) {
             Logger.getLogger(ControladorVistaQuienLoHizo.class.getName()).log(Level.SEVERE, null, ex);
@@ -139,6 +143,38 @@ public class ControladorVistaQuienLoHizo implements MouseListener, ActionListene
         Collections.shuffle(listaAutores);
     }
 
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        System.out.println("    _" + this.listaObras.get(this.indiceObraActual).getNombreObra());
+        if (((JButton) e.getSource()).getText().equals(this.listaObras.get(this.indiceObraActual).getAutor().getNombreAutor())) {
+            inhabilitarBotones();
+
+            if (this.indiceObraActual + 1 == this.listaObras.size()) {
+                JOptionPane.showMessageDialog(vista, "Has completado todas las obras");
+            } else {
+                this.indiceObraActual++;
+                siguienteImagen();
+            }
+        } else {
+            ((JButton) e.getSource()).setBackground(Color.decode("#ffcccb"));
+            System.out.println(((JButton) e.getSource()).getText() + " -+ " + (this.listaObras.get(this.indiceObraActual).getAutor().getNombreAutor()));
+        }
+    }
+
+    private void inhabilitarBotones() {
+        for (JButton boton : this.listaBotones) {
+            boton.setEnabled(false);
+            boton.setBackground(Color.DARK_GRAY);
+        }
+    }
+
+    private void habilitarBotones() {
+        for (JButton boton : this.listaBotones) {
+            boton.setEnabled(true);
+            boton.setBackground(Color.WHITE);
+        }
+    }
+
     //
     //
     //
@@ -165,18 +201,5 @@ public class ControladorVistaQuienLoHizo implements MouseListener, ActionListene
     @Override
     public void mouseExited(MouseEvent e) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        System.out.println("    _" + this.listaObras.get(this.indiceObraActual).getNombreObra());
-        if (((JButton) e.getSource()).getText().equals(this.listaObras.get(this.indiceObraActual).getAutor().getNombreAutor())) {
-            this.indiceObraActual++;
-            siguienteImagen();
-
-        } else {
-
-            System.out.println(((JButton) e.getSource()).getText() + " -+ " + (this.listaObras.get(this.indiceObraActual).getAutor().getNombreAutor()));
-        }
     }
 }

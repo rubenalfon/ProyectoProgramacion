@@ -9,6 +9,7 @@ import java.awt.Graphics;
 import java.awt.Image;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
@@ -29,6 +30,20 @@ public class VistaQuienLoHizo extends javax.swing.JFrame {
     private void setFrame() {
         this.setSize(500, 500);
         this.setVisible(true);
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//        this.jPanel1.setBackground(Color.decode("#f0dab6"));
+////        this.jPanel1.setForeground(Color.decode("#ffcccb"));
+//        getContentPane().setBackground(Color.RED);
+//        System.out.println("Vista uww");
+        
+//        this.jPanel1.setBackground(Color.GRAY);
+        
+        
+        this.jPanelImagen.setBackground(Color.decode("#f0dab6"));
+        this.jPanelPreguntaBotones.setBackground(new Color(0, 0, 0, 0));
+        this.jPanelPregunta.setBackground(new Color(0, 0, 0, 0));
+        this.jPanelBotones.setBackground(new Color(0, 0, 0, 0));
+        this.getjPanel1().setBackground(Color.decode("#f0dab6"));
     }
 
     public JLabel getjLabelImagen() {
@@ -105,29 +120,42 @@ public class VistaQuienLoHizo extends javax.swing.JFrame {
         jPanelBotones = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setMinimumSize(new java.awt.Dimension(300, 300));
+        setMinimumSize(new java.awt.Dimension(700, 600));
+        setPreferredSize(new java.awt.Dimension(700, 600));
         getContentPane().setLayout(new javax.swing.BoxLayout(getContentPane(), javax.swing.BoxLayout.LINE_AXIS));
 
+        jPanel1.setMinimumSize(new java.awt.Dimension(630, 600));
+        jPanel1.setName(""); // NOI18N
+        jPanel1.setPreferredSize(new java.awt.Dimension(630, 600));
         jPanel1.setLayout(new javax.swing.BoxLayout(jPanel1, javax.swing.BoxLayout.LINE_AXIS));
 
         jPanelImagen.setMinimumSize(new java.awt.Dimension(300, 500));
         jPanelImagen.setPreferredSize(new java.awt.Dimension(300, 500));
         jPanelImagen.setLayout(new java.awt.BorderLayout());
+
+        jLabelImagen.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jPanelImagen.add(jLabelImagen, java.awt.BorderLayout.CENTER);
 
         jPanel1.add(jPanelImagen);
 
+        jPanelPreguntaBotones.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 1, 10, 1));
+        jPanelPreguntaBotones.setForeground(new java.awt.Color(0, 0, 0));
+        jPanelPreguntaBotones.setMinimumSize(new java.awt.Dimension(330, 64));
+        jPanelPreguntaBotones.setPreferredSize(new java.awt.Dimension(330, 564));
         jPanelPreguntaBotones.setLayout(new javax.swing.BoxLayout(jPanelPreguntaBotones, javax.swing.BoxLayout.Y_AXIS));
 
         jPanelPregunta.setLayout(new javax.swing.BoxLayout(jPanelPregunta, javax.swing.BoxLayout.LINE_AXIS));
 
+        jLabelPregunta.setFont(new java.awt.Font("Segoe UI", 0, 48)); // NOI18N
         jLabelPregunta.setText("¿Quien lo hizo?");
         jPanelPregunta.add(jLabelPregunta);
 
         jPanelPreguntaBotones.add(jPanelPregunta);
 
-        jPanelBotones.setPreferredSize(new java.awt.Dimension(500, 514));
-        jPanelBotones.setLayout(new java.awt.GridLayout(0, 1));
+        jPanelBotones.setBorder(javax.swing.BorderFactory.createEmptyBorder(50, 50, 50, 50));
+        jPanelBotones.setForeground(new java.awt.Color(255, 255, 255));
+        jPanelBotones.setPreferredSize(new java.awt.Dimension(250, 450));
+        jPanelBotones.setLayout(new java.awt.GridLayout(0, 1, 10, 10));
         jPanelPreguntaBotones.add(jPanelBotones);
 
         jPanel1.add(jPanelPreguntaBotones);
