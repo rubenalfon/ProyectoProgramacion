@@ -4,17 +4,10 @@
  */
 package com.gf.dao;
 
-import com.gf.modelo.Autor;
-import com.gf.modelo.Museo;
-import com.gf.modelo.Obra;
-import com.gf.utils.ConvertirArrayListACadena;
-import com.gf.utils.DatabaseManager;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import com.gf.modelo.*;
+import com.gf.utils.*;
+import java.sql.*;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 /**
  * Objetivos:
