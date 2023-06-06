@@ -37,13 +37,8 @@ public class vistaVerdaderoFalsoMuseos extends javax.swing.JFrame {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setLocationRelativeTo(null);
 
-//        this.jPanel1.setBackground(Color.decode("#1F1F1F"));
-//        this.jPanelMuseo.setBackground(new Color(0, 0, 0, 0));
-//        this.jPanelPreguntaBotones.setBackground(new Color(0, 0, 0, 0));
-//        this.jPanelBotones.setBackground(new Color(0, 0, 0, 0));
-//        this.jPanelPregunta.setBackground(new Color(0, 0, 0, 0));
-//        this.jButtonFalso.setBackground(new Color(30,30,30, 255));
-//        this.jButtonVerdadero.setBackground(new Color(0, 0, 0, 0));
+        this.jButtonFalso.setFocusPainted(false);
+        this.jButtonVerdadero.setFocusPainted(false);
     }
 
     public JButton getjButtonFalso() {
@@ -133,8 +128,6 @@ public class vistaVerdaderoFalsoMuseos extends javax.swing.JFrame {
     public void setjPanel2(JPanel jPanel2) {
         this.jPanel2 = jPanel2;
     }
-    
-    
 
     /**
      * This method is called from within the constructor to initialize the form.

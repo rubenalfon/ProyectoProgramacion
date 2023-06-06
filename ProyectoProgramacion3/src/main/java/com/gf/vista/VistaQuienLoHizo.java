@@ -153,7 +153,7 @@ public class VistaQuienLoHizo extends javax.swing.JFrame {
         jPanelPregunta.add(jLabelPregunta, java.awt.BorderLayout.CENTER);
 
         jLabelPuntuacion.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabelPuntuacion.setText("10/10");
+        jLabelPuntuacion.setText("0/0");
         jPanelPregunta.add(jLabelPuntuacion, java.awt.BorderLayout.LINE_END);
 
         jPanelPreguntaBotones.add(jPanelPregunta);

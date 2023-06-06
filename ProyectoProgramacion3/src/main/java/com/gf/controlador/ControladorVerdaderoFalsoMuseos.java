@@ -88,7 +88,7 @@ public class ControladorVerdaderoFalsoMuseos implements MouseListener, ActionLis
         inhabilitarBotones();
         if (this.indiceMuseoActual + 1 == this.listaMuseos.size()) {
             mostrarPuntuacion();
-            JOptionPane.showMessageDialog(vista, "Has completado todos los museos. Has obtenido " + this.contadorAciertos + " de " + this.listaMuseos.size() + ".");
+            JOptionPane.showMessageDialog(vista, "Has completado todos los museos. Has acertado " + this.contadorAciertos + " de " + this.listaMuseos.size() + ".");
         } else {
             this.indiceMuseoActual++;
             siguienteMuseo();

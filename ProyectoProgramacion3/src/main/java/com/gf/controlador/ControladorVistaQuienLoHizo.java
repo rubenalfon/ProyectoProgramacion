@@ -48,6 +48,7 @@ public class ControladorVistaQuienLoHizo implements MouseListener, ActionListene
             @Override
             public void componentResized(ComponentEvent e) {
                 ponerImagenActual();
+                vista.revalidate();
             }
         });
     }
@@ -141,7 +142,7 @@ public class ControladorVistaQuienLoHizo implements MouseListener, ActionListene
 
             if (this.indiceObraActual + 1 == this.listaObras.size()) { // Si es la ultima obra
                 mostrarPuntuacion();
-                JOptionPane.showMessageDialog(vista, "Has completado todas las obras. Has obtenido " + this.contadorAciertos + " de " + this.listaObras.size() + ".");
+                JOptionPane.showMessageDialog(vista, "Has completado todas las obras. Has acertado " + this.contadorAciertos + " de " + this.listaObras.size() + ".");
             } else {
                 this.indiceObraActual++;
                 siguienteImagen();

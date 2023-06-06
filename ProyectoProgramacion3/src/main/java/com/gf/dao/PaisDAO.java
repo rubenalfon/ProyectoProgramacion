@@ -6,10 +6,7 @@ package com.gf.dao;
 
 import com.gf.modelo.Pais;
 import com.gf.utils.DatabaseManager;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 
 /**
  *
@@ -18,7 +15,6 @@ import java.sql.SQLException;
 public class PaisDAO {
 
     public Pais obtenerPaisPorId(int idPais) {
-
         Pais pais = null;
         String sql = "SELECT * FROM pais WHERE id_pais = ?";
 
