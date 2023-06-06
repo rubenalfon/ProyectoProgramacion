@@ -101,13 +101,19 @@ public class ObraDAO {
 
     public Obra obtenerEsculturaAleatoriaDeAutor(ArrayList<Integer> lista, Autor autorDado) {
         Obra obra = null;
-        String sql = "SELECT * FROM obra where disciplina like 'Escultura' and id_obra not in "
+        String sql;
+        if (lista == null || lista.isEmpty()) {
+            sql= "SELECT * FROM obra where disciplina like 'Escultura' and id_autor = ? ORDER BY RAND () LIMIT 1";
+        }else{
+            sql= "SELECT * FROM obra where disciplina like 'Escultura' and id_obra not in "
                 + ConvertirArrayListACadena.convertir(lista)
                 + "and id_autor = ? ORDER BY RAND () LIMIT 1";
+        }
 
         try {
             Connection con = DatabaseManager.getConnection();
             PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, autorDado.getIdAutor());
             ResultSet rs = ps.executeQuery();
 
             if (rs.next()) {
@@ -136,13 +142,20 @@ public class ObraDAO {
 
     public Obra obtenerEsculturaAleatoriaNoDeAutor(ArrayList<Integer> lista, Autor autorDado) {
         Obra obra = null;
-        String sql = "SELECT * FROM obra where disciplina like 'Escultura' and id_obra not in "
+        String sql;
+        if (lista == null || lista.isEmpty()) {
+            sql= "SELECT * FROM obra where disciplina like 'Escultura' and id_autor != ? ORDER BY RAND () LIMIT 1";
+        }else{
+            sql= "SELECT * FROM obra where disciplina like 'Escultura' and id_obra not in "
                 + ConvertirArrayListACadena.convertir(lista)
                 + "and id_autor != ? ORDER BY RAND () LIMIT 1";
+        }
+         
 
         try {
             Connection con = DatabaseManager.getConnection();
             PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, autorDado.getIdAutor());
             ResultSet rs = ps.executeQuery();
 
             if (rs.next()) {

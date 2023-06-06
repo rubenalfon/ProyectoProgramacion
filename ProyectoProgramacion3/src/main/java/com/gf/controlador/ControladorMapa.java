@@ -3,49 +3,31 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package com.gf.controlador;
-
-import com.gf.dao.MuseoDAO;
 import com.gf.dao.ObraDAO;
-import com.gf.dao.PaisDAO;
-import com.gf.modelo.Autor;
 import com.gf.modelo.Obra;
-import com.gf.modelo.Pais;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import javax.swing.JButton;
-import javax.swing.JPanel;
 import javax.swing.border.LineBorder;
-import javax.swing.border.MatteBorder;
 import javax.swing.event.MouseInputListener;
-import org.jxmapviewer.JXMapKit;
 import org.jxmapviewer.input.PanMouseInputListener;
-import org.jxmapviewer.input.ZoomMouseWheelListenerCenter;
 import org.jxmapviewer.viewer.GeoPosition;
 import com.gf.utils.ReverseGeocoding;
 import com.gf.vista.PantallaDeCarga;
 import com.gf.vista.VistaMapa;
-import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Toolkit;
-import java.awt.event.MouseWheelListener;
-import java.awt.image.BufferedImage;
-import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
-import javax.swing.JFrame;
 import org.jxmapviewer.input.ZoomMouseWheelListenerCursor;
 
 /**

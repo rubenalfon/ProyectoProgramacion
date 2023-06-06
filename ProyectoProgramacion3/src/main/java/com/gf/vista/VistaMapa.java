@@ -50,7 +50,7 @@ public class VistaMapa extends javax.swing.JFrame {
         this.setSize(new Dimension(1200,800));
         this.mapViewer= new JXMapViewer();
         
-        DefaultTileFactory tileFactory= new DefaultTileFactory( new VirtualEarthTileFactoryInfo(VirtualEarthTileFactoryInfo.MAP));
+        DefaultTileFactory tileFactory= new DefaultTileFactory( new VirtualEarthTileFactoryInfo(VirtualEarthTileFactoryInfo.HYBRID));
         this.mapViewer.setTileFactory(tileFactory);
         this.mapViewer.setAddressLocation(new GeoPosition(180, 0));
         this.mapViewer.setZoom(16);

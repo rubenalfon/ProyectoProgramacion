@@ -20,6 +20,7 @@ public class PantallaDeCarga extends javax.swing.JFrame {
      * @param parent
      */
     public PantallaDeCarga(JFrame parent) {
+        initComponents();
         setFrame(parent);
         
     }
@@ -29,11 +30,9 @@ public class PantallaDeCarga extends javax.swing.JFrame {
 //        System.out.println(imagenEscalada.getAccelerationPriority());
 //        this.jLabel1.setText("uwu");
 //        this.jLabel1.setIcon(new ImageIcon(imagenEscalada));
-        jLabel2 = new javax.swing.JLabel();
         this.setLocation(parent.getX(),parent.getY());
         this.setSize(parent.getBounds().getSize());
         this.setPreferredSize(parent.getBounds().getSize());
-        
 //        ImageIcon imagen = new ImageIcon(PantallaDeCarga.class.getClassLoader().getResource("loading.gif"));
 //        Image imagenEscalada = imagen.getImage().getScaledInstance(this.getWidth(), this.getHeight(), Image.SCALE_SMOOTH);
 //        this.jLabel2.setIcon(new ImageIcon(imagenEscalada));
@@ -55,6 +54,7 @@ public class PantallaDeCarga extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/gf/resources/loading.gif"))); // NOI18N
         jLabel2.setText("jLabel2");
         getContentPane().add(jLabel2, java.awt.BorderLayout.CENTER);
 
