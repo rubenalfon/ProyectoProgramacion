@@ -26,7 +26,7 @@ public class PuntuacionDAO {
         PreparedStatement ps = con.prepareStatement(sql);
         ps.setInt(1, num);
         ResultSet rs = ps.executeQuery();
-        
+
         while (rs.next()) {
             listaPuntuaciones.add(new Puntuacion(
                     rs.getInt("id_puntuacion"),
@@ -39,4 +39,22 @@ public class PuntuacionDAO {
         return listaPuntuaciones;
     }
 
+    public boolean guardarPuntuacion(Puntuacion puntuacion) throws SQLException {
+        boolean confirmacion = false;
+        String sql = "INSERT INTO puntuacion (nombre_usuario, aciertos, puntos_totales, segundos) values (?,?,?,?)";
+
+        Connection con = DatabaseManager.getConnection();
+        PreparedStatement ps = con.prepareStatement(sql);
+        ps.setString(1, puntuacion.getNombreUsuario());
+        ps.setInt(2, puntuacion.getAciertos());
+        ps.setInt(3, puntuacion.getPuntosTotales());
+        ps.setInt(4, puntuacion.getSegundos());
+
+        if (ps.executeUpdate() == 1) {
+            confirmacion = true;
+        }
+
+        DatabaseManager.closeConnection();
+        return confirmacion;
+    }
 }

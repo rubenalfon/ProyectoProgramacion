@@ -108,7 +108,7 @@ public class ControladorVistaQuienLoHizo implements MouseListener, ActionListene
 
         } catch (MalformedURLException ex) {
             Dimension d = new Dimension(this.vista.getjLabelImagen().getSize());
-            Icon imagen = new ImageIcon(imagenReescalada(new ImageIcon("./src/files/imagenNoEncontrada.jpg"), d));
+            Icon imagen = new ImageIcon(imagenReescalada(new ImageIcon("/com/gf/resources/imagenNoEncontrada.jpg"), d));
             this.vista.getjLabelImagen().setIcon(imagen);
         }
     }

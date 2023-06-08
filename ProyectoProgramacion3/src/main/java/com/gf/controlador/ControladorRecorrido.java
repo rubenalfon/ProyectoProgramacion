@@ -4,10 +4,16 @@
  */
 package com.gf.controlador;
 
+import com.gf.dao.PuntuacionDAO;
+import com.gf.modelo.Puntuacion;
 import com.gf.utils.PantallaInfo;
 import com.gf.vista.*;
 import java.awt.event.*;
+import java.sql.SQLException;
 import java.time.*;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.*;
 
 /**
@@ -47,16 +53,6 @@ public class ControladorRecorrido extends JFrame implements WindowListener {
         return seg;
     }
 
-    private void mostrarProgreso(JFrame vista, int puntuacion, int numPreguntas) { // Muestra los aciertos sobre los puntos totales
-        this.puntuacion += puntuacion;
-        this.numPreguntas += numPreguntas;
-        JOptionPane.showMessageDialog(vista, "Por ahora llevas acertadas " + this.puntuacion + "/" + this.numPreguntas);
-    }
-
-    private void mostrarProgresoFinal(JFrame vista, int puntuacion, int numPreguntas, long seg) { // Muestra los aciertos sobre los puntos totales, y el tiempo desde el inicio
-        JOptionPane.showMessageDialog(vista, "Total " + puntuacion + "/" + numPreguntas, "Tiempo Total: " + Math.round(seg) + " Seg", JOptionPane.PLAIN_MESSAGE);
-    }
-
     @Override
     public void windowClosed(WindowEvent e) { // Cuando se cierre una ventana de un juego, se abrirá la del siguiente
         if (e.getSource() instanceof VistaGregorio) {
@@ -83,8 +79,31 @@ public class ControladorRecorrido extends JFrame implements WindowListener {
             PantallaInfo.setPosicion(this);
             this.setVisible(rootPaneCheckingEnabled);
             this.dispose();
-            mostrarProgresoFinal(this, puntuacion, numPreguntas, seg);
+            gestionarPuntuaciones();
         }
+    }
+
+    private void mostrarProgreso(JFrame vista, int puntuacion, int numPreguntas) { // Muestra los aciertos sobre los puntos totales
+        this.puntuacion += puntuacion;
+        this.numPreguntas += numPreguntas;
+        JOptionPane.showMessageDialog(vista, "Por ahora llevas acertadas " + this.puntuacion + "/" + this.numPreguntas);
+    }
+
+    private void gestionarPuntuaciones() {
+        mostrarProgresoFinal(this, puntuacion, numPreguntas, seg);
+
+        try { // Recuperamos de bd las 10 mejores y comprobamos si el usuario lo ha hecho mejor que alguno de ellos.
+            PuntuacionDAO pdao = new PuntuacionDAO();
+            ArrayList<Puntuacion> listaMejoresPuntuaciones = pdao.obtenerMejoresPuntuaciones(10);
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(ControladorRecorrido.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+
+    private void mostrarProgresoFinal(JFrame vista, int puntuacion, int numPreguntas, long seg) { // Muestra los aciertos sobre los puntos totales, y el tiempo desde el inicio
+        JOptionPane.showMessageDialog(vista, "Total " + puntuacion + "/" + numPreguntas, "Tiempo Total: " + Math.round(seg) + " Seg", JOptionPane.PLAIN_MESSAGE);
     }
 
     @Override
