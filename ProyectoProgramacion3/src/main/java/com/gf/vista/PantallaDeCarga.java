@@ -5,6 +5,8 @@
 package com.gf.vista;
 
 import com.gf.utils.PantallaInfo;
+import javax.swing.ImageIcon;
+import javax.swing.JFrame;
 
 /**
  *
@@ -13,26 +15,14 @@ import com.gf.utils.PantallaInfo;
 public class PantallaDeCarga extends javax.swing.JFrame {
 
     /**
-     * Creates new form PantallaDeCarga
-     *
-     * @param parent
+     * Creates new form PantallaDeCarga2
      */
     public PantallaDeCarga() {
-        setFrame();
-    }
-
-    private void setFrame() {
-//        ImageIcon imagen = new ImageIcon("./src/resources/loading.gif");
-//        Image imagenEscalada = imagen.getImage().getScaledInstance(parent.getWidth(), parent.getHeight(), Image.SCALE_SMOOTH);
-//        System.out.println(imagenEscalada.getAccelerationPriority());
-//        this.jLabel1.setText("uwu");
-//        this.jLabel1.setIcon(new ImageIcon(imagenEscalada));
+        initComponents();
         PantallaInfo.configPantalla(this);
         PantallaInfo.setPosicion(this);
-//        ImageIcon imagen = new ImageIcon(PantallaDeCarga.class.getClassLoader().getResource("loading.gif"));
-//        Image imagenEscalada = imagen.getImage().getScaledInstance(this.getWidth(), this.getHeight(), Image.SCALE_SMOOTH);
-//        this.jLabel2.setIcon(new ImageIcon(imagenEscalada));
-
+        this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        revalidate();
     }
 
     /**
@@ -44,52 +34,20 @@ public class PantallaDeCarga extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel2 = new javax.swing.JLabel();
+        jPanel1 = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/gf/resources/loading.gif"))); // NOI18N
-        jLabel2.setText("jLabel2");
-        getContentPane().add(jLabel2, java.awt.BorderLayout.CENTER);
+        jPanel1.setMaximumSize(new java.awt.Dimension(149, 181));
+        jPanel1.setPreferredSize(new java.awt.Dimension(149, 181));
+        jPanel1.setLayout(new java.awt.BorderLayout());
+        getContentPane().add(jPanel1, java.awt.BorderLayout.CENTER);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(PantallaDeCarga.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(PantallaDeCarga.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(PantallaDeCarga.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(PantallaDeCarga.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel2;
+    private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
 }
