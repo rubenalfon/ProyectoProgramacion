@@ -52,5 +52,4 @@ public class Autor {
         return "Autor{" + "idAutor=" + idAutor + ", nombreAutor=" + nombreAutor + ", pais=" + pais + '}';
     }
 
-    
 }

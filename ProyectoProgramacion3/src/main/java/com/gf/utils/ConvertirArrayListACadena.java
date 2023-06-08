@@ -7,13 +7,13 @@ package com.gf.utils;
 import java.util.ArrayList;
 
 /**
- * Convierte un ArrayList a String con un formato para SQL.
+ *
  *
  * @author Ruben
  */
 public class ConvertirArrayListACadena {
 
-    public static String convertir(ArrayList<Integer> lista) {
+    public static String convertir(ArrayList<Integer> lista) { // Convierte un ArrayList a String con un formato para SQL.
         String cadena = "";
 
         if (lista != null && !lista.isEmpty()) {

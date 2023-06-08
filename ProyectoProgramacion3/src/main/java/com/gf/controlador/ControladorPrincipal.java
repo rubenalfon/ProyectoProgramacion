@@ -5,19 +5,9 @@
 package com.gf.controlador;
 
 import com.gf.utils.PantallaInfo;
-import com.gf.vista.Vista;
-import com.gf.vista.VistaGregorio;
-import com.gf.vista.VistaInicial;
-import com.gf.vista.VistaMapa;
-import com.gf.vista.VistaQuienLoHizo;
-import com.gf.vista.vistaVerdaderoFalsoMuseos;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.WindowEvent;
-import java.awt.event.WindowListener;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JOptionPane;
+import com.gf.vista.*;
+import java.awt.event.*;
+import javax.swing.*;
 
 /**
  *

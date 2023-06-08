@@ -148,11 +148,13 @@ public class VistaQuienLoHizo extends javax.swing.JFrame {
         jPanelPregunta.setLayout(new java.awt.BorderLayout());
 
         jLabelPregunta.setFont(new java.awt.Font("Segoe UI", 0, 48)); // NOI18N
+        jLabelPregunta.setForeground(new java.awt.Color(85, 85, 85));
         jLabelPregunta.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabelPregunta.setText("¿Quien lo hizo?");
         jPanelPregunta.add(jLabelPregunta, java.awt.BorderLayout.CENTER);
 
         jLabelPuntuacion.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabelPuntuacion.setForeground(new java.awt.Color(128, 128, 128));
         jLabelPuntuacion.setText("0/0");
         jPanelPregunta.add(jLabelPuntuacion, java.awt.BorderLayout.LINE_END);
 

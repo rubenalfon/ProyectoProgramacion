@@ -4,6 +4,7 @@
  */
 package com.gf.vista;
 
+import java.awt.Color;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.*;
@@ -18,6 +19,14 @@ public class vistaVerdaderoFalsoMuseos extends javax.swing.JFrame {
      * Creates new form VistaQuienLoHizo
      */
     public vistaVerdaderoFalsoMuseos() {
+
+        try {
+//            com.formdev.flatlaf.intellijthemes.FlatDarkFlatIJTheme
+            UIManager.setLookAndFeel("com.formdev.flatlaf.intellijthemes.FlatDarkFlatIJTheme");
+
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
+            Logger.getLogger(vistaVerdaderoFalsoMuseos.class.getName()).log(Level.SEVERE, null, ex);
+        }
         initComponents();
         setFrame();
     }
@@ -147,13 +156,13 @@ public class vistaVerdaderoFalsoMuseos extends javax.swing.JFrame {
 
         jPanel1.setMinimumSize(new java.awt.Dimension(630, 600));
         jPanel1.setName(""); // NOI18N
-        jPanel1.setPreferredSize(new java.awt.Dimension(630, 600));
+        jPanel1.setPreferredSize(new java.awt.Dimension(1000, 600));
         jPanel1.setLayout(new javax.swing.BoxLayout(jPanel1, javax.swing.BoxLayout.Y_AXIS));
 
-        jPanel2.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 0, 0, 20));
+        jPanel2.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 0, 0, 40));
         jPanel2.setLayout(new java.awt.BorderLayout());
 
-        jLabelPuntuacion.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabelPuntuacion.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabelPuntuacion.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         jLabelPuntuacion.setText("Puntuación/Obras");
         jPanel2.add(jLabelPuntuacion, java.awt.BorderLayout.CENTER);

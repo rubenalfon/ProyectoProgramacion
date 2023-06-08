@@ -54,7 +54,7 @@ public class ControladorVistaQuienLoHizo implements MouseListener, ActionListene
         this.vista.addComponentListener(new ComponentAdapter() {
             @Override
             public void componentResized(ComponentEvent e) {
-                ponerImagenActual();
+                cargarImagenActual();
                 vista.revalidate();
             }
         });
@@ -70,48 +70,50 @@ public class ControladorVistaQuienLoHizo implements MouseListener, ActionListene
             boton.setPreferredSize(new Dimension(100, 40));
             boton.setFocusPainted(false);
             boton.addActionListener(this);
+            boton.setForeground(Color.BLACK);
             this.vista.getjPanelBotones().add(boton);
             this.listaBotones.add(boton);
         }
         inhabilitarBotones();
 
         ArrayList<Integer> listaIdUsados = new ArrayList<>();
-        for (int i = 0; i < numeroObras; i++) { try {
-            // Pedir las obras a BD
-            Obra obra = this.odao.obtenerObraAleatoria(listaIdUsados);
-            this.listaObras.add(obra);
-            listaIdUsados.add(obra.getIdObra());
+        for (int i = 0; i < numeroObras; i++) { // Pedir las obras a BD
+            try {
+                Obra obra = this.odao.obtenerObraAleatoria(listaIdUsados);
+                this.listaObras.add(obra);
+                listaIdUsados.add(obra.getIdObra());
             } catch (SQLException ex) {
                 Logger.getLogger(ControladorVistaQuienLoHizo.class.getName()).log(Level.SEVERE, null, ex);
+                JOptionPane.showMessageDialog(null, "Error a la hora de conectar con la base de datos", "Error", JOptionPane.ERROR_MESSAGE);
             }
         }
         siguienteImagen();
     }
 
     private void siguienteImagen() {
-        ponerImagenActual();
+        cargarImagenActual();
         recogerAutores(this.numeroBotones);
         ponerBotones();
         mostrarPuntuacion();
         habilitarBotones();
     }
 
-    private void ponerImagenActual() { // Pone en pantalla la imagen del incideObraActual
+    private void cargarImagenActual() { // Pone en pantalla la imagen del incideObraActual
         try {
             Dimension d = new Dimension(this.vista.getjLabelImagen().getSize());
             URL url = new URL(this.listaObras.get(this.indiceObraActual).getUrlObra());
 
-            Icon imagen = new ImageIcon(imagenRescalada(new ImageIcon(url), d));
+            Icon imagen = new ImageIcon(imagenReescalada(new ImageIcon(url), d));
             this.vista.getjLabelImagen().setIcon(imagen);
 
         } catch (MalformedURLException ex) {
             Dimension d = new Dimension(this.vista.getjLabelImagen().getSize());
-            Icon imagen = new ImageIcon(imagenRescalada(new ImageIcon("./src/files/imagenNoEncontrada.jpg"), d));
+            Icon imagen = new ImageIcon(imagenReescalada(new ImageIcon("./src/files/imagenNoEncontrada.jpg"), d));
             this.vista.getjLabelImagen().setIcon(imagen);
         }
     }
 
-    private Image imagenRescalada(ImageIcon imagen, Dimension dimension) { // Reescala la imagen al tamaño máximo sin cambiar la relacion de aspecto
+    private Image imagenReescalada(ImageIcon imagen, Dimension dimension) { // Reescala la imagen al tamaño máximo sin cambiar la relacion de aspecto
 
         double escalaAncho = dimension.getWidth() / imagen.getIconWidth();
         double escalaAlto = dimension.getHeight() / imagen.getIconHeight();
@@ -135,10 +137,15 @@ public class ControladorVistaQuienLoHizo implements MouseListener, ActionListene
 
         this.listaAutores.add(this.listaObras.get(this.indiceObraActual).getAutor());
         for (int i = 1; i < numAutores; i++) {
-            Autor autor = this.adao.obtenerAutorAleatorio(listaNoUsar);
-
-            listaNoUsar.add(autor.getIdAutor());
-            this.listaAutores.add(autor);
+            Autor autor;
+            try {
+                autor = this.adao.obtenerAutorAleatorio(listaNoUsar);
+                listaNoUsar.add(autor.getIdAutor());
+                this.listaAutores.add(autor);
+            } catch (SQLException ex) {
+                Logger.getLogger(ControladorVistaQuienLoHizo.class.getName()).log(Level.SEVERE, null, ex);
+                JOptionPane.showMessageDialog(null, "Error a la hora de conectar con la base de datos", "Error", JOptionPane.ERROR_MESSAGE);
+            }
         }
         Collections.shuffle(this.listaAutores);
     }
@@ -197,9 +204,11 @@ public class ControladorVistaQuienLoHizo implements MouseListener, ActionListene
     private void mostrarPuntuacion() {
         this.vista.getjLabelPuntuacion().setText(this.contadorAciertos + "/" + this.listaObras.size());
     }
-    public int getNumPreguntas(){
+
+    public int getNumPreguntas() {
         return this.listaObras.size();
     }
+
     @Override
     public void mouseClicked(MouseEvent e) {
     }

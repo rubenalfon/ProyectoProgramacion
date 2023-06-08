@@ -4,13 +4,9 @@
  */
 package com.gf.utils;
 
-import java.awt.Graphics2D;
-import java.awt.Image;
-import java.awt.RenderingHints;
+import java.awt.*;
 import java.awt.image.BufferedImage;
-import javax.swing.ImageIcon;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
+import javax.swing.*;
 
 /**
  *
@@ -19,19 +15,18 @@ import javax.swing.JLabel;
 public class PantallaInfo {
 
     private static JFrame vista;
-    
-    public static void setPosicion(JFrame vista){
-        PantallaInfo.vista=vista;
+
+    public static void setPosicion(JFrame vista) {
+        PantallaInfo.vista = vista;
     }
 
-
-
-    public static void configPantalla(JFrame vista){
-        vista.setSize( PantallaInfo.vista.getSize());
-        vista.setLocation(PantallaInfo.vista.getLocation().x+(PantallaInfo.vista.getSize().width- vista.getSize().width)/2
-                ,PantallaInfo.vista.getLocation().y +(PantallaInfo.vista.getSize().height- vista.getSize().height)/2);
+    public static void configPantalla(JFrame vista) {
+        vista.setSize(PantallaInfo.vista.getSize());
+        vista.setLocation(PantallaInfo.vista.getLocation().x + (PantallaInfo.vista.getSize().width - vista.getSize().width) / 2,
+                 PantallaInfo.vista.getLocation().y + (PantallaInfo.vista.getSize().height - vista.getSize().height) / 2);
         vista.setVisible(true);
     }
+
     public static ImageIcon reEscalarImagen(ImageIcon img, int nuevoAncho, int nuevoAlto) {
         if (img == null) {
             return null;
@@ -46,10 +41,10 @@ public class PantallaInfo {
         g2d.drawImage(imagenOriginal, 0, 0, nuevoAncho, nuevoAlto, null);
         g2d.dispose();
 
-
         return new ImageIcon(imagenEscalada);
     }
-    public static void setPuntuacionPantalla(JLabel label,int aciertos, int total){
-        label.setText(aciertos+"/"+total);
+
+    public static void setPuntuacionPantalla(JLabel label, int aciertos, int total) {
+        label.setText(aciertos + "/" + total);
     }
 }

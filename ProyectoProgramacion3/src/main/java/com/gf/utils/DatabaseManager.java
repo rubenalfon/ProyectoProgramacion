@@ -16,12 +16,11 @@ import java.util.logging.Logger;
  */
 public class DatabaseManager {
 
-    private static Connection conn;
+    private static Connection conn; // La conexión a utilizar
 
-    private static final String MYSQL_BD_URL = "jdbc:mysql://localhost:3306/dim_gf";
-    private static final String MYSQL_USER = "root";
-    private static final String MYSQL_PASSWORD = "";
-
+    private static final String MYSQL_BD_URL = "jdbc:mysql://localhost:3306/dim_gf"; // url de la BD
+    private static final String MYSQL_USER = "root"; // Usuario con el que conectarse a la BD
+    private static final String MYSQL_PASSWORD = ""; // Contraseña con la que conectarse a la BD
 
     public static Connection getConnection() throws SQLException {
         if (conn == null) {
@@ -33,7 +32,7 @@ public class DatabaseManager {
     public static void closeConnection() {
         try {
             getConnection().close();
-            conn=null;
+            conn = null;
         } catch (SQLException ex) {
             Logger.getLogger(DatabaseManager.class.getName()).log(Level.SEVERE, null, ex);
         }

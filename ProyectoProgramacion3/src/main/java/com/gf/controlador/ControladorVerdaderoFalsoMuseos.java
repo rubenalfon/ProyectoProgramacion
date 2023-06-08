@@ -12,8 +12,7 @@ import java.awt.*;
 import java.awt.event.*;
 import java.sql.SQLException;
 import java.util.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.logging.*;
 import javax.swing.*;
 
 /**
@@ -46,30 +45,38 @@ public class ControladorVerdaderoFalsoMuseos implements MouseListener, ActionLis
         iniciar(numeroMuseos);
     }
 
-    private void iniciar(int numeroObras) {
-        inhabilitarBotones();
-
-        ArrayList<Integer> listaIdUsados = new ArrayList<>();
-        for (int i = 0; i < numeroObras; i++) { try {
-            // Pedir los museos a BD
-            Museo museo = mdao.obtenerMuseoAleatorio(listaIdUsados);
-            this.listaMuseos.add(museo);
-            listaIdUsados.add(museo.getIdMuseo());
-            } catch (SQLException ex) {
-                Logger.getLogger(ControladorVerdaderoFalsoMuseos.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-        siguienteMuseo();
-    }
-
     public vistaVerdaderoFalsoMuseos getVista() {
         return vista;
     }
 
-    private void siguienteMuseo() {
-        // Poner el museo actual
+    public int getNumPreguntas() {
+        return listaMuseos.size();
+    }
+
+    public int getContadorAciertos() {
+        return contadorAciertos;
+    }
+
+    private void iniciar(int numeroObras) {
+        inhabilitarBotones();
+
+        ArrayList<Integer> listaIdUsados = new ArrayList<>();
+        for (int i = 0; i < numeroObras; i++) { // Pedir los museos a BD
+            try {
+                Museo museo = mdao.obtenerMuseoAleatorio(listaIdUsados);
+                this.listaMuseos.add(museo);
+                listaIdUsados.add(museo.getIdMuseo());
+            } catch (SQLException ex) {
+                Logger.getLogger(ControladorVerdaderoFalsoMuseos.class.getName()).log(Level.SEVERE, null, ex);
+                JOptionPane.showMessageDialog(null, "Error a la hora de conectar con la base de datos", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+        cargarMuseoActual();
+    }
+
+    private void cargarMuseoActual() { // Poner el museo actual
         this.vista.getjLabelMuseo().setText(this.listaMuseos.get(indiceMuseoActual).getNombreMuseo());
-        
+
         mostrarPuntuacion();
         habilitarBotones();
     }
@@ -80,7 +87,7 @@ public class ControladorVerdaderoFalsoMuseos implements MouseListener, ActionLis
             acertar();
         } else if (!(this.listaMuseos.get(indiceMuseoActual).getPais().getNombrePais().equals("Inexistente")) && ((JButton) e.getSource()).getText().equals("Verdadero")) {
             acertar();
-        } else {
+        } else { // Si falla
             ((JButton) e.getSource()).setBackground(Color.decode("#501a0e")); // Rojo
             UltimoMuseoFalladoId = this.listaMuseos.get(this.indiceMuseoActual).getIdMuseo();
             this.vista.getjLabelPuntuacion().setForeground(null); // Poner el color por defecto
@@ -105,14 +112,8 @@ public class ControladorVerdaderoFalsoMuseos implements MouseListener, ActionLis
             this.vista.dispose();
         } else {
             this.indiceMuseoActual++;
-            siguienteMuseo();
+            cargarMuseoActual();
         }
-    }
-    public int getNumPreguntas(){
-        return listaMuseos.size();
-    }
-    public int getContadorAciertos() {
-        return contadorAciertos;
     }
 
     private void inhabilitarBotones() {

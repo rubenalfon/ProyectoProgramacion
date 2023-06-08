@@ -5,6 +5,7 @@
 package com.gf.vista;
 
 import com.gf.utils.PantallaInfo;
+import java.awt.Color;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JButton;
@@ -21,15 +22,24 @@ public class VistaInicial extends javax.swing.JFrame {
      * Creates new form VistaInicial
      */
     public VistaInicial() {
-        try {
-//            com.formdev.flatlaf.intellijthemes.FlatDarkFlatIJTheme
-            UIManager.setLookAndFeel("com.formdev.flatlaf.intellijthemes.FlatDarkFlatIJTheme");
-
-        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
-            Logger.getLogger(vistaVerdaderoFalsoMuseos.class.getName()).log(Level.SEVERE, null, ex);
-        }
+//        try {
+////            com.formdev.flatlaf.intellijthemes.FlatDarkFlatIJTheme
+//            UIManager.setLookAndFeel("com.formdev.flatlaf.intellijthemes.FlatDarkFlatIJTheme");
+//
+//        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
+//            Logger.getLogger(vistaVerdaderoFalsoMuseos.class.getName()).log(Level.SEVERE, null, ex);
+//        }
         initComponents();
-        
+        setFrame();
+    }
+
+    private void setFrame() {
+        Color color = Color.decode("#f0dab6");
+
+        this.jPanelPrincipal.setBackground(color);
+        this.jPanelJuegos.setBackground(new Color(0,0,0,0));
+        this.jPanelPuntuacionesRecorrido.setBackground(new Color(0,0,0,0));
+        this.jPanelPuntuaciones.setBackground(new Color(0,0,0,0));
     }
 
     /**
@@ -63,62 +73,101 @@ public class VistaInicial extends javax.swing.JFrame {
         jPanelPrincipal.setBorder(javax.swing.BorderFactory.createEmptyBorder(50, 50, 50, 50));
         jPanelPrincipal.setLayout(new javax.swing.BoxLayout(jPanelPrincipal, javax.swing.BoxLayout.PAGE_AXIS));
 
-        jPanelJuegos.setLayout(new java.awt.GridLayout(3, 2, 40, 40));
+        jPanelJuegos.setLayout(new java.awt.GridLayout(2, 2, 40, 40));
 
-        jPanelQuien.setLayout(new java.awt.BorderLayout());
+        jPanelQuien.setLayout(new javax.swing.BoxLayout(jPanelQuien, javax.swing.BoxLayout.LINE_AXIS));
 
+        jButtonQuienLoHizo.setBackground(new java.awt.Color(196, 178, 149));
+        jButtonQuienLoHizo.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
         jButtonQuienLoHizo.setText("¿Quién lo hizo?");
+        jButtonQuienLoHizo.setMaximumSize(new java.awt.Dimension(1000, 1000));
+        jButtonQuienLoHizo.setMinimumSize(new java.awt.Dimension(30, 30));
         jButtonQuienLoHizo.setName("quien"); // NOI18N
-        jPanelQuien.add(jButtonQuienLoHizo, java.awt.BorderLayout.PAGE_START);
+        jButtonQuienLoHizo.setPreferredSize(new java.awt.Dimension(1000, 1000));
+        jPanelQuien.add(jButtonQuienLoHizo);
 
         jPanelJuegos.add(jPanelQuien);
 
-        jPanelVerdaderoFalsoMuseos.setLayout(new java.awt.BorderLayout());
+        jPanelVerdaderoFalsoMuseos.setLayout(new javax.swing.BoxLayout(jPanelVerdaderoFalsoMuseos, javax.swing.BoxLayout.LINE_AXIS));
 
+        jButtonVerdaderoFalsoMuseos.setBackground(new java.awt.Color(196, 178, 149));
+        jButtonVerdaderoFalsoMuseos.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
         jButtonVerdaderoFalsoMuseos.setText("Verdadero/Falso de Museos");
+        jButtonVerdaderoFalsoMuseos.setMaximumSize(new java.awt.Dimension(1000, 1000));
+        jButtonVerdaderoFalsoMuseos.setMinimumSize(new java.awt.Dimension(30, 30));
         jButtonVerdaderoFalsoMuseos.setName("verdadero"); // NOI18N
-        jPanelVerdaderoFalsoMuseos.add(jButtonVerdaderoFalsoMuseos, java.awt.BorderLayout.PAGE_START);
+        jButtonVerdaderoFalsoMuseos.setPreferredSize(new java.awt.Dimension(1000, 1000));
+        jPanelVerdaderoFalsoMuseos.add(jButtonVerdaderoFalsoMuseos);
 
         jPanelJuegos.add(jPanelVerdaderoFalsoMuseos);
 
-        jPanelGregorioFernandez.setLayout(new java.awt.BorderLayout());
+        jPanelGregorioFernandez.setLayout(new javax.swing.BoxLayout(jPanelGregorioFernandez, javax.swing.BoxLayout.LINE_AXIS));
 
+        jButtonGregorioFernandez.setBackground(new java.awt.Color(196, 178, 149));
+        jButtonGregorioFernandez.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
         jButtonGregorioFernandez.setText("Gregorio Fernández.");
+        jButtonGregorioFernandez.setMaximumSize(new java.awt.Dimension(1000, 1000));
+        jButtonGregorioFernandez.setMinimumSize(new java.awt.Dimension(30, 30));
         jButtonGregorioFernandez.setName("gregorio"); // NOI18N
-        jPanelGregorioFernandez.add(jButtonGregorioFernandez, java.awt.BorderLayout.PAGE_END);
+        jButtonGregorioFernandez.setPreferredSize(new java.awt.Dimension(1000, 1000));
+        jPanelGregorioFernandez.add(jButtonGregorioFernandez);
 
         jPanelJuegos.add(jPanelGregorioFernandez);
 
-        jPanelColocaMapa.setLayout(new java.awt.BorderLayout());
+        jPanelColocaMapa.setLayout(new javax.swing.BoxLayout(jPanelColocaMapa, javax.swing.BoxLayout.LINE_AXIS));
 
+        jButtonColocaMapa.setBackground(new java.awt.Color(196, 178, 149));
+        jButtonColocaMapa.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
         jButtonColocaMapa.setText("Coloca en el mapa.");
+        jButtonColocaMapa.setMaximumSize(new java.awt.Dimension(1000, 1000));
+        jButtonColocaMapa.setMinimumSize(new java.awt.Dimension(30, 30));
         jButtonColocaMapa.setName("mapa"); // NOI18N
+        jButtonColocaMapa.setPreferredSize(new java.awt.Dimension(1000, 1000));
         jButtonColocaMapa.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonColocaMapaActionPerformed(evt);
             }
         });
-        jPanelColocaMapa.add(jButtonColocaMapa, java.awt.BorderLayout.PAGE_END);
+        jPanelColocaMapa.add(jButtonColocaMapa);
 
         jPanelJuegos.add(jPanelColocaMapa);
 
         jPanelPrincipal.add(jPanelJuegos);
 
-        jPanelPuntuacionesRecorrido.setLayout(new javax.swing.BoxLayout(jPanelPuntuacionesRecorrido, javax.swing.BoxLayout.LINE_AXIS));
+        jPanelPuntuacionesRecorrido.setBorder(javax.swing.BorderFactory.createEmptyBorder(50, 1, 1, 1));
+        jPanelPuntuacionesRecorrido.setMaximumSize(new java.awt.Dimension(32767, 300));
+        jPanelPuntuacionesRecorrido.setMinimumSize(new java.awt.Dimension(308, 300));
+        jPanelPuntuacionesRecorrido.setPreferredSize(new java.awt.Dimension(1108, 300));
+        jPanelPuntuacionesRecorrido.setLayout(new java.awt.GridLayout());
 
-        jPanelPuntuaciones.setLayout(new java.awt.BorderLayout());
+        jPanelPuntuaciones.setBorder(javax.swing.BorderFactory.createEmptyBorder(200, 1, 1, 1));
+        jPanelPuntuaciones.setMaximumSize(new java.awt.Dimension(32767, 300));
+        jPanelPuntuaciones.setMinimumSize(new java.awt.Dimension(153, 300));
+        jPanelPuntuaciones.setPreferredSize(new java.awt.Dimension(553, 300));
+        jPanelPuntuaciones.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT, 1, 1));
 
+        jButtonPuntuaciones.setBackground(new java.awt.Color(196, 178, 149));
+        jButtonPuntuaciones.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jButtonPuntuaciones.setText("Puntuaciones");
-        jPanelPuntuaciones.add(jButtonPuntuaciones, java.awt.BorderLayout.PAGE_END);
+        jButtonPuntuaciones.setMaximumSize(new java.awt.Dimension(150, 40));
+        jButtonPuntuaciones.setMinimumSize(new java.awt.Dimension(150, 40));
+        jButtonPuntuaciones.setPreferredSize(new java.awt.Dimension(150, 40));
+        jPanelPuntuaciones.add(jButtonPuntuaciones);
 
         jPanelPuntuacionesRecorrido.add(jPanelPuntuaciones);
 
-        jPanelRecorrido.setLayout(new java.awt.BorderLayout());
+        jPanelRecorrido.setMaximumSize(new java.awt.Dimension(1000, 1000));
+        jPanelRecorrido.setLayout(new javax.swing.BoxLayout(jPanelRecorrido, javax.swing.BoxLayout.LINE_AXIS));
 
+        jButtonRecorrido.setBackground(new java.awt.Color(196, 178, 149));
+        jButtonRecorrido.setFont(new java.awt.Font("Segoe UI", 0, 48)); // NOI18N
         jButtonRecorrido.setText("recorrido");
         jButtonRecorrido.setActionCommand("");
+        jButtonRecorrido.setMaximumSize(new java.awt.Dimension(1000, 1000));
+        jButtonRecorrido.setMinimumSize(new java.awt.Dimension(30, 30));
         jButtonRecorrido.setName("recorrido"); // NOI18N
-        jPanelRecorrido.add(jButtonRecorrido, java.awt.BorderLayout.PAGE_END);
+        jButtonRecorrido.setPreferredSize(new java.awt.Dimension(1000, 1000));
+        jPanelRecorrido.add(jButtonRecorrido);
 
         jPanelPuntuacionesRecorrido.add(jPanelRecorrido);
 

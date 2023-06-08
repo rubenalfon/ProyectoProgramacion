@@ -15,16 +15,17 @@ import java.sql.*;
 public class PaisDAO {
 
     public Pais obtenerPaisPorId(int idPais) throws SQLException {
+        Pais pais = null;
         String sql = "SELECT * FROM pais WHERE id_pais = ?";
         PreparedStatement ps = DatabaseManager.getConnection().prepareStatement(sql);
         ps.setInt(1, idPais);
         ResultSet rs = ps.executeQuery();
 
         if (rs.next()) {
-            return new Pais(idPais, rs.getString("nombre_pais"));
+            pais = new Pais(idPais, rs.getString("nombre_pais"));
         }
         DatabaseManager.closeConnection();
 
-        return null;
+        return pais;
     }
 }

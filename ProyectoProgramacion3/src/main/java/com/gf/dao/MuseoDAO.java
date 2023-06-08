@@ -59,7 +59,6 @@ public class MuseoDAO {
             museo = new Museo(rs.getInt("id_museo"), rs.getString("nombre_museo"), pdao.obtenerPaisPorId(rs.getInt("id_pais")));
         }
         DatabaseManager.closeConnection();
-
         return museo;
     }
 }
