@@ -75,10 +75,10 @@ public class ControladorPrincipal implements WindowListener,ActionListener{
 
     @Override
     public void windowDeactivated(WindowEvent e) {
+        System.out.println(e.getSource());
         if((e.getSource())==vista) return;
         switch (juegoSeleccionado) {
             case 0:
-                
                 break;
             case 1:
                 panelMensaje(gregorio.getVista(), gregorio.getPuntuacion(), gregorio.getNumPreguntas());
@@ -104,6 +104,7 @@ public class ControladorPrincipal implements WindowListener,ActionListener{
                 juegoSeleccionado=0;
                 System.out.println("uwu");
                 recorrido= new ControladorRecorrido();
+                this.recorrido.addWindowListener(this);
                 break;
             case "gregorio":
                 juegoSeleccionado=1;
@@ -134,4 +135,6 @@ public class ControladorPrincipal implements WindowListener,ActionListener{
     private void panelMensaje(JFrame vista, int puntuacion, int numPreguntas){
         JOptionPane.showMessageDialog(vista, "¡Felicidades! Has acertado  " + puntuacion + " / " + numPreguntas);
     }
+    
+
 }
