@@ -19,7 +19,7 @@ import java.util.ArrayList;
 public class PuntuacionDAO {
 
     public ArrayList<Puntuacion> obtenerMejoresPuntuaciones(int num) throws SQLException {
-        ArrayList<Puntuacion> listaPuntuaciones = null;
+        ArrayList<Puntuacion> listaPuntuaciones = new ArrayList<>();
         String sql = "SELECT * FROM puntuacion ORDER BY aciertos DESC LIMIT ?";
 
         Connection con = DatabaseManager.getConnection();

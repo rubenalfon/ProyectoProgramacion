@@ -79,31 +79,60 @@ public class ControladorRecorrido extends JFrame implements WindowListener {
             PantallaInfo.setPosicion(this);
             this.setVisible(rootPaneCheckingEnabled);
             this.dispose();
-            gestionarPuntuaciones();
+//            gestionarPuntuaciones();
+            mostrarClasificacion();
         }
     }
 
     private void mostrarProgreso(JFrame vista, int puntuacion, int numPreguntas) { // Muestra los aciertos sobre los puntos totales
         this.puntuacion += puntuacion;
         this.numPreguntas += numPreguntas;
-        JOptionPane.showMessageDialog(vista, "Por ahora llevas acertadas " + this.puntuacion + "/" + this.numPreguntas);
+        if (puntuacion < numPreguntas / 2) {
+            JOptionPane.showMessageDialog(vista, "¡Ánimo! Has acertado por el momento " + puntuacion + " de " + numPreguntas);
+        } else {
+            JOptionPane.showMessageDialog(vista, "¡Felicidades! Has acertado  " + puntuacion + " de " + numPreguntas);
+        }
     }
 
-    private void gestionarPuntuaciones() {
-        mostrarProgresoFinal(this, puntuacion, numPreguntas, seg);
-
-        try { // Recuperamos de bd las 10 mejores y comprobamos si el usuario lo ha hecho mejor que alguno de ellos.
+    private void mostrarClasificacion() {
+        try { // Recuperamos de bd las 10 mejores.
             PuntuacionDAO pdao = new PuntuacionDAO();
             ArrayList<Puntuacion> listaMejoresPuntuaciones = pdao.obtenerMejoresPuntuaciones(10);
-            
+
+            String cadena = "<html><table><th><td>Nombre</td><td>Aciertos</td><td>Segundos</td></th>";
+            int contador = 1;
+            for (Puntuacion p : listaMejoresPuntuaciones) {
+                cadena += "<tr><td>" + (String.valueOf(contador) + "º." + "</td>"
+                        + "<td>" + p.getNombreUsuario() + "</td>"
+                        + "<td>" + String.valueOf(p.getAciertos()) + "</td><td>"
+                        + String.valueOf(p.getSegundos()) + "</td></tr>");
+                contador++;
+            }
+            cadena += "<tr><td colspan='4'><h1>Tu puntuación</h1></td></tr>";
+            cadena += "<tr><td colspan='2'>Tú</td><td>" + this.puntuacion + "</td><td>" + Math.round(seg) + "</td></tr>";
+            cadena += "</table>";
+
+            if (this.puntuacion >= listaMejoresPuntuaciones.get(listaMejoresPuntuaciones.size() - 1).getAciertos()) {
+                cadena += "<h1>Introduce tu nombre: </h1></html>";
+                String nombre = JOptionPane.showInputDialog(this, cadena, "Clasificación", JOptionPane.PLAIN_MESSAGE);
+                guardarPuntuacion(nombre);
+            } else {
+                cadena += "</html>";
+                JOptionPane.showMessageDialog(this, cadena, "Clasificación", JOptionPane.PLAIN_MESSAGE);
+            }
         } catch (SQLException ex) {
             Logger.getLogger(ControladorRecorrido.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "Error al conectar con la base de datos", "Error", JOptionPane.ERROR_MESSAGE);
         }
-
     }
 
-    private void mostrarProgresoFinal(JFrame vista, int puntuacion, int numPreguntas, long seg) { // Muestra los aciertos sobre los puntos totales, y el tiempo desde el inicio
-        JOptionPane.showMessageDialog(vista, "Total " + puntuacion + "/" + numPreguntas, "Tiempo Total: " + Math.round(seg) + " Seg", JOptionPane.PLAIN_MESSAGE);
+    private void guardarPuntuacion(String nombre) {
+        try {
+            PuntuacionDAO pdao = new PuntuacionDAO();
+            pdao.guardarPuntuacion(new Puntuacion(0, nombre, this.puntuacion, this.numPreguntas, Math.round(this.seg)));
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al guardar la puntuación", "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }
 
     @Override

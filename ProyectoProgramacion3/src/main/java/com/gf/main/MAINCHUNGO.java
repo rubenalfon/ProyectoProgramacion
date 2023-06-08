@@ -7,15 +7,24 @@ package com.gf.main;
 import com.gf.dao.PuntuacionDAO;
 import com.gf.modelo.Puntuacion;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 /**
  *
  * @author alfgonru
  */
 public class MAINCHUNGO {
+
     public static void main(String[] args) throws SQLException {
+//        PuntuacionDAO pdao = new PuntuacionDAO();
+//
+//        pdao.guardarPuntuacion(new Puntuacion(0, "Ganadoro", 2, 40, 50));
+
         PuntuacionDAO pdao = new PuntuacionDAO();
-    
-    pdao.guardarPuntuacion(new Puntuacion(0, "Ganadoro", 20, 40, 50));
+        ArrayList<Puntuacion> listaMejoresPuntuaciones = pdao.obtenerMejoresPuntuaciones(10);
+
+        for (Puntuacion p : listaMejoresPuntuaciones) {
+            System.out.println(p);
+        }
     }
 }

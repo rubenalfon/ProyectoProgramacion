@@ -44,6 +44,7 @@ public class ControladorGregorio implements ComponentListener, ActionListener {
         this.vista.getjButton1().addActionListener(this);
         this.vista.getjButton2().addActionListener(this);
         PantallaInfo.setPuntuacionPantalla(this.vista.getPuntuacion(), puntuacion, getNumPreguntas());
+
         insertarImagenEnBoton();
     }
 
@@ -112,7 +113,6 @@ public class ControladorGregorio implements ComponentListener, ActionListener {
     public void componentResized(ComponentEvent e) {
         this.vista.getjButton1().setIcon(PantallaInfo.reEscalarImagen((ImageIcon) this.vista.getjButton1().getIcon(), this.vista.getjButton1().getSize().width, this.vista.getjButton1().getSize().height));
         this.vista.getjButton2().setIcon(PantallaInfo.reEscalarImagen((ImageIcon) this.vista.getjButton2().getIcon(), this.vista.getjButton1().getSize().width, this.vista.getjButton1().getSize().height));
-
     }
 
     @Override
@@ -144,5 +144,4 @@ public class ControladorGregorio implements ComponentListener, ActionListener {
             Logger.getLogger(ControladorGregorio.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
 }

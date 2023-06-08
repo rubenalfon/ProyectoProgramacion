@@ -67,4 +67,8 @@ public class Puntuacion {
         this.segundos = segundos;
     }
 
+    @Override
+    public String toString() {
+        return "Puntuacion{" + "idPuntuacion=" + idPuntuacion + ", nombreUsuario=" + nombreUsuario + ", aciertos=" + aciertos + ", puntosTotales=" + puntosTotales + ", segundos=" + segundos + '}';
+    }
 }

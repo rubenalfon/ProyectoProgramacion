@@ -4,16 +4,23 @@
  */
 package com.gf.controlador;
 
+import com.gf.dao.PuntuacionDAO;
+import com.gf.modelo.Puntuacion;
 import com.gf.utils.PantallaInfo;
 import com.gf.vista.*;
 import java.awt.event.*;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.*;
 
 /**
  *
  * @author Angel
  */
-public class ControladorPrincipal implements WindowListener,ActionListener{
+public class ControladorPrincipal implements WindowListener, ActionListener {
+
     private ControladorMapa mapa;
     private ControladorGregorio gregorio;
     private ControladorVerdaderoFalsoMuseos verdaderoFalso;
@@ -25,8 +32,9 @@ public class ControladorPrincipal implements WindowListener,ActionListener{
     public ControladorPrincipal() {
         setFrame();
     }
-    private void setFrame(){
-        this.vista= new VistaInicial();
+
+    private void setFrame() {
+        this.vista = new VistaInicial();
         this.vista.setVisible(true);
         this.vista.setLocationRelativeTo(null);
         this.vista.getjButtonColocaMapa().addActionListener(this);
@@ -34,8 +42,10 @@ public class ControladorPrincipal implements WindowListener,ActionListener{
         this.vista.getjButtonQuienLoHizo().addActionListener(this);
         this.vista.getjButtonGregorioFernandez().addActionListener(this);
         this.vista.getjButtonRecorrido().addActionListener(this);
+        this.vista.getjButtonPuntuaciones().addActionListener(this);
         PantallaInfo.setPosicion(vista);
     }
+
     @Override
     public void windowOpened(WindowEvent e) {
     }
@@ -66,7 +76,9 @@ public class ControladorPrincipal implements WindowListener,ActionListener{
     @Override
     public void windowDeactivated(WindowEvent e) {
         System.out.println(e.getSource());
-        if((e.getSource())==vista) return;
+        if ((e.getSource()) == vista) {
+            return;
+        }
         switch (juegoSeleccionado) {
             case 0:
                 break;
@@ -78,53 +90,85 @@ public class ControladorPrincipal implements WindowListener,ActionListener{
                 break;
             case 3:
                 panelMensaje(verdaderoFalso.getVista(), verdaderoFalso.getContadorAciertos(), verdaderoFalso.getNumPreguntas());
-                break;                
+                break;
             case 4:
                 panelMensaje(quienLoHizo.getVista(), quienLoHizo.getContadorAciertos(), quienLoHizo.getNumPreguntas());
                 break;
-  
         }
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        this.vista.setVisible(false);
-        switch (((JButton)e.getSource()).getName()) {
+
+        switch (((JButton) e.getSource()).getName()) {
             case "recorrido":
-                juegoSeleccionado=0;
+                this.vista.setVisible(false);
+                juegoSeleccionado = 0;
                 System.out.println("uwu");
-                recorrido= new ControladorRecorrido();
+                recorrido = new ControladorRecorrido();
                 this.recorrido.addWindowListener(this);
                 break;
             case "gregorio":
-                juegoSeleccionado=1;
+                this.vista.setVisible(false);
+                juegoSeleccionado = 1;
                 gregorio = new ControladorGregorio(new VistaGregorio(), 6);
                 gregorio.getVista().addWindowListener(this);
                 break;
             case "mapa":
-                juegoSeleccionado=2;
+                this.vista.setVisible(false);
+                juegoSeleccionado = 2;
                 System.out.println("mapa");
                 mapa = new ControladorMapa(new VistaMapa(), 6);
                 mapa.getVista().addWindowListener(this);
                 break;
             case "verdadero":
-                juegoSeleccionado=3;
+                this.vista.setVisible(false);
+                juegoSeleccionado = 3;
                 verdaderoFalso = new ControladorVerdaderoFalsoMuseos(new vistaVerdaderoFalsoMuseos(), 4);
                 verdaderoFalso.getVista().addWindowListener(this);
                 break;
             case "quien":
-                juegoSeleccionado=4;
-                quienLoHizo= new ControladorVistaQuienLoHizo(new VistaQuienLoHizo(), 5, 5);
+                this.vista.setVisible(false);
+                juegoSeleccionado = 4;
+                quienLoHizo = new ControladorVistaQuienLoHizo(new VistaQuienLoHizo(), 5, 5);
                 quienLoHizo.getVista().addWindowListener(this);
                 break;
-                
+            case "puntuaciones":
+                mostrarClasificacion();
+                break;
         }
-        
-        System.out.println(((JButton)e.getSource()).getName());
     }
-    private void panelMensaje(JFrame vista, int puntuacion, int numPreguntas){
-        JOptionPane.showMessageDialog(vista, "¡Felicidades! Has acertado  " + puntuacion + " / " + numPreguntas);
-    }
-    
 
+    private void panelMensaje(JFrame vista, int puntuacion, int numPreguntas) {
+        System.out.println(puntuacion + "-" +  numPreguntas / 2);
+        if (puntuacion < numPreguntas / 2) {
+            JOptionPane.showMessageDialog(vista, "¡Ánimos! Has acertado  " + puntuacion + " / " + numPreguntas);
+            
+        } else {
+            JOptionPane.showMessageDialog(vista, "¡Felicidades! Has acertado  " + puntuacion + " / " + numPreguntas);
+        }
+    }
+
+    private void mostrarClasificacion() {
+        try { // Recuperamos de bd las 10 mejores.
+            PuntuacionDAO pdao = new PuntuacionDAO();
+            ArrayList<Puntuacion> listaMejoresPuntuaciones = pdao.obtenerMejoresPuntuaciones(10);
+
+            String cadena = "<html><table><th><td>Nombre</td><td>Aciertos</td><td>Segundos</td></th>";
+            int contador = 1;
+            for (Puntuacion p : listaMejoresPuntuaciones) {
+                cadena += "<tr><td>" + (String.valueOf(contador) + "º." + "</td>"
+                        + "<td>" + p.getNombreUsuario() + "</td>"
+                        + "<td>" + String.valueOf(p.getAciertos()) + "</td><td>"
+                        + String.valueOf(p.getSegundos()) + "</td></tr>");
+                contador++;
+            }
+            cadena += "</table></html>";
+
+            JOptionPane.showMessageDialog(this.vista, cadena, "Clasificación", JOptionPane.PLAIN_MESSAGE);
+        } catch (SQLException ex) {
+            Logger.getLogger(ControladorRecorrido.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "Error al conectar con la base de datos", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
 }
