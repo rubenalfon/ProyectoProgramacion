@@ -20,7 +20,8 @@ public class ControladorPrincipal implements WindowListener,ActionListener{
     private ControladorVistaQuienLoHizo quienLoHizo;
     private ControladorRecorrido recorrido;
     private VistaInicial vista;
-    private int juegoSeleccionado;
+    private int juegoSeleccionado;//num de juego seleccionado
+    private boolean inJuego;//Controla si estoy dentro de un juego o no
 
     public ControladorPrincipal() {
         setFrame();
@@ -49,6 +50,28 @@ public class ControladorPrincipal implements WindowListener,ActionListener{
         this.vista.setVisible(true);
         PantallaInfo.configPantalla(vista);
         PantallaInfo.setPosicion(vista);
+        
+        if(inJuego){//si esta en un juego y cierra la pestaña pues muestra el resultado
+            switch (juegoSeleccionado) {
+                case 0:
+                    break;
+                case 1:
+                    panelMensaje( gregorio.getPuntuacion(), gregorio.getNumPreguntas());
+                    break;
+                case 2:
+                    panelMensaje(mapa.getPuntuacion(), mapa.getNumPreguntas());
+                    break;
+                case 3:
+                    panelMensaje( verdaderoFalso.getContadorAciertos(), verdaderoFalso.getNumPreguntas());
+                    break;                
+                case 4:
+                    panelMensaje(quienLoHizo.getContadorAciertos(), quienLoHizo.getNumPreguntas());
+                    break;
+
+            }
+        }else{
+            this.inJuego=false;
+        }
     }
 
     @Override
@@ -65,45 +88,24 @@ public class ControladorPrincipal implements WindowListener,ActionListener{
 
     @Override
     public void windowDeactivated(WindowEvent e) {
-        System.out.println(e.getSource());
-        if((e.getSource())==vista) return;
-        switch (juegoSeleccionado) {
-            case 0:
-                break;
-            case 1:
-                panelMensaje(gregorio.getVista(), gregorio.getPuntuacion(), gregorio.getNumPreguntas());
-                break;
-            case 2:
-                panelMensaje(mapa.getVista(), mapa.getPuntuacion(), mapa.getNumPreguntas());
-                break;
-            case 3:
-                panelMensaje(verdaderoFalso.getVista(), verdaderoFalso.getContadorAciertos(), verdaderoFalso.getNumPreguntas());
-                break;                
-            case 4:
-                panelMensaje(quienLoHizo.getVista(), quienLoHizo.getContadorAciertos(), quienLoHizo.getNumPreguntas());
-                break;
-  
-        }
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         this.vista.setVisible(false);
-        switch (((JButton)e.getSource()).getName()) {
+        switch (((JButton)e.getSource()).getName()) {//En funcion del boton que escoja este te creara un controlador 
             case "recorrido":
                 juegoSeleccionado=0;
-                System.out.println("uwu");
                 recorrido= new ControladorRecorrido();
                 this.recorrido.addWindowListener(this);
                 break;
             case "gregorio":
                 juegoSeleccionado=1;
-                gregorio = new ControladorGregorio(new VistaGregorio(), 6);
+                gregorio = new ControladorGregorio(new VistaGregorio(), 5);
                 gregorio.getVista().addWindowListener(this);
                 break;
             case "mapa":
                 juegoSeleccionado=2;
-                System.out.println("mapa");
                 mapa = new ControladorMapa(new VistaMapa(), 6);
                 mapa.getVista().addWindowListener(this);
                 break;
@@ -119,11 +121,10 @@ public class ControladorPrincipal implements WindowListener,ActionListener{
                 break;
                 
         }
-        
-        System.out.println(((JButton)e.getSource()).getName());
+         this.inJuego=true;
     }
-    private void panelMensaje(JFrame vista, int puntuacion, int numPreguntas){
-        JOptionPane.showMessageDialog(vista, "¡Felicidades! Has acertado  " + puntuacion + " / " + numPreguntas);
+    private void panelMensaje( int puntuacion, int numPreguntas){
+        JOptionPane.showMessageDialog(null, "¡Felicidades! Has acertado  " + puntuacion + " / " + numPreguntas);
     }
     
 

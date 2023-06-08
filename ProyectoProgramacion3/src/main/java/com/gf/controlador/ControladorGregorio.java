@@ -8,6 +8,7 @@ import com.gf.dao.*;
 import com.gf.modelo.Obra;
 import com.gf.utils.PantallaInfo;
 import com.gf.vista.*;
+import java.awt.Color;
 import java.awt.event.*;
 import java.net.*;
 import java.sql.SQLException;
@@ -21,23 +22,21 @@ import javax.swing.*;
  */
 public class ControladorGregorio implements ComponentListener, ActionListener {
 
-    private VistaGregorio vista;
-    private PantallaDeCarga pantallaCarga;
-    private int puntuacion;
+    private VistaGregorio vista;//Vista del juego
+    private int puntuacion;//Puntuacion totla
     HashMap<Integer, ImageIcon> obrasImg;
-    ArrayList<Integer> idsObraGregorio; // Esta lista y la de abajo iran disminuyendo el tamaño a medida que avance el juego para asi 
+    ArrayList<Integer> idsObraGregorio; // Esta lista y la de abajo iran disminuyendo el tamaño a medida que avance el juego para asi mantener un control de las obras que se van mostrando
     ArrayList<Integer> idsObraNoGregorio;//
     private ObraDAO obraDao;
-
+    private PantallaDeCarga pantalla;
     public ControladorGregorio(VistaGregorio vista, int preguntas) {
         this.vista = vista;
         this.vista.setVisible(false);
-
+        this.pantalla = new PantallaDeCarga();
         this.obraDao = new ObraDAO();
-        this.pantallaCarga = new PantallaDeCarga();
-
+        
         cargarObras(preguntas);
-
+        
         PantallaInfo.configPantalla(this.vista);
         PantallaInfo.setPosicion(this.vista);
         this.vista.addComponentListener(this);
@@ -47,7 +46,9 @@ public class ControladorGregorio implements ComponentListener, ActionListener {
         insertarImagenEnBoton();
     }
 
-    private void cargarObras(int preguntas) {
+
+
+    private void cargarObras(int preguntas) {//Cargo todas las imagenes requeridas en un hasmap
         this.obrasImg = new HashMap<>();
         AutorDAO autorDao = new AutorDAO();
         this.idsObraGregorio = new ArrayList<>();
@@ -63,16 +64,13 @@ public class ControladorGregorio implements ComponentListener, ActionListener {
             } catch (MalformedURLException ex) {
                 ex.printStackTrace();
             } catch (SQLException ex) {
+                this.pantalla.dispose();
                 this.vista.dispose();
-                this.pantallaCarga.dispose();
                 JOptionPane.showMessageDialog(null, "Error a la hora de conectar con la base de datos", "Error", JOptionPane.ERROR_MESSAGE);
                 return;
             }
         }
-        this.pantallaCarga.dispose();
-        this.pantallaCarga = null;
-        System.out.println(this.vista);
-        System.out.println(obrasImg.toString());
+        this.pantalla.dispose();
     }
 
     private boolean insertarImagenEnBoton() {
@@ -80,7 +78,6 @@ public class ControladorGregorio implements ComponentListener, ActionListener {
             return false;
         }
         ArrayList mezcla = new ArrayList();
-
         mezcla.add(idsObraGregorio.get(0));
         mezcla.add(idsObraNoGregorio.get(0));
         idsObraGregorio.remove(0);
@@ -90,9 +87,6 @@ public class ControladorGregorio implements ComponentListener, ActionListener {
         this.vista.getjButton2().setIcon(PantallaInfo.reEscalarImagen(obrasImg.get(mezcla.get(1)), this.vista.getjButton1().getSize().width, this.vista.getjButton1().getSize().height));
         this.vista.getjButton1().setName(String.valueOf(mezcla.get(0)));
         this.vista.getjButton2().setName(String.valueOf(mezcla.get(1)));
-
-        System.out.println(idsObraGregorio);
-        System.out.println(idsObraNoGregorio);
         return true;
     }
 
@@ -131,12 +125,12 @@ public class ControladorGregorio implements ComponentListener, ActionListener {
     public void actionPerformed(ActionEvent e) {
         ObraDAO obraDao = new ObraDAO();
         System.out.println(((JButton) e.getSource()).getName());
-        try {
+        try {//Si es del gregorio aumenta puntuacion
             if (obraDao.obtenerObraId(Integer.valueOf(((JButton) e.getSource()).getName())).getAutor().getNombreAutor().equals("Gregorio Fernández")) {
                 puntuacion++;
                 PantallaInfo.setPuntuacionPantalla(this.vista.getPuntuacion(), puntuacion, getNumPreguntas());
             }
-            if (!insertarImagenEnBoton()) {
+            if (!insertarImagenEnBoton()) {//si el metodo de botones devuelve falso, es que ha habido una execepcion ya que se quedo 
                 this.vista.dispose();
 
             }

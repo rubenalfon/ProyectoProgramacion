@@ -18,8 +18,7 @@ import java.awt.Toolkit;
 import java.net.*;
 import java.sql.SQLException;
 import java.util.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.logging.*;
 import javax.swing.border.LineBorder;
 import javax.swing.event.MouseInputListener;
 import org.jxmapviewer.input.ZoomMouseWheelListenerCursor;
@@ -30,12 +29,12 @@ import org.jxmapviewer.input.ZoomMouseWheelListenerCursor;
  */
 public class ControladorMapa implements MouseListener, ActionListener {
 
-    private VistaMapa vista;
+    private VistaMapa vista;//vista del juego
     private int numPreguntas;
     private int numImagenes;
     private int puntuacion;
     private ObraDAO odao;
-    private PantallaDeCarga pantalla;
+    private PantallaDeCarga pantalla;//pantalla mostrada cuando debe de cargar
 
     public ControladorMapa(VistaMapa vista, int numImagenes) {
         this.vista = vista;
@@ -48,7 +47,7 @@ public class ControladorMapa implements MouseListener, ActionListener {
         this.numPreguntas=numImagenes;
         setMapListeners();
         crearImagenes();
-        
+
         PantallaInfo.configPantalla(this.vista);
         PantallaInfo.setPosicion(this.vista);
         PantallaInfo.setPuntuacionPantalla(this.vista.getPuntuacion(),puntuacion , numPreguntas);
@@ -135,7 +134,7 @@ public class ControladorMapa implements MouseListener, ActionListener {
         GeoPosition clickedPosition = this.vista.getMapViewer().convertPointToGeoPosition(e.getPoint());
         String pais = ReverseGeocoding.getCountryName(clickedPosition.getLatitude(), clickedPosition.getLongitude());
         JButton uwu = botonSeleccionado();
-        if (uwu != null) {
+        if (uwu.isEnabled()) {
             numImagenes--;
             uwu.setBorder(null);
             if (uwu.getName().equals(pais)) {
