@@ -6,11 +6,15 @@ package com.gf.controlador;
 
 import com.gf.dao.*;
 import com.gf.modelo.*;
+import com.gf.utils.PantallaInfo;
 import com.gf.vista.VistaQuienLoHizo;
 import java.awt.*;
 import java.awt.event.*;
 import java.net.*;
+import java.sql.SQLException;
 import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.*;
 
 /**
@@ -34,6 +38,9 @@ public class ControladorVistaQuienLoHizo implements MouseListener, ActionListene
 
     public ControladorVistaQuienLoHizo(VistaQuienLoHizo vista, int numeroObras, int numeroBotones) {
         this.vista = vista;
+        this.vista.setDefaultCloseOperation(vista.DISPOSE_ON_CLOSE);
+        PantallaInfo.configPantalla(this.vista);
+        PantallaInfo.setPosicion(this.vista);
         this.odao = new ObraDAO();
         this.adao = new AutorDAO();
         this.numeroBotones = numeroBotones;
@@ -53,6 +60,10 @@ public class ControladorVistaQuienLoHizo implements MouseListener, ActionListene
         });
     }
 
+    public VistaQuienLoHizo getVista() {
+        return vista;
+    }
+
     private void iniciar(int numeroObras) {
         for (int i = 0; i < this.numeroBotones; i++) { // Generar los botones
             JButton boton = new JButton(String.valueOf(i + 1));
@@ -65,10 +76,14 @@ public class ControladorVistaQuienLoHizo implements MouseListener, ActionListene
         inhabilitarBotones();
 
         ArrayList<Integer> listaIdUsados = new ArrayList<>();
-        for (int i = 0; i < numeroObras; i++) { // Pedir las obras a BD
+        for (int i = 0; i < numeroObras; i++) { try {
+            // Pedir las obras a BD
             Obra obra = this.odao.obtenerObraAleatoria(listaIdUsados);
             this.listaObras.add(obra);
             listaIdUsados.add(obra.getIdObra());
+            } catch (SQLException ex) {
+                Logger.getLogger(ControladorVistaQuienLoHizo.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
         siguienteImagen();
     }
@@ -108,6 +123,10 @@ public class ControladorVistaQuienLoHizo implements MouseListener, ActionListene
         return imagenEscalada;
     }
 
+    public int getContadorAciertos() {
+        return contadorAciertos;
+    }
+
     private void recogerAutores(int numAutores) { // Recoge de la BD autores a mostrar en los botones
         this.listaAutores = new ArrayList<>();
 
@@ -142,7 +161,7 @@ public class ControladorVistaQuienLoHizo implements MouseListener, ActionListene
 
             if (this.indiceObraActual + 1 == this.listaObras.size()) { // Si es la ultima obra
                 mostrarPuntuacion();
-                JOptionPane.showMessageDialog(vista, "Has completado todas las obras. Has acertado " + this.contadorAciertos + " de " + this.listaObras.size() + ".");
+                this.vista.dispose();
             } else {
                 this.indiceObraActual++;
                 siguienteImagen();
@@ -178,7 +197,9 @@ public class ControladorVistaQuienLoHizo implements MouseListener, ActionListene
     private void mostrarPuntuacion() {
         this.vista.getjLabelPuntuacion().setText(this.contadorAciertos + "/" + this.listaObras.size());
     }
-
+    public int getNumPreguntas(){
+        return this.listaObras.size();
+    }
     @Override
     public void mouseClicked(MouseEvent e) {
     }

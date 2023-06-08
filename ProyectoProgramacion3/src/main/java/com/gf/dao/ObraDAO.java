@@ -24,7 +24,36 @@ import java.util.ArrayList;
  */
 public class ObraDAO {
 
-    public Obra obtenerObraAleatoria(ArrayList<Integer> lista) {
+    public Obra obtenerObraId(int id) throws SQLException {
+        Obra obra =null;
+        String sql = "select * from obra where id_obra = ?";
+
+        Connection con = DatabaseManager.getConnection();
+        PreparedStatement ps = con.prepareStatement(sql);
+        ps.setInt(1, id);
+        ResultSet rs = ps.executeQuery();
+
+        if (rs.next()) {
+            int idObra = rs.getInt("id_obra");
+            String nombreObra = rs.getString("nombre_obra");
+            String descripcionObra = rs.getString("descripcion_obra");
+            String disciplina = rs.getString("disciplina");
+            String urlObra = rs.getString("url_obra");
+            int idAutor = rs.getInt("id_autor");
+            int idMuseo = rs.getInt("id_museo");
+
+            AutorDAO adao = new AutorDAO();
+            MuseoDAO mdao = new MuseoDAO();
+            Autor autor = adao.obtenerAutorPorId(idAutor);
+            Museo museo = mdao.obtenerMuseoPorId(idMuseo);
+
+            obra =  new Obra(idObra, nombreObra, descripcionObra, disciplina, urlObra, autor, museo);
+        }
+
+        DatabaseManager.closeConnection();
+        return obra;
+    }
+    public Obra obtenerObraAleatoria(ArrayList<Integer> lista) throws SQLException {
         Obra obra = null;
         String sql;
         if (lista == null || lista.isEmpty()) {
@@ -34,151 +63,132 @@ public class ObraDAO {
                     + ConvertirArrayListACadena.convertir(lista)
                     + " ORDER BY RAND () LIMIT 1";
         }
-        
-        try {
-            Connection con = DatabaseManager.getConnection();
-            PreparedStatement ps = con.prepareStatement(sql);
-            ResultSet rs = ps.executeQuery();
 
-            if (rs.next()) {
-                int idObra = rs.getInt("id_obra");
-                String nombreObra = rs.getString("nombre_obra");
-                String descripcionObra = rs.getString("descripcion_obra");
-                String disciplina = rs.getString("disciplina");
-                String urlObra = rs.getString("url_obra");
-                int idAutor = rs.getInt("id_autor");
-                int idMuseo = rs.getInt("id_museo");
+        Connection con = DatabaseManager.getConnection();
+        PreparedStatement ps = con.prepareStatement(sql);
+        ResultSet rs = ps.executeQuery();
 
-                AutorDAO adao = new AutorDAO();
-                MuseoDAO mdao = new MuseoDAO();
-                Autor autor = adao.obtenerAutorPorId(idAutor);
-                Museo museo = mdao.obtenerMuseoPorId(idMuseo);
+        if (rs.next()) {
+            int idObra = rs.getInt("id_obra");
+            String nombreObra = rs.getString("nombre_obra");
+            String descripcionObra = rs.getString("descripcion_obra");
+            String disciplina = rs.getString("disciplina");
+            String urlObra = rs.getString("url_obra");
+            int idAutor = rs.getInt("id_autor");
+            int idMuseo = rs.getInt("id_museo");
 
-                obra = new Obra(idObra, nombreObra, descripcionObra, disciplina, urlObra, autor, museo);
-            }
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        } finally {
-            DatabaseManager.closeConnection();
+            AutorDAO adao = new AutorDAO();
+            MuseoDAO mdao = new MuseoDAO();
+            Autor autor = adao.obtenerAutorPorId(idAutor);
+            Museo museo = mdao.obtenerMuseoPorId(idMuseo);
+
+            obra = new Obra(idObra, nombreObra, descripcionObra, disciplina, urlObra, autor, museo);
         }
+
+        DatabaseManager.closeConnection();
         return obra;
     }
 
-    public Obra obtenerPinturaAleatoria(ArrayList<Integer> lista) {
+    public Obra obtenerPinturaAleatoria(ArrayList<Integer> lista) throws SQLException {
         Obra obra = null;
         String sql = "SELECT * FROM obra where id_obra not in "
                 + ConvertirArrayListACadena.convertir(lista)
                 + " ORDER BY RAND () LIMIT 1";
 
-        try {
-            Connection con = DatabaseManager.getConnection();
-            PreparedStatement ps = con.prepareStatement(sql);
-            ResultSet rs = ps.executeQuery();
+        Connection con = DatabaseManager.getConnection();
+        PreparedStatement ps = con.prepareStatement(sql);
+        ResultSet rs = ps.executeQuery();
 
-            if (rs.next()) {
-                int idObra = rs.getInt("id_obra");
-                String nombreObra = rs.getString("nombre_obra");
-                String descripcionObra = rs.getString("descripcion_obra");
-                String disciplina = rs.getString("disciplina");
-                String urlObra = rs.getString("url_obra");
-                int idAutor = rs.getInt("id_autor");
-                int idMuseo = rs.getInt("id_museo");
+        if (rs.next()) {
+            int idObra = rs.getInt("id_obra");
+            String nombreObra = rs.getString("nombre_obra");
+            String descripcionObra = rs.getString("descripcion_obra");
+            String disciplina = rs.getString("disciplina");
+            String urlObra = rs.getString("url_obra");
+            int idAutor = rs.getInt("id_autor");
+            int idMuseo = rs.getInt("id_museo");
 
-                AutorDAO adao = new AutorDAO();
-                MuseoDAO mdao = new MuseoDAO();
-                Autor autor = adao.obtenerAutorPorId(idAutor);
-                Museo museo = mdao.obtenerMuseoPorId(idMuseo);
+            AutorDAO adao = new AutorDAO();
+            MuseoDAO mdao = new MuseoDAO();
+            Autor autor = adao.obtenerAutorPorId(idAutor);
+            Museo museo = mdao.obtenerMuseoPorId(idMuseo);
 
-                obra = new Obra(idObra, nombreObra, descripcionObra, disciplina, urlObra, autor, museo);
-            }
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        } finally {
-            DatabaseManager.closeConnection();
+            obra = new Obra(idObra, nombreObra, descripcionObra, disciplina, urlObra, autor, museo);
         }
+
+        DatabaseManager.closeConnection();
         return obra;
     }
 
-    public Obra obtenerEsculturaAleatoriaDeAutor(ArrayList<Integer> lista, Autor autorDado) {
+    public Obra obtenerEsculturaAleatoriaDeAutor(ArrayList<Integer> lista, Autor autorDado) throws SQLException {
         Obra obra = null;
         String sql;
         if (lista == null || lista.isEmpty()) {
-            sql= "SELECT * FROM obra where disciplina like 'Escultura' and id_autor = ? ORDER BY RAND () LIMIT 1";
-        }else{
-            sql= "SELECT * FROM obra where disciplina like 'Escultura' and id_obra not in "
-                + ConvertirArrayListACadena.convertir(lista)
-                + "and id_autor = ? ORDER BY RAND () LIMIT 1";
+            sql = "SELECT * FROM obra where disciplina like 'Escultura' and id_autor = ? ORDER BY RAND () LIMIT 1";
+        } else {
+            sql = "SELECT * FROM obra where disciplina like 'Escultura' and id_obra not in "
+                    + ConvertirArrayListACadena.convertir(lista)
+                    + "and id_autor = ? ORDER BY RAND () LIMIT 1";
         }
 
-        try {
-            Connection con = DatabaseManager.getConnection();
-            PreparedStatement ps = con.prepareStatement(sql);
-            ps.setInt(1, autorDado.getIdAutor());
-            ResultSet rs = ps.executeQuery();
+        Connection con = DatabaseManager.getConnection();
+        PreparedStatement ps = con.prepareStatement(sql);
+        ps.setInt(1, autorDado.getIdAutor());
+        ResultSet rs = ps.executeQuery();
 
-            if (rs.next()) {
-                int idObra = rs.getInt("id_obra");
-                String nombreObra = rs.getString("nombre_obra");
-                String descripcionObra = rs.getString("descripcion_obra");
-                String disciplina = rs.getString("disciplina");
-                String urlObra = rs.getString("url_obra");
-                int idAutor = rs.getInt("id_autor");
-                int idMuseo = rs.getInt("id_museo");
+        if (rs.next()) {
+            int idObra = rs.getInt("id_obra");
+            String nombreObra = rs.getString("nombre_obra");
+            String descripcionObra = rs.getString("descripcion_obra");
+            String disciplina = rs.getString("disciplina");
+            String urlObra = rs.getString("url_obra");
+            int idAutor = rs.getInt("id_autor");
+            int idMuseo = rs.getInt("id_museo");
 
-                AutorDAO adao = new AutorDAO();
-                MuseoDAO mdao = new MuseoDAO();
-                Autor autor = adao.obtenerAutorPorId(idAutor);
-                Museo museo = mdao.obtenerMuseoPorId(idMuseo);
+            AutorDAO adao = new AutorDAO();
+            MuseoDAO mdao = new MuseoDAO();
+            Autor autor = adao.obtenerAutorPorId(idAutor);
+            Museo museo = mdao.obtenerMuseoPorId(idMuseo);
 
-                obra = new Obra(idObra, nombreObra, descripcionObra, disciplina, urlObra, autor, museo);
-            }
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        } finally {
-            DatabaseManager.closeConnection();
+            obra = new Obra(idObra, nombreObra, descripcionObra, disciplina, urlObra, autor, museo);
+
         }
+        DatabaseManager.closeConnection();
         return obra;
     }
 
-    public Obra obtenerEsculturaAleatoriaNoDeAutor(ArrayList<Integer> lista, Autor autorDado) {
+    public Obra obtenerEsculturaAleatoriaNoDeAutor(ArrayList<Integer> lista, Autor autorDado) throws SQLException {
         Obra obra = null;
         String sql;
         if (lista == null || lista.isEmpty()) {
-            sql= "SELECT * FROM obra where disciplina like 'Escultura' and id_autor != ? ORDER BY RAND () LIMIT 1";
-        }else{
-            sql= "SELECT * FROM obra where disciplina like 'Escultura' and id_obra not in "
-                + ConvertirArrayListACadena.convertir(lista)
-                + "and id_autor != ? ORDER BY RAND () LIMIT 1";
+            sql = "SELECT * FROM obra where disciplina like 'Escultura' and id_autor != ? ORDER BY RAND () LIMIT 1";
+        } else {
+            sql = "SELECT * FROM obra where disciplina like 'Escultura' and id_obra not in "
+                    + ConvertirArrayListACadena.convertir(lista)
+                    + "and id_autor != ? ORDER BY RAND () LIMIT 1";
         }
-         
+        Connection con = DatabaseManager.getConnection();
+        PreparedStatement ps = con.prepareStatement(sql);
+        ps.setInt(1, autorDado.getIdAutor());
+        ResultSet rs = ps.executeQuery();
 
-        try {
-            Connection con = DatabaseManager.getConnection();
-            PreparedStatement ps = con.prepareStatement(sql);
-            ps.setInt(1, autorDado.getIdAutor());
-            ResultSet rs = ps.executeQuery();
+        if (rs.next()) {
+            int idObra = rs.getInt("id_obra");
+            String nombreObra = rs.getString("nombre_obra");
+            String descripcionObra = rs.getString("descripcion_obra");
+            String disciplina = rs.getString("disciplina");
+            String urlObra = rs.getString("url_obra");
+            int idAutor = rs.getInt("id_autor");
+            int idMuseo = rs.getInt("id_museo");
 
-            if (rs.next()) {
-                int idObra = rs.getInt("id_obra");
-                String nombreObra = rs.getString("nombre_obra");
-                String descripcionObra = rs.getString("descripcion_obra");
-                String disciplina = rs.getString("disciplina");
-                String urlObra = rs.getString("url_obra");
-                int idAutor = rs.getInt("id_autor");
-                int idMuseo = rs.getInt("id_museo");
+            AutorDAO adao = new AutorDAO();
+            MuseoDAO mdao = new MuseoDAO();
+            Autor autor = adao.obtenerAutorPorId(idAutor);
+            Museo museo = mdao.obtenerMuseoPorId(idMuseo);
 
-                AutorDAO adao = new AutorDAO();
-                MuseoDAO mdao = new MuseoDAO();
-                Autor autor = adao.obtenerAutorPorId(idAutor);
-                Museo museo = mdao.obtenerMuseoPorId(idMuseo);
-
-                obra = new Obra(idObra, nombreObra, descripcionObra, disciplina, urlObra, autor, museo);
-            }
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        } finally {
-            DatabaseManager.closeConnection();
+            obra = new Obra(idObra, nombreObra, descripcionObra, disciplina, urlObra, autor, museo);
         }
+        DatabaseManager.closeConnection();
         return obra;
     }
 }

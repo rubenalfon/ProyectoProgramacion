@@ -18,17 +18,8 @@ public class vistaVerdaderoFalsoMuseos extends javax.swing.JFrame {
      * Creates new form VistaQuienLoHizo
      */
     public vistaVerdaderoFalsoMuseos() {
-
-        try {
-//            com.formdev.flatlaf.intellijthemes.FlatDarkFlatIJTheme
-            UIManager.setLookAndFeel("com.formdev.flatlaf.intellijthemes.FlatDarkFlatIJTheme");
-
-        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
-            Logger.getLogger(vistaVerdaderoFalsoMuseos.class.getName()).log(Level.SEVERE, null, ex);
-        }
         initComponents();
         setFrame();
-        System.out.println(jButtonFalso.getBackground().toString());
     }
 
     private void setFrame() {

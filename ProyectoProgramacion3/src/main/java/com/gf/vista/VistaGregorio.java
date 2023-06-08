@@ -4,8 +4,10 @@
  */
 package com.gf.vista;
 
+import com.gf.utils.PantallaInfo;
 import java.awt.Dimension;
 import javax.swing.JButton;
+import javax.swing.JLabel;
 
 /**
  *
@@ -23,6 +25,11 @@ public class VistaGregorio extends javax.swing.JFrame {
     private void setFrame(){
         this.setTitle("Gregorio Fernandez");
         this.setMinimumSize(new Dimension(800,600));
+        this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+    }
+
+    public JLabel getPuntuacion() {
+        return puntuacion;
     }
 
     public JButton getjButton1() {
@@ -52,6 +59,7 @@ public class VistaGregorio extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jPanel9 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
+        puntuacion = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
         jPanel5 = new javax.swing.JPanel();
@@ -143,16 +151,9 @@ public class VistaGregorio extends javax.swing.JFrame {
 
         getContentPane().add(jPanel1, java.awt.BorderLayout.PAGE_START);
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 789, Short.MAX_VALUE)
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 100, Short.MAX_VALUE)
-        );
+        puntuacion.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        puntuacion.setText("Puntuacion");
+        jPanel2.add(puntuacion);
 
         getContentPane().add(jPanel2, java.awt.BorderLayout.PAGE_END);
 
@@ -166,7 +167,7 @@ public class VistaGregorio extends javax.swing.JFrame {
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 307, Short.MAX_VALUE)
+            .addGap(0, 372, Short.MAX_VALUE)
         );
 
         jPanel3.add(jPanel4, java.awt.BorderLayout.LINE_END);
@@ -179,7 +180,7 @@ public class VistaGregorio extends javax.swing.JFrame {
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 307, Short.MAX_VALUE)
+            .addGap(0, 372, Short.MAX_VALUE)
         );
 
         jPanel3.add(jPanel5, java.awt.BorderLayout.LINE_START);
@@ -247,5 +248,6 @@ public class VistaGregorio extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
+    private javax.swing.JLabel puntuacion;
     // End of variables declaration//GEN-END:variables
 }

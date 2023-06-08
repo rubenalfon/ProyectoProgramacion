@@ -5,6 +5,7 @@
 package com.gf.controlador;
 import com.gf.dao.ObraDAO;
 import com.gf.modelo.Obra;
+import com.gf.utils.PantallaInfo;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
@@ -24,10 +25,14 @@ import java.awt.Image;
 import java.awt.Toolkit;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
+import javax.swing.border.BevelBorder;
 import org.jxmapviewer.input.ZoomMouseWheelListenerCursor;
 
 /**
@@ -37,6 +42,7 @@ import org.jxmapviewer.input.ZoomMouseWheelListenerCursor;
 public class ControladorMapa implements MouseListener, ActionListener {
 
     private VistaMapa vista;
+    private int numPreguntas;
     private int numImagenes;
     private int puntuacion;
     private ObraDAO odao;
@@ -44,14 +50,19 @@ public class ControladorMapa implements MouseListener, ActionListener {
 
     public ControladorMapa(VistaMapa vista, int numImagenes) {
         this.vista = vista;
-        this.vista.setMinimumSize(new Dimension(((Toolkit.getDefaultToolkit().getScreenSize().width / 10) * numImagenes), Toolkit.getDefaultToolkit().getScreenSize().height / 3));
+        this.vista.setVisible(false);
+        this.vista.setMinimumSize(new Dimension(((Toolkit.getDefaultToolkit().getScreenSize().width / 10) * numImagenes), Toolkit.getDefaultToolkit().getScreenSize().height / 2));
         this.vista.getPanelContenedorImagenes().setPreferredSize(new Dimension(this.vista.getSize().width, Toolkit.getDefaultToolkit().getScreenSize().height / 12 + 10));
-        this.pantalla= new PantallaDeCarga(this.vista);
         this.numImagenes = numImagenes;
         this.odao = new ObraDAO();
+        this.pantalla= new PantallaDeCarga();
+        this.numPreguntas=numImagenes;
         setMapListeners();
         crearImagenes();
-        this.vista.getPuntuacion().setText("0/" + numImagenes);
+        
+        PantallaInfo.configPantalla(this.vista);
+        PantallaInfo.setPosicion(this.vista);
+        PantallaInfo.setPuntuacionPantalla(this.vista.getPuntuacion(),puntuacion , numPreguntas);
     }
 
     private void setMapListeners() {
@@ -62,10 +73,9 @@ public class ControladorMapa implements MouseListener, ActionListener {
         this.vista.getMapViewer().addMouseWheelListener(new ZoomMouseWheelListenerCursor(this.vista.getMapViewer()));
     }
 
-    private Image imagenRescalada(URL url, Dimension dimension) {
-        ImageIcon imagen = new ImageIcon(url);
-        Image imagenEscalada = imagen.getImage().getScaledInstance(dimension.width, dimension.height, Image.SCALE_SMOOTH);
-        return imagenEscalada;
+
+    public VistaMapa getVista() {
+        return vista;
     }
 
     private void crearImagenes() {
@@ -83,23 +93,27 @@ public class ControladorMapa implements MouseListener, ActionListener {
             button.setOpaque(true);
             button.addActionListener(this);
             button.setBorder(null);
-            Obra obra = odao.obtenerObraAleatoria(idobras);
-            idobras.add(obra.getIdObra());
-            button.setToolTipText(obra.getNombreObra());
-            button.setName(obra.getMuseo().getPais().getNombrePais());
-            System.out.println(obra.getUrlObra());
-            System.out.println(obra.getNombreObra());
             try {
-                button.setIcon(new ImageIcon(imagenRescalada(new URL(obra.getUrlObra()), button.getSize())));
-            } catch (MalformedURLException ex) {
-                Logger.getLogger(ControladorMapa.class.getName()).log(Level.SEVERE, null, ex);
+                Obra obra = odao.obtenerObraAleatoria(idobras);
+                idobras.add(obra.getIdObra());
+                button.setToolTipText(obra.getNombreObra());
+                button.setName(obra.getMuseo().getPais().getNombrePais());
+                System.out.println(obra.getUrlObra());
+                System.out.println(obra.getNombreObra());
+                try {
+                    button.setIcon(PantallaInfo.reEscalarImagen(new ImageIcon(new URL(obra.getUrlObra())), button.getSize().width, button.getSize().height));
+                } catch (MalformedURLException ex) {
+                    Logger.getLogger(ControladorMapa.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            } catch (SQLException ex) {
+                this.vista.dispose();
+                this.pantalla.dispose();
+                JOptionPane.showMessageDialog(null, "Error a la hora de conectar con la base de datos","Error",JOptionPane.ERROR_MESSAGE);
+                
+                return;
             }
-            System.out.println("nyah");
             this.vista.getPanelContenedorImagenes().add(button);
         }
-        this.vista.setBounds(this.pantalla.getBounds());
-        this.vista.setLocation(this.pantalla.getLocation());
-        this.vista.setVisible(true);
         this.pantalla.dispose();
         
     }
@@ -131,37 +145,30 @@ public class ControladorMapa implements MouseListener, ActionListener {
     public void mouseClicked(MouseEvent e) {
         GeoPosition clickedPosition = this.vista.getMapViewer().convertPointToGeoPosition(e.getPoint());
         String pais = ReverseGeocoding.getCountryName(clickedPosition.getLatitude(), clickedPosition.getLongitude());
-        if (e.getClickCount() == 2) {
-            System.out.println(clickedPosition);
-            System.out.println(pais);
-        }
         JButton uwu = botonSeleccionado();
         if (uwu != null) {
             numImagenes--;
             uwu.setBorder(null);
             if (uwu.getName().equals(pais)) {
-                uwu.setForeground(Color.red);
+                uwu.setBorder(BorderFactory.createMatteBorder(5, 5, 5, 5, Color.GREEN));
                 System.out.println("siuuuu");
                 puntuacion++;
             } else {
-                uwu.setForeground(Color.red);
+                uwu.setBorder(BorderFactory.createMatteBorder(5, 5, 5, 5, Color.RED));
             }
             uwu.setEnabled(false);
-            ajustarPuntuacionPantalla();
+            PantallaInfo.setPuntuacionPantalla(this.vista.getPuntuacion(),puntuacion , numPreguntas);
         }
         if (numImagenes == 0) {
             this.vista.dispose();
-            this.vista=null;
         }
     }
 
-    public int getNumImagenes() {
-        return numImagenes;
+    public int getNumPreguntas() {
+        return numPreguntas;
     }
 
-    private void ajustarPuntuacionPantalla() {
-        this.vista.getPuntuacion().setText(puntuacion + "" + this.vista.getPuntuacion().getText().substring(this.vista.getPuntuacion().getText().indexOf('/'), this.vista.getPuntuacion().getText().indexOf('/') + 2));
-    }
+
     
     @Override
     public void mousePressed(MouseEvent e) {

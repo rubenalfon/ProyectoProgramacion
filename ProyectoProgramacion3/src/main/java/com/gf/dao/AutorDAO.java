@@ -24,12 +24,11 @@ import java.util.ArrayList;
  */
 public class AutorDAO {
 
-    public Autor obtenerAutorPorId(int idAutor) {
+    public Autor obtenerAutorPorId(int idAutor) throws SQLException {
 
         Autor autor = null;
         String sql = "SELECT * FROM autor WHERE id_autor = ?";
 
-        try {
             Connection con = DatabaseManager.getConnection();
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setInt(1, idAutor);
@@ -38,11 +37,8 @@ public class AutorDAO {
                 PaisDAO pdao = new PaisDAO();
                 autor = new Autor(idAutor, rs.getString("nombre_autor"), pdao.obtenerPaisPorId(rs.getInt("id_pais")));
             }
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        } finally {
-            DatabaseManager.closeConnection();
-        }
+        
+        DatabaseManager.closeConnection();
         return autor;
     }
 

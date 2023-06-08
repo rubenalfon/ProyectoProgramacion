@@ -7,80 +7,164 @@ package com.gf.controlador;
 import com.gf.dao.AutorDAO;
 import com.gf.dao.ObraDAO;
 import com.gf.modelo.Obra;
+import com.gf.utils.PantallaInfo;
 import com.gf.vista.PantallaDeCarga;
 import com.gf.vista.VistaGregorio;
+import java.awt.Color;
+import java.awt.Graphics2D;
 import java.awt.Image;
+import java.awt.RenderingHints;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
+import java.awt.event.WindowStateListener;
+import java.awt.image.BufferedImage;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.sql.SQLException;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.ZoneOffset;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 /**
  *
  * @author parbalan
  */
-public class ControladorGregorio {
+public class ControladorGregorio implements ComponentListener, ActionListener {
+
     private VistaGregorio vista;
     private PantallaDeCarga pantallaCarga;
     private int puntuacion;
-    HashMap<Integer,ImageIcon> obrasImg;
-    ArrayList<Integer> idsObraGregorio;
-    ArrayList<Integer> idsObraNoGregorio;
+    HashMap<Integer, ImageIcon> obrasImg;
+    ArrayList<Integer> idsObraGregorio;//Esta lista y la de abajo iran disminuyendo el tamaño a medida que avance el juego para asi 
+    ArrayList<Integer> idsObraNoGregorio;//
     private ObraDAO obraDao;
-    
+
     public ControladorGregorio(VistaGregorio vista, int preguntas) {
         this.vista = vista;
-        this.obraDao= new ObraDAO();
-        this.pantallaCarga=new PantallaDeCarga(this.vista);
+        this.vista.setVisible(false);
+        
+        this.obraDao = new ObraDAO();
+        this.pantallaCarga = new PantallaDeCarga();
+        
         cargarObras(preguntas);
+        
+        PantallaInfo.configPantalla(this.vista);
+        PantallaInfo.setPosicion(this.vista);
+        this.vista.addComponentListener(this);
+        this.vista.getjButton1().addActionListener(this);
+        this.vista.getjButton2().addActionListener(this);
+        PantallaInfo.setPuntuacionPantalla(this.vista.getPuntuacion(),puntuacion , getNumPreguntas());
         insertarImagenEnBoton();
     }
-    private void cargarObras(int preguntas){
-        this.obrasImg = new HashMap<>();    
+
+    private void cargarObras(int preguntas) {
+        this.obrasImg = new HashMap<>();
         AutorDAO autorDao = new AutorDAO();
-        this.idsObraGregorio= new ArrayList<>();
-        this.idsObraNoGregorio= new ArrayList<>();
+        this.idsObraGregorio = new ArrayList<>();
+        this.idsObraNoGregorio = new ArrayList<>();
         for (int i = 0; i < preguntas; i++) {
             try {
-                Obra obra =obraDao.obtenerEsculturaAleatoriaDeAutor(new ArrayList<>(obrasImg.keySet()),autorDao.obtenerAutorPorId(1));
+                Obra obra = obraDao.obtenerEsculturaAleatoriaDeAutor(new ArrayList<>(obrasImg.keySet()), autorDao.obtenerAutorPorId(1));
                 obrasImg.put(obra.getIdObra(), new ImageIcon(new URL(obra.getUrlObra())));
                 this.idsObraGregorio.add(obra.getIdObra());
-                Obra obra2 = obraDao.obtenerEsculturaAleatoriaNoDeAutor(new ArrayList<>(obrasImg.keySet()),autorDao.obtenerAutorPorId(1));
+                Obra obra2 = obraDao.obtenerEsculturaAleatoriaNoDeAutor(new ArrayList<>(obrasImg.keySet()), autorDao.obtenerAutorPorId(1));
                 obrasImg.put(obra2.getIdObra(), new ImageIcon(new URL(obra2.getUrlObra())));
                 this.idsObraNoGregorio.add(obra2.getIdObra());
             } catch (MalformedURLException ex) {
                 ex.printStackTrace();
+            } catch (SQLException ex) {
+                this.vista.dispose();
+                this.pantallaCarga.dispose();
+                JOptionPane.showMessageDialog(null, "Error a la hora de conectar con la base de datos","Error",JOptionPane.ERROR_MESSAGE);
+                return;
             }
         }
-        this.vista.setBounds(this.pantallaCarga.getBounds());
-        this.vista.setLocation(this.pantallaCarga.getLocation());
-        this.vista.setVisible(true);
         this.pantallaCarga.dispose();
-        this.pantallaCarga=null;
-        vista.setVisible(true);
+        this.pantallaCarga = null;
+        System.out.println(this.vista);
         System.out.println(obrasImg.toString());
     }
-    private void insertarImagenEnBoton(){
-        try{
+    private boolean insertarImagenEnBoton() {
+        if(idsObraGregorio.isEmpty()){
+            return false;
+        }
             ArrayList mezcla = new ArrayList();
+            
             mezcla.add(idsObraGregorio.get(0));
             mezcla.add(idsObraNoGregorio.get(0));
             idsObraGregorio.remove(0);
-            idsObraGregorio.remove(0);
+            idsObraNoGregorio.remove(0);
             Collections.shuffle(mezcla);
-            this.vista.getjButton1().setIcon(reEscalarImagen(obrasImg.get(mezcla.get(0))));
-            this.vista.getjButton2().setIcon(reEscalarImagen(obrasImg.get(mezcla.get(1))));
-        }catch(Exception ex){
-            System.out.println(ex.getMessage());
+            this.vista.getjButton1().setIcon(PantallaInfo.reEscalarImagen(obrasImg.get(mezcla.get(0)), this.vista.getjButton1().getSize().width, this.vista.getjButton1().getSize().height));
+            this.vista.getjButton2().setIcon(PantallaInfo.reEscalarImagen(obrasImg.get(mezcla.get(1)), this.vista.getjButton1().getSize().width, this.vista.getjButton1().getSize().height));
+            this.vista.getjButton1().setName(String.valueOf(mezcla.get(0)));
+            this.vista.getjButton2().setName(String.valueOf(mezcla.get(1)));
+            
+            System.out.println(idsObraGregorio);
+            System.out.println(idsObraNoGregorio);
+        return true;
+    }
+
+    public VistaGregorio getVista() {
+        return vista;
+    }
+
+    public int getPuntuacion() {
+        return puntuacion;
+    }
+
+    public int getNumPreguntas(){
+        return this.obrasImg.size()/2;
+    }
+    @Override
+    public void componentResized(ComponentEvent e) {
+        this.vista.getjButton1().setIcon(PantallaInfo.reEscalarImagen((ImageIcon) this.vista.getjButton1().getIcon(), this.vista.getjButton1().getSize().width, this.vista.getjButton1().getSize().height));
+        this.vista.getjButton2().setIcon(PantallaInfo.reEscalarImagen((ImageIcon) this.vista.getjButton2().getIcon(), this.vista.getjButton1().getSize().width, this.vista.getjButton1().getSize().height));
+
+    }
+
+    @Override
+    public void componentMoved(ComponentEvent e) {
+    }
+
+    @Override
+    public void componentShown(ComponentEvent e) {
+    }
+
+    @Override
+    public void componentHidden(ComponentEvent e) {
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        ObraDAO obraDao= new ObraDAO();
+        System.out.println(((JButton)e.getSource()).getName());
+        try {
+            if(obraDao.obtenerObraId(Integer.valueOf(((JButton)e.getSource()).getName())).getAutor().getNombreAutor().equals("Gregorio Fernández")){
+                puntuacion++;
+                PantallaInfo.setPuntuacionPantalla(this.vista.getPuntuacion(),puntuacion , getNumPreguntas());
+            }
+            if(!insertarImagenEnBoton()){
+                this.vista.dispose();
+                
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ControladorGregorio.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    private ImageIcon reEscalarImagen(ImageIcon img){
-        Image imagenEscalada = img.getImage().getScaledInstance(this.vista.getjButton1().getSize().width, this.vista.getjButton1().getSize().height, Image.SCALE_SMOOTH);
-        return new ImageIcon(imagenEscalada);
-    }
-    
+
 }

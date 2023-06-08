@@ -6,10 +6,14 @@ package com.gf.controlador;
 
 import com.gf.dao.*;
 import com.gf.modelo.*;
+import com.gf.utils.PantallaInfo;
 import com.gf.vista.vistaVerdaderoFalsoMuseos;
 import java.awt.*;
 import java.awt.event.*;
+import java.sql.SQLException;
 import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.*;
 
 /**
@@ -30,8 +34,10 @@ public class ControladorVerdaderoFalsoMuseos implements MouseListener, ActionLis
 
     public ControladorVerdaderoFalsoMuseos(vistaVerdaderoFalsoMuseos vista, int numeroMuseos) {
         this.vista = vista;
+        this.vista.setDefaultCloseOperation(vista.DISPOSE_ON_CLOSE);
         this.mdao = new MuseoDAO();
-
+        PantallaInfo.configPantalla(this.vista);
+        PantallaInfo.setPosicion(this.vista);
         this.listaMuseos = new ArrayList<>();
 
         this.vista.getjButtonFalso().addActionListener(this);
@@ -44,12 +50,20 @@ public class ControladorVerdaderoFalsoMuseos implements MouseListener, ActionLis
         inhabilitarBotones();
 
         ArrayList<Integer> listaIdUsados = new ArrayList<>();
-        for (int i = 0; i < numeroObras; i++) { // Pedir los museos a BD
+        for (int i = 0; i < numeroObras; i++) { try {
+            // Pedir los museos a BD
             Museo museo = mdao.obtenerMuseoAleatorio(listaIdUsados);
             this.listaMuseos.add(museo);
             listaIdUsados.add(museo.getIdMuseo());
+            } catch (SQLException ex) {
+                Logger.getLogger(ControladorVerdaderoFalsoMuseos.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
         siguienteMuseo();
+    }
+
+    public vistaVerdaderoFalsoMuseos getVista() {
+        return vista;
     }
 
     private void siguienteMuseo() {
@@ -88,11 +102,17 @@ public class ControladorVerdaderoFalsoMuseos implements MouseListener, ActionLis
         inhabilitarBotones();
         if (this.indiceMuseoActual + 1 == this.listaMuseos.size()) {
             mostrarPuntuacion();
-            JOptionPane.showMessageDialog(vista, "Has completado todos los museos. Has acertado " + this.contadorAciertos + " de " + this.listaMuseos.size() + ".");
+            this.vista.dispose();
         } else {
             this.indiceMuseoActual++;
             siguienteMuseo();
         }
+    }
+    public int getNumPreguntas(){
+        return listaMuseos.size();
+    }
+    public int getContadorAciertos() {
+        return contadorAciertos;
     }
 
     private void inhabilitarBotones() {

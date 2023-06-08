@@ -4,6 +4,13 @@
  */
 package com.gf.vista;
 
+import com.gf.utils.PantallaInfo;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JButton;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
+
 /**
  *
  * @author alfgonru
@@ -14,7 +21,15 @@ public class VistaInicial extends javax.swing.JFrame {
      * Creates new form VistaInicial
      */
     public VistaInicial() {
+        try {
+//            com.formdev.flatlaf.intellijthemes.FlatDarkFlatIJTheme
+            UIManager.setLookAndFeel("com.formdev.flatlaf.intellijthemes.FlatDarkFlatIJTheme");
+
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
+            Logger.getLogger(vistaVerdaderoFalsoMuseos.class.getName()).log(Level.SEVERE, null, ex);
+        }
         initComponents();
+        
     }
 
     /**
@@ -53,6 +68,7 @@ public class VistaInicial extends javax.swing.JFrame {
         jPanelQuien.setLayout(new java.awt.BorderLayout());
 
         jButtonQuienLoHizo.setText("¿Quién lo hizo?");
+        jButtonQuienLoHizo.setName("quien"); // NOI18N
         jPanelQuien.add(jButtonQuienLoHizo, java.awt.BorderLayout.PAGE_START);
 
         jPanelJuegos.add(jPanelQuien);
@@ -60,6 +76,7 @@ public class VistaInicial extends javax.swing.JFrame {
         jPanelVerdaderoFalsoMuseos.setLayout(new java.awt.BorderLayout());
 
         jButtonVerdaderoFalsoMuseos.setText("Verdadero/Falso de Museos");
+        jButtonVerdaderoFalsoMuseos.setName("verdadero"); // NOI18N
         jPanelVerdaderoFalsoMuseos.add(jButtonVerdaderoFalsoMuseos, java.awt.BorderLayout.PAGE_START);
 
         jPanelJuegos.add(jPanelVerdaderoFalsoMuseos);
@@ -67,6 +84,7 @@ public class VistaInicial extends javax.swing.JFrame {
         jPanelGregorioFernandez.setLayout(new java.awt.BorderLayout());
 
         jButtonGregorioFernandez.setText("Gregorio Fernández.");
+        jButtonGregorioFernandez.setName("gregorio"); // NOI18N
         jPanelGregorioFernandez.add(jButtonGregorioFernandez, java.awt.BorderLayout.PAGE_END);
 
         jPanelJuegos.add(jPanelGregorioFernandez);
@@ -74,6 +92,12 @@ public class VistaInicial extends javax.swing.JFrame {
         jPanelColocaMapa.setLayout(new java.awt.BorderLayout());
 
         jButtonColocaMapa.setText("Coloca en el mapa.");
+        jButtonColocaMapa.setName("mapa"); // NOI18N
+        jButtonColocaMapa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonColocaMapaActionPerformed(evt);
+            }
+        });
         jPanelColocaMapa.add(jButtonColocaMapa, java.awt.BorderLayout.PAGE_END);
 
         jPanelJuegos.add(jPanelColocaMapa);
@@ -91,7 +115,9 @@ public class VistaInicial extends javax.swing.JFrame {
 
         jPanelRecorrido.setLayout(new java.awt.BorderLayout());
 
-        jButtonRecorrido.setText("Recorrido");
+        jButtonRecorrido.setText("recorrido");
+        jButtonRecorrido.setActionCommand("");
+        jButtonRecorrido.setName("recorrido"); // NOI18N
         jPanelRecorrido.add(jButtonRecorrido, java.awt.BorderLayout.PAGE_END);
 
         jPanelPuntuacionesRecorrido.add(jPanelRecorrido);
@@ -102,6 +128,34 @@ public class VistaInicial extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButtonColocaMapaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonColocaMapaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButtonColocaMapaActionPerformed
+
+    public JButton getjButtonColocaMapa() {
+        return jButtonColocaMapa;
+    }
+
+    public JButton getjButtonGregorioFernandez() {
+        return jButtonGregorioFernandez;
+    }
+
+    public JButton getjButtonPuntuaciones() {
+        return jButtonPuntuaciones;
+    }
+
+    public JButton getjButtonQuienLoHizo() {
+        return jButtonQuienLoHizo;
+    }
+
+    public JButton getjButtonRecorrido() {
+        return jButtonRecorrido;
+    }
+
+    public JButton getjButtonVerdaderoFalsoMuseos() {
+        return jButtonVerdaderoFalsoMuseos;
+    }
 
     /**
      * @param args the command line arguments

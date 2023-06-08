@@ -52,6 +52,7 @@
                 <Component class="javax.swing.JButton" name="jButtonQuienLoHizo">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="&#xbf;Qui&#xe9;n lo hizo?"/>
+                    <Property name="name" type="java.lang.String" value="quien" noResource="true"/>
                   </Properties>
                   <Constraints>
                     <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout" value="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout$BorderConstraintsDescription">
@@ -68,6 +69,7 @@
                 <Component class="javax.swing.JButton" name="jButtonVerdaderoFalsoMuseos">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Verdadero/Falso de Museos"/>
+                    <Property name="name" type="java.lang.String" value="verdadero" noResource="true"/>
                   </Properties>
                   <Constraints>
                     <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout" value="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout$BorderConstraintsDescription">
@@ -84,6 +86,7 @@
                 <Component class="javax.swing.JButton" name="jButtonGregorioFernandez">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Gregorio Fern&#xe1;ndez."/>
+                    <Property name="name" type="java.lang.String" value="gregorio" noResource="true"/>
                   </Properties>
                   <Constraints>
                     <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout" value="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout$BorderConstraintsDescription">
@@ -100,7 +103,11 @@
                 <Component class="javax.swing.JButton" name="jButtonColocaMapa">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Coloca en el mapa."/>
+                    <Property name="name" type="java.lang.String" value="mapa" noResource="true"/>
                   </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonColocaMapaActionPerformed"/>
+                  </Events>
                   <Constraints>
                     <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout" value="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout$BorderConstraintsDescription">
                       <BorderConstraints direction="Last"/>
@@ -137,7 +144,9 @@
               <SubComponents>
                 <Component class="javax.swing.JButton" name="jButtonRecorrido">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="Recorrido"/>
+                    <Property name="text" type="java.lang.String" value="recorrido"/>
+                    <Property name="actionCommand" type="java.lang.String" value=""/>
+                    <Property name="name" type="java.lang.String" value="recorrido" noResource="true"/>
                   </Properties>
                   <Constraints>
                     <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout" value="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout$BorderConstraintsDescription">

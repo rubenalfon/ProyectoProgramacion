@@ -4,6 +4,7 @@
  */
 package com.gf.vista;
 
+import com.gf.utils.PantallaInfo;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.util.logging.Level;
@@ -46,8 +47,6 @@ public class VistaMapa extends javax.swing.JFrame {
     }
     private void setFrame(){
         
-        
-        this.setSize(new Dimension(1200,800));
         this.mapViewer= new JXMapViewer();
         
         DefaultTileFactory tileFactory= new DefaultTileFactory( new VirtualEarthTileFactoryInfo(VirtualEarthTileFactoryInfo.HYBRID));
@@ -55,6 +54,8 @@ public class VistaMapa extends javax.swing.JFrame {
         this.mapViewer.setAddressLocation(new GeoPosition(180, 0));
         this.mapViewer.setZoom(16);
         this.jPanel2.add(mapViewer,BorderLayout.CENTER);
+        this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+
         
 
     }

@@ -4,6 +4,7 @@
  */
 package com.gf.vista;
 
+import com.gf.utils.PantallaInfo;
 import java.awt.Dimension;
 import java.awt.Image;
 import javax.swing.ImageIcon;
@@ -19,25 +20,21 @@ public class PantallaDeCarga extends javax.swing.JFrame {
      * Creates new form PantallaDeCarga
      * @param parent
      */
-    public PantallaDeCarga(JFrame parent) {
-        initComponents();
-        setFrame(parent);
+    public PantallaDeCarga() {
+        setFrame();
         
     }
-    private void setFrame(JFrame parent){ 
+    private void setFrame(){ 
 //        ImageIcon imagen = new ImageIcon("./src/resources/loading.gif");
 //        Image imagenEscalada = imagen.getImage().getScaledInstance(parent.getWidth(), parent.getHeight(), Image.SCALE_SMOOTH);
 //        System.out.println(imagenEscalada.getAccelerationPriority());
 //        this.jLabel1.setText("uwu");
 //        this.jLabel1.setIcon(new ImageIcon(imagenEscalada));
-        this.setLocation(parent.getX(),parent.getY());
-        this.setSize(parent.getBounds().getSize());
-        this.setPreferredSize(parent.getBounds().getSize());
+          PantallaInfo.configPantalla(this);
+          PantallaInfo.setPosicion(this);
 //        ImageIcon imagen = new ImageIcon(PantallaDeCarga.class.getClassLoader().getResource("loading.gif"));
 //        Image imagenEscalada = imagen.getImage().getScaledInstance(this.getWidth(), this.getHeight(), Image.SCALE_SMOOTH);
 //        this.jLabel2.setIcon(new ImageIcon(imagenEscalada));
-        this.pack();
-        this.setVisible(true);
         
     }
 

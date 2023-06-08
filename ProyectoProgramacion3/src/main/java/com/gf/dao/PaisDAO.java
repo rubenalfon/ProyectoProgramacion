@@ -14,23 +14,17 @@ import java.sql.*;
  */
 public class PaisDAO {
 
-    public Pais obtenerPaisPorId(int idPais) {
-        Pais pais = null;
+    public Pais obtenerPaisPorId(int idPais) throws SQLException {
         String sql = "SELECT * FROM pais WHERE id_pais = ?";
+        PreparedStatement ps = DatabaseManager.getConnection().prepareStatement(sql);
+        ps.setInt(1, idPais);
+        ResultSet rs = ps.executeQuery();
 
-        try (Connection con = DatabaseManager.getConnection()) {
-            PreparedStatement ps = con.prepareStatement(sql);
-            ps.setInt(1, idPais);
-            ResultSet rs = ps.executeQuery();
-
-            if (rs.next()) {
-                pais = new Pais(idPais, rs.getString("nombre_pais"));
-            }
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        }finally{
-            DatabaseManager.closeConnection();
+        if (rs.next()) {
+            return new Pais(idPais, rs.getString("nombre_pais"));
         }
-        return pais;
+        DatabaseManager.closeConnection();
+
+        return null;
     }
 }
