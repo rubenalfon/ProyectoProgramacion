@@ -11,8 +11,7 @@ import com.gf.vista.*;
 import java.awt.event.*;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.logging.*;
 import javax.swing.*;
 
 /**
@@ -144,53 +143,26 @@ public class ControladorPrincipal implements WindowListener, ActionListener {
                 mostrarClasificacion();
                 break;
             case "sobre":
-                String html = """
-                              <html>
-                              <html>
-                              <head>
-                                <meta charset="UTF-8">
-                                <title>Aplicaci\u00f3n de Museos</title>
-                              </head>
-                              <body>
-                                <h1>Aplicaci\u00f3n de Museos</h1>
-                                <h2>D\u00eda Internacional de los Museos</h2>
-                                <p>En conmemoraci\u00f3n del "D\u00eda Internacional de los Museos" que se celebra el 18 de mayo, nuestro ciclo DAM quiere aportar su granito de arena y apoyar al ciclo de Turismo en esta celebraci\u00f3n.</p>
-                                
-                                <h3>Juegos</h3>
-                                <ol>
-                                  <li>
-                                    <h4>\u00bfQui\u00e9n lo hizo?</h4>
-                                    <p>A partir de unas im\u00e1genes de obras de arte gen\u00e9ricas, hay que adivinar su autor.</p>
-                                  </li>
-                                  <li>
-                                    <h4>Verdadero/Falso de Museos</h4>
-                                    <p>Se mostrar\u00e1 una lista de nombres de museos y el usuario tiene que decir si existen o no.</p>
-                                  </li>
-                                  <li>
-                                    <h4>Gregorio Fern\u00e1ndez</h4>
-                                    <p>El usuario tiene que adivinar cu\u00e1l de dos im\u00e1genes de esculturas planteadas corresponde a la autor\u00eda de Gregorio Fern\u00e1ndez.</p>
-                                  </li>
-                                  <li>
-                                    <h4>Coloca en el mapa</h4>
-                                    <p>El usuario tiene que colocar en un mapa europeo obras de arte.</p>
-                                  </li>
-                                </ol>
-                                
-                                <h3>Descripci\u00f3n de la Aplicaci\u00f3n</h3>
-                                <p>Se plantea realizar una aplicaci\u00f3n Java que recoja 4 de los juegos que formaban la gymkana organizada por los chicos de turismo, y en los que participaron todos los alumnos del centro.</p>
-                                
-                                <h3>Fecha de Celebraci\u00f3n</h3>
-                                <p>El "D\u00eda Internacional de los Museos" se celebra cada a\u00f1o el 18 de mayo.</p>
-                              </body>
-                              </html>""";
-                JOptionPane.showMessageDialog(vista, html);
+                String html = "<html>"
+                        + "<head><title>Acerca de nuestra aplicación</title><style>.authors {font-weight: bold;}</style></head>"
+                        + "<body><h1>Acerca de nuestra aplicación</h1>"
+                        + "<p>Bienvenido a nuestra aplicación dedicada a la celebración del Día Internacional de los Museos.<br/>Estamos encantados de presentarte una experiencia interactiva y educativa que te sumergirá en el fascinante mundo del arte y los museos.</p>"
+                        + "<h2>Juegos emocionantes:</h2>"
+                        + "<h3>1. ¿Quién lo creó?</h3><p>Te mostraremos imágenes de diferentes obras de arte y tendrás que adivinar quién es su autor.<br/>Pon a prueba tus conocimientos artísticos.</p>"
+                        + "<h3>2. Verdadero/Falso de Museos</h3><p>Te presentaremos una lista de nombres de museos y deberás determinar si existen o no en el mundo real.<br/>¡Demuestra tu conocimiento sobre museos de todo el mundo!</p>"
+                        + "<h3>3. ¿Es de Gregorio Fernández?</h3><p>Te mostraremos dos imágenes de esculturas y deberás adivinar si una de ellas es obra de Gregorio Fernández, un reconocido escultor.<br/>¡Ponte a prueba y descubre su estilo artístico!</p>"
+                        + "<h3>4. Coloca en el mapa</h3><p>Te desafiamos a colocar diferentes obras de arte en un mapa.<br/>Pon a prueba tu geografía y conocimientos sobre las obras de arte más famosas del mundo.</p>"
+                        + "<h2>Con un modo recorrido</h2>"
+                        + "<p>En el que recorrerás todas las pruebas y si lo haces muy bien, ¡Entrarás en el podio!</p>"
+                        + "<h2>Autores:</h2><p class=\"authors\">Ángel Paredes Ballesteros y Rubén Alfonso Gonzalo</p>"
+                        + "<h2>¡Disfruta del Día Internacional de los Museos con nuestra aplicación!</h2></body></html>";
+                JOptionPane.showMessageDialog(vista, html, "Sobre", JOptionPane.PLAIN_MESSAGE);
         }
         this.inJuego = true;
     }
 
     private void panelMensaje(int puntuacion, int numPreguntas) {
-        System.out.println(puntuacion + "-" + numPreguntas / 2);
-        if (puntuacion < numPreguntas / 2) {
+        if ((double) puntuacion < numPreguntas * 0.7) {
             JOptionPane.showMessageDialog(vista, "¡Ánimos! Has acertado  " + puntuacion + " / " + numPreguntas);
         } else {
             JOptionPane.showMessageDialog(vista, "¡Felicidades! Has acertado  " + puntuacion + " / " + numPreguntas);

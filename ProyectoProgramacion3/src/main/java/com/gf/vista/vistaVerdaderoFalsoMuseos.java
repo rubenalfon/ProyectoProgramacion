@@ -4,7 +4,6 @@
  */
 package com.gf.vista;
 
-import java.util.logging.*;
 import javax.swing.*;
 
 /**
