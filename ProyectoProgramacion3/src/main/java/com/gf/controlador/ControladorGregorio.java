@@ -9,12 +9,15 @@ import com.gf.modelo.Obra;
 import com.gf.utils.PantallaInfo;
 import com.gf.vista.*;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.event.*;
 import java.net.*;
 import java.sql.SQLException;
 import java.util.*;
 import java.util.logging.*;
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
+import javax.swing.border.LineBorder;
 
 /**
  *
@@ -29,14 +32,16 @@ public class ControladorGregorio implements ComponentListener, ActionListener {
     private ArrayList<Integer> idsObraNoGregorio;//
     private ObraDAO obraDao;
     private PantallaDeCarga pantalla;
+    private boolean fallado;
+
     public ControladorGregorio(VistaGregorio vista, int preguntas) {
         this.vista = vista;
         this.vista.setVisible(false);
         this.pantalla = new PantallaDeCarga();
         this.obraDao = new ObraDAO();
-        
+
         cargarObras(preguntas);
-        
+
         PantallaInfo.configPantalla(this.vista);
         PantallaInfo.setPosicion(this.vista);
         this.vista.addComponentListener(this);
@@ -46,8 +51,6 @@ public class ControladorGregorio implements ComponentListener, ActionListener {
 
         insertarImagenEnBoton();
     }
-
-
 
     private void cargarObras(int preguntas) {//Cargo todas las imagenes requeridas en un hasmap
         this.obrasImg = new HashMap<>();
@@ -127,13 +130,33 @@ public class ControladorGregorio implements ComponentListener, ActionListener {
         System.out.println(((JButton) e.getSource()).getName());
         try {//Si es del gregorio aumenta puntuacion
             if (obraDao.obtenerObraId(Integer.valueOf(((JButton) e.getSource()).getName())).getAutor().getNombreAutor().equals("Gregorio Fernández")) {
-                puntuacion++;
-                PantallaInfo.setPuntuacionPantalla(this.vista.getPuntuacion(), puntuacion, getNumPreguntas());
-            }
-            if (!insertarImagenEnBoton()) {//si el metodo de botones devuelve falso, es que ha habido una execepcion ya que se quedo 
-                this.vista.dispose();
+                if(fallado){
+                    if(e.getSource()==this.vista.getjButton1()){
+                        System.out.println("sdfasdfa");
+                        ((JButton)e.getSource()).setBorder(new EmptyBorder(0,0,0,0));
+                    }else this.vista.getjButton2().setBorder(new EmptyBorder(0,0,0,0));
+                    fallado =false;
+                }else{
+                    puntuacion++;
+                    PantallaInfo.setPuntuacionPantalla(this.vista.getPuntuacion(), puntuacion, getNumPreguntas());
+                }
+                if (!insertarImagenEnBoton()) {//si el metodo de botones devuelve falso, es que ha habido una execepcion ya que se quedo 
+                    this.vista.dispose();
 
+                }
+                
+            }else{
+                
+                fallado=true;
+                ((JButton) e.getSource()).setBorder(new LineBorder(Color.RED));
+//                for (Component component : this.vista.getContenedorBotones().getComponents()) {
+//                    if((JButton)e.getSource()!=(JButton)component){
+//                        System.out.println("aasdfasdf");
+//                        ((JButton)component).setBorder(new LineBorder(Color.GREEN));
+//                    }
+//                }
             }
+
         } catch (SQLException ex) {
             Logger.getLogger(ControladorGregorio.class.getName()).log(Level.SEVERE, null, ex);
         }

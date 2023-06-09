@@ -8,6 +8,7 @@ import com.gf.utils.PantallaInfo;
 import java.awt.Dimension;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 
 /**
  *
@@ -39,7 +40,6 @@ public class VistaGregorio extends javax.swing.JFrame {
     public JButton getjButton2() {
         return jButton2;
     }
-    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
