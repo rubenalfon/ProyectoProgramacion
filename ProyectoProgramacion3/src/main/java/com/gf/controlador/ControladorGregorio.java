@@ -91,6 +91,8 @@ public class ControladorGregorio implements ComponentListener, ActionListener {
         this.vista.getjButton2().setIcon(PantallaInfo.reEscalarImagen(obrasImg.get(mezcla.get(1)), this.vista.getjButton1().getSize().width, this.vista.getjButton1().getSize().height));
         this.vista.getjButton1().setName(String.valueOf(mezcla.get(0)));
         this.vista.getjButton2().setName(String.valueOf(mezcla.get(1)));
+        this.vista.getjButton1().setBorder(null);
+        this.vista.getjButton2().setBorder(null);
         return true;
     }
 
@@ -130,12 +132,10 @@ public class ControladorGregorio implements ComponentListener, ActionListener {
         System.out.println(((JButton) e.getSource()).getName());
         try {//Si es del gregorio aumenta puntuacion
             if (obraDao.obtenerObraId(Integer.valueOf(((JButton) e.getSource()).getName())).getAutor().getNombreAutor().equals("Gregorio Fernández")) {
-                if(fallado){
-                    if(e.getSource()==this.vista.getjButton1()){
-                        System.out.println("sdfasdfa");
-                        ((JButton)e.getSource()).setBorder(new EmptyBorder(0,0,0,0));
-                    }else this.vista.getjButton2().setBorder(new EmptyBorder(0,0,0,0));
-                    fallado =false;
+                if(this.fallado){
+                    this.fallado=false;
+                     this.vista.getjButton1().setBorder(null);
+                     this.vista.getjButton2().setBorder(null);
                 }else{
                     puntuacion++;
                     PantallaInfo.setPuntuacionPantalla(this.vista.getPuntuacion(), puntuacion, getNumPreguntas());
@@ -147,16 +147,12 @@ public class ControladorGregorio implements ComponentListener, ActionListener {
                 
             }else{
                 
-                fallado=true;
-                ((JButton) e.getSource()).setBorder(new LineBorder(Color.RED));
-//                for (Component component : this.vista.getContenedorBotones().getComponents()) {
-//                    if((JButton)e.getSource()!=(JButton)component){
-//                        System.out.println("aasdfasdf");
-//                        ((JButton)component).setBorder(new LineBorder(Color.GREEN));
-//                    }
-//                }
+                ((JButton) e.getSource()).setBorder(new LineBorder(Color.RED,10));
+                if(e.getSource()==this.vista.getjButton1()) this.vista.getjButton2().setBorder(new LineBorder(Color.GREEN,10));
+                else  this.vista.getjButton1().setBorder(new LineBorder(Color.GREEN,10));
+                this.fallado=true;
             }
-
+            System.out.println(fallado);
         } catch (SQLException ex) {
             Logger.getLogger(ControladorGregorio.class.getName()).log(Level.SEVERE, null, ex);
         }
