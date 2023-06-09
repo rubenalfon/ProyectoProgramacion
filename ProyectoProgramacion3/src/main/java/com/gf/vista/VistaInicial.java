@@ -36,9 +36,9 @@ public class VistaInicial extends javax.swing.JFrame {
         Color color = Color.decode("#f0dab6");
 
         this.jPanelPrincipal.setBackground(color);
-        this.jPanelJuegos.setBackground(new Color(0,0,0,0));
-        this.jPanelPuntuacionesRecorrido.setBackground(new Color(0,0,0,0));
-        this.jPanelPuntuaciones.setBackground(new Color(0,0,0,0));
+        this.jPanelJuegos.setBackground(new Color(0, 0, 0, 0));
+        this.jPanelPuntuacionesRecorridoSobre.setBackground(new Color(0, 0, 0, 0));
+        this.jPanelPuntuacionesSobre.setBackground(new Color(0, 0, 0, 0));
     }
 
     /**
@@ -60,11 +60,13 @@ public class VistaInicial extends javax.swing.JFrame {
         jButtonGregorioFernandez = new javax.swing.JButton();
         jPanelColocaMapa = new javax.swing.JPanel();
         jButtonColocaMapa = new javax.swing.JButton();
-        jPanelPuntuacionesRecorrido = new javax.swing.JPanel();
-        jPanelPuntuaciones = new javax.swing.JPanel();
-        jButtonPuntuaciones = new javax.swing.JButton();
+        jPanelPuntuacionesRecorridoSobre = new javax.swing.JPanel();
         jPanelRecorrido = new javax.swing.JPanel();
         jButtonRecorrido = new javax.swing.JButton();
+        jPanelPuntuacionesSobre = new javax.swing.JPanel();
+        jButtonPuntuaciones = new javax.swing.JButton();
+        filler1 = new javax.swing.Box.Filler(new java.awt.Dimension(20, 0), new java.awt.Dimension(20, 0), new java.awt.Dimension(20, 32767));
+        jButtonSobre = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new javax.swing.BoxLayout(getContentPane(), javax.swing.BoxLayout.LINE_AXIS));
@@ -141,17 +143,35 @@ public class VistaInicial extends javax.swing.JFrame {
 
         jPanelPrincipal.add(jPanelJuegos);
 
-        jPanelPuntuacionesRecorrido.setBorder(javax.swing.BorderFactory.createEmptyBorder(50, 1, 1, 1));
-        jPanelPuntuacionesRecorrido.setMaximumSize(new java.awt.Dimension(32767, 300));
-        jPanelPuntuacionesRecorrido.setMinimumSize(new java.awt.Dimension(308, 300));
-        jPanelPuntuacionesRecorrido.setPreferredSize(new java.awt.Dimension(1108, 300));
-        jPanelPuntuacionesRecorrido.setLayout(new java.awt.GridLayout(1, 0));
+        jPanelPuntuacionesRecorridoSobre.setBorder(javax.swing.BorderFactory.createEmptyBorder(50, 1, 1, 1));
+        jPanelPuntuacionesRecorridoSobre.setMaximumSize(new java.awt.Dimension(32767, 300));
+        jPanelPuntuacionesRecorridoSobre.setMinimumSize(new java.awt.Dimension(308, 300));
+        jPanelPuntuacionesRecorridoSobre.setPreferredSize(new java.awt.Dimension(1108, 300));
+        jPanelPuntuacionesRecorridoSobre.setLayout(new java.awt.GridLayout(0, 1));
 
-        jPanelPuntuaciones.setBorder(javax.swing.BorderFactory.createEmptyBorder(200, 1, 1, 1));
-        jPanelPuntuaciones.setMaximumSize(new java.awt.Dimension(32767, 300));
-        jPanelPuntuaciones.setMinimumSize(new java.awt.Dimension(153, 300));
-        jPanelPuntuaciones.setPreferredSize(new java.awt.Dimension(553, 300));
-        jPanelPuntuaciones.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT, 1, 1));
+        jPanelRecorrido.setMaximumSize(new java.awt.Dimension(1000, 1000));
+        jPanelRecorrido.setMinimumSize(new java.awt.Dimension(300, 30));
+        jPanelRecorrido.setLayout(new java.awt.BorderLayout());
+
+        jButtonRecorrido.setBackground(new java.awt.Color(196, 178, 149));
+        jButtonRecorrido.setFont(new java.awt.Font("Segoe UI", 0, 48)); // NOI18N
+        jButtonRecorrido.setForeground(new java.awt.Color(235, 235, 235));
+        jButtonRecorrido.setText("Recorrido");
+        jButtonRecorrido.setActionCommand("");
+        jButtonRecorrido.setBorder(null);
+        jButtonRecorrido.setMaximumSize(new java.awt.Dimension(1000, 1000));
+        jButtonRecorrido.setMinimumSize(new java.awt.Dimension(30, 30));
+        jButtonRecorrido.setName("recorrido"); // NOI18N
+        jButtonRecorrido.setPreferredSize(new java.awt.Dimension(1000, 1000));
+        jPanelRecorrido.add(jButtonRecorrido, java.awt.BorderLayout.CENTER);
+
+        jPanelPuntuacionesRecorridoSobre.add(jPanelRecorrido);
+
+        jPanelPuntuacionesSobre.setBorder(javax.swing.BorderFactory.createEmptyBorder(20, 0, 0, 0));
+        jPanelPuntuacionesSobre.setMaximumSize(new java.awt.Dimension(32767, 300));
+        jPanelPuntuacionesSobre.setMinimumSize(new java.awt.Dimension(153, 0));
+        jPanelPuntuacionesSobre.setPreferredSize(new java.awt.Dimension(553, 50));
+        jPanelPuntuacionesSobre.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT, 0, 0));
 
         jButtonPuntuaciones.setBackground(new java.awt.Color(196, 178, 149));
         jButtonPuntuaciones.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
@@ -162,28 +182,23 @@ public class VistaInicial extends javax.swing.JFrame {
         jButtonPuntuaciones.setMinimumSize(new java.awt.Dimension(150, 40));
         jButtonPuntuaciones.setName("puntuaciones"); // NOI18N
         jButtonPuntuaciones.setPreferredSize(new java.awt.Dimension(150, 40));
-        jPanelPuntuaciones.add(jButtonPuntuaciones);
+        jPanelPuntuacionesSobre.add(jButtonPuntuaciones);
+        jPanelPuntuacionesSobre.add(filler1);
 
-        jPanelPuntuacionesRecorrido.add(jPanelPuntuaciones);
+        jButtonSobre.setBackground(new java.awt.Color(196, 178, 149));
+        jButtonSobre.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jButtonSobre.setForeground(new java.awt.Color(255, 255, 255));
+        jButtonSobre.setText("Sobre");
+        jButtonSobre.setBorder(null);
+        jButtonSobre.setMaximumSize(new java.awt.Dimension(150, 40));
+        jButtonSobre.setMinimumSize(new java.awt.Dimension(150, 40));
+        jButtonSobre.setName("sobre"); // NOI18N
+        jButtonSobre.setPreferredSize(new java.awt.Dimension(150, 40));
+        jPanelPuntuacionesSobre.add(jButtonSobre);
 
-        jPanelRecorrido.setMaximumSize(new java.awt.Dimension(1000, 1000));
-        jPanelRecorrido.setLayout(new javax.swing.BoxLayout(jPanelRecorrido, javax.swing.BoxLayout.LINE_AXIS));
+        jPanelPuntuacionesRecorridoSobre.add(jPanelPuntuacionesSobre);
 
-        jButtonRecorrido.setBackground(new java.awt.Color(196, 178, 149));
-        jButtonRecorrido.setFont(new java.awt.Font("Segoe UI", 0, 48)); // NOI18N
-        jButtonRecorrido.setForeground(new java.awt.Color(235, 235, 235));
-        jButtonRecorrido.setText("Recorrido ->");
-        jButtonRecorrido.setActionCommand("");
-        jButtonRecorrido.setBorder(null);
-        jButtonRecorrido.setMaximumSize(new java.awt.Dimension(1000, 1000));
-        jButtonRecorrido.setMinimumSize(new java.awt.Dimension(30, 30));
-        jButtonRecorrido.setName("recorrido"); // NOI18N
-        jButtonRecorrido.setPreferredSize(new java.awt.Dimension(1000, 1000));
-        jPanelRecorrido.add(jButtonRecorrido);
-
-        jPanelPuntuacionesRecorrido.add(jPanelRecorrido);
-
-        jPanelPrincipal.add(jPanelPuntuacionesRecorrido);
+        jPanelPrincipal.add(jPanelPuntuacionesRecorridoSobre);
 
         getContentPane().add(jPanelPrincipal);
 
@@ -218,21 +233,26 @@ public class VistaInicial extends javax.swing.JFrame {
         return jButtonVerdaderoFalsoMuseos;
     }
 
+    public JButton getjButtonSobre() {
+        return jButtonSobre;
+    }
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.Box.Filler filler1;
     private javax.swing.JButton jButtonColocaMapa;
     private javax.swing.JButton jButtonGregorioFernandez;
     private javax.swing.JButton jButtonPuntuaciones;
     private javax.swing.JButton jButtonQuienLoHizo;
     private javax.swing.JButton jButtonRecorrido;
+    private javax.swing.JButton jButtonSobre;
     private javax.swing.JButton jButtonVerdaderoFalsoMuseos;
     private javax.swing.JPanel jPanelColocaMapa;
     private javax.swing.JPanel jPanelGregorioFernandez;
     private javax.swing.JPanel jPanelJuegos;
     private javax.swing.JPanel jPanelPrincipal;
-    private javax.swing.JPanel jPanelPuntuaciones;
-    private javax.swing.JPanel jPanelPuntuacionesRecorrido;
+    private javax.swing.JPanel jPanelPuntuacionesRecorridoSobre;
+    private javax.swing.JPanel jPanelPuntuacionesSobre;
     private javax.swing.JPanel jPanelQuien;
     private javax.swing.JPanel jPanelRecorrido;
     private javax.swing.JPanel jPanelVerdaderoFalsoMuseos;
