@@ -6,10 +6,7 @@ package com.gf.dao;
 
 import com.gf.modelo.Puntuacion;
 import com.gf.utils.DatabaseManager;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 
 /**
