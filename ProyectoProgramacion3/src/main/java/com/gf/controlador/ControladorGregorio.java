@@ -24,9 +24,9 @@ public class ControladorGregorio implements ComponentListener, ActionListener {
 
     private VistaGregorio vista;//Vista del juego
     private int puntuacion;//Puntuacion totla
-    HashMap<Integer, ImageIcon> obrasImg;
-    ArrayList<Integer> idsObraGregorio; // Esta lista y la de abajo iran disminuyendo el tamaño a medida que avance el juego para asi mantener un control de las obras que se van mostrando
-    ArrayList<Integer> idsObraNoGregorio;//
+    private HashMap<Integer, ImageIcon> obrasImg;
+    private ArrayList<Integer> idsObraGregorio; // Esta lista y la de abajo iran disminuyendo el tamaño a medida que avance el juego para asi mantener un control de las obras que se van mostrando
+    private ArrayList<Integer> idsObraNoGregorio;//
     private ObraDAO obraDao;
     private PantallaDeCarga pantalla;
     public ControladorGregorio(VistaGregorio vista, int preguntas) {
