@@ -61,6 +61,7 @@
                       <Color blue="eb" green="eb" red="eb" type="rgb"/>
                     </Property>
                     <Property name="text" type="java.lang.String" value="&#xbf;Qui&#xe9;n lo hizo?"/>
+                    <Property name="toolTipText" type="java.lang.String" value="&#xa1;Adivina que autor ha hecho esta obra! "/>
                     <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                       <Border info="null"/>
                     </Property>
@@ -94,6 +95,7 @@
                       <Color blue="eb" green="eb" red="eb" type="rgb"/>
                     </Property>
                     <Property name="text" type="java.lang.String" value="Verdadero/Falso de Museos"/>
+                    <Property name="toolTipText" type="java.lang.String" value="&#xbf;Puedes diferenciar si estos museos existen o no?"/>
                     <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                       <Border info="null"/>
                     </Property>
@@ -127,6 +129,7 @@
                       <Color blue="eb" green="eb" red="eb" type="rgb"/>
                     </Property>
                     <Property name="text" type="java.lang.String" value="Gregorio Fern&#xe1;ndez"/>
+                    <Property name="toolTipText" type="java.lang.String" value="&#xa1;Intenta adivinar que obras pertenecen a Gregorio Fern&#xe1;ndez! "/>
                     <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                       <Border info="null"/>
                     </Property>
@@ -160,6 +163,7 @@
                       <Color blue="eb" green="eb" red="eb" type="rgb"/>
                     </Property>
                     <Property name="text" type="java.lang.String" value="Coloca en el mapa"/>
+                    <Property name="toolTipText" type="java.lang.String" value="&#xbf;Sabes en qu&#xe9; pa&#xed;s se encuentran los museos de estas obras?"/>
                     <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                       <Border info="null"/>
                     </Property>
@@ -229,6 +233,7 @@
                       <Color blue="eb" green="eb" red="eb" type="rgb"/>
                     </Property>
                     <Property name="text" type="java.lang.String" value="Recorrido"/>
+                    <Property name="toolTipText" type="java.lang.String" value="&#xa1;Ad&#xe9;ntrate a la aventura e intenta conseguir tu posici&#xf3;n en el ranking, juega a todos los juegos y demuestra que tienes el mejor tiempo!"/>
                     <Property name="actionCommand" type="java.lang.String" value=""/>
                     <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                       <Border info="null"/>
