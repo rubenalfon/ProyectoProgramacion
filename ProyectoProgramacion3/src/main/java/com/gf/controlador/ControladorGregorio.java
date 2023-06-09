@@ -152,7 +152,6 @@ public class ControladorGregorio implements ComponentListener, ActionListener {
                 else  this.vista.getjButton1().setBorder(new LineBorder(Color.GREEN,10));
                 this.fallado=true;
             }
-            System.out.println(fallado);
         } catch (SQLException ex) {
             Logger.getLogger(ControladorGregorio.class.getName()).log(Level.SEVERE, null, ex);
         }
