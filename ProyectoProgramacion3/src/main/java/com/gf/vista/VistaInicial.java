@@ -78,6 +78,7 @@ public class VistaInicial extends javax.swing.JFrame {
 
         jButtonQuienLoHizo.setBackground(new java.awt.Color(196, 178, 149));
         jButtonQuienLoHizo.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
+        jButtonQuienLoHizo.setForeground(new java.awt.Color(235, 235, 235));
         jButtonQuienLoHizo.setText("¿Quién lo hizo?");
         jButtonQuienLoHizo.setBorder(null);
         jButtonQuienLoHizo.setMaximumSize(new java.awt.Dimension(1000, 1000));
@@ -92,6 +93,7 @@ public class VistaInicial extends javax.swing.JFrame {
 
         jButtonVerdaderoFalsoMuseos.setBackground(new java.awt.Color(196, 178, 149));
         jButtonVerdaderoFalsoMuseos.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
+        jButtonVerdaderoFalsoMuseos.setForeground(new java.awt.Color(235, 235, 235));
         jButtonVerdaderoFalsoMuseos.setText("Verdadero/Falso de Museos");
         jButtonVerdaderoFalsoMuseos.setBorder(null);
         jButtonVerdaderoFalsoMuseos.setMaximumSize(new java.awt.Dimension(1000, 1000));
@@ -106,7 +108,8 @@ public class VistaInicial extends javax.swing.JFrame {
 
         jButtonGregorioFernandez.setBackground(new java.awt.Color(196, 178, 149));
         jButtonGregorioFernandez.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
-        jButtonGregorioFernandez.setText("Gregorio Fernández.");
+        jButtonGregorioFernandez.setForeground(new java.awt.Color(235, 235, 235));
+        jButtonGregorioFernandez.setText("Gregorio Fernández");
         jButtonGregorioFernandez.setBorder(null);
         jButtonGregorioFernandez.setMaximumSize(new java.awt.Dimension(1000, 1000));
         jButtonGregorioFernandez.setMinimumSize(new java.awt.Dimension(30, 30));
@@ -120,7 +123,8 @@ public class VistaInicial extends javax.swing.JFrame {
 
         jButtonColocaMapa.setBackground(new java.awt.Color(196, 178, 149));
         jButtonColocaMapa.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
-        jButtonColocaMapa.setText("Coloca en el mapa.");
+        jButtonColocaMapa.setForeground(new java.awt.Color(235, 235, 235));
+        jButtonColocaMapa.setText("Coloca en el mapa");
         jButtonColocaMapa.setBorder(null);
         jButtonColocaMapa.setMaximumSize(new java.awt.Dimension(1000, 1000));
         jButtonColocaMapa.setMinimumSize(new java.awt.Dimension(30, 30));
@@ -151,6 +155,7 @@ public class VistaInicial extends javax.swing.JFrame {
 
         jButtonPuntuaciones.setBackground(new java.awt.Color(196, 178, 149));
         jButtonPuntuaciones.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jButtonPuntuaciones.setForeground(new java.awt.Color(255, 255, 255));
         jButtonPuntuaciones.setText("Puntuaciones");
         jButtonPuntuaciones.setBorder(null);
         jButtonPuntuaciones.setMaximumSize(new java.awt.Dimension(150, 40));
@@ -166,7 +171,8 @@ public class VistaInicial extends javax.swing.JFrame {
 
         jButtonRecorrido.setBackground(new java.awt.Color(196, 178, 149));
         jButtonRecorrido.setFont(new java.awt.Font("Segoe UI", 0, 48)); // NOI18N
-        jButtonRecorrido.setText("recorrido");
+        jButtonRecorrido.setForeground(new java.awt.Color(235, 235, 235));
+        jButtonRecorrido.setText("Recorrido ->");
         jButtonRecorrido.setActionCommand("");
         jButtonRecorrido.setBorder(null);
         jButtonRecorrido.setMaximumSize(new java.awt.Dimension(1000, 1000));

@@ -92,9 +92,9 @@ public class ControladorRecorrido extends JFrame implements WindowListener {
         this.puntuacion += puntuacion;
         this.numPreguntas += numPreguntas;
         if (puntuacion < numPreguntas / 2) {
-            JOptionPane.showMessageDialog(vista, "¡Ánimo! Has acertado por el momento " + puntuacion + " de " + numPreguntas);
+            JOptionPane.showMessageDialog(vista, "¡Ánimo! Has acertado por el momento " + this.puntuacion + " de " + this.numPreguntas);
         } else {
-            JOptionPane.showMessageDialog(vista, "¡Felicidades! Has acertado  " + puntuacion + " de " + numPreguntas);
+            JOptionPane.showMessageDialog(vista, "¡Felicidades! Has acertado  " + this.puntuacion + " de " + this.numPreguntas);
         }
     }
 
@@ -103,27 +103,36 @@ public class ControladorRecorrido extends JFrame implements WindowListener {
             PuntuacionDAO pdao = new PuntuacionDAO();
             ArrayList<Puntuacion> listaMejoresPuntuaciones = pdao.obtenerMejoresPuntuaciones(10);
 
-            String cadena = "<html><table><th><td>Nombre</td><td>Aciertos</td><td>Segundos</td></th>";
-            int contador = 1;
-            for (Puntuacion p : listaMejoresPuntuaciones) {
-                cadena += "<tr><td>" + (String.valueOf(contador) + "º." + "</td>"
-                        + "<td>" + p.getNombreUsuario() + "</td>"
-                        + "<td>" + String.valueOf(p.getAciertos()) + "</td><td>"
-                        + String.valueOf(p.getSegundos()) + "</td></tr>");
-                contador++;
-            }
-            cadena += "<tr><td colspan='4'><h1>Tu puntuación</h1></td></tr>";
-            cadena += "<tr><td colspan='2'>Tú</td><td>" + this.puntuacion + "</td><td>" + Math.round(seg) + "</td></tr>";
-            cadena += "</table>";
-
-            if (this.puntuacion >= listaMejoresPuntuaciones.get(listaMejoresPuntuaciones.size() - 1).getAciertos()) {
-                cadena += "<h1>Introduce tu nombre: </h1></html>";
-                String nombre = JOptionPane.showInputDialog(this, cadena, "Clasificación", JOptionPane.PLAIN_MESSAGE);
+            if (listaMejoresPuntuaciones.isEmpty()) {
+                String nombre = JOptionPane.showInputDialog(this, "<html><p>No hay resultados.</p><p>Introduce tu nombre para guardar tu marca (" + this.puntuacion + " aciertos, en " + Math.round(seg) + " segundos)</p></html>", "Clasificación", JOptionPane.PLAIN_MESSAGE);
                 guardarPuntuacion(nombre);
             } else {
-                cadena += "</html>";
-                JOptionPane.showMessageDialog(this, cadena, "Clasificación", JOptionPane.PLAIN_MESSAGE);
-                JOptionPane.showMessageDialog(this, "Puntuación guardada correctamente", "Guardado", JOptionPane.PLAIN_MESSAGE);
+
+                String cadena = "<html><table><th><td>Nombre</td><td>Aciertos</td><td>Segundos</td></th>";
+                int contador = 1;
+                for (Puntuacion p : listaMejoresPuntuaciones) {
+                    cadena += "<tr><td>" + (String.valueOf(contador) + "º." + "</td>"
+                            + "<td>" + p.getNombreUsuario() + "</td>"
+                            + "<td>" + String.valueOf(p.getAciertos()) + "</td><td>"
+                            + String.valueOf(p.getSegundos()) + "</td></tr>");
+                    contador++;
+                }
+                cadena += "<tr><td colspan='4'><h1>Tu puntuación</h1></td></tr>";
+                cadena += "<tr><td colspan='2'>Tú</td><td>" + this.puntuacion + "</td><td>" + Math.round(seg) + "</td></tr>";
+                cadena += "</table>";
+
+                if (listaMejoresPuntuaciones.size() < 10) {
+                    cadena += "<h1>No se ha llenado el podio.<br/>Introduce tu nombre: </h1></html>";
+                    String nombre = JOptionPane.showInputDialog(this, cadena, "Clasificación", JOptionPane.PLAIN_MESSAGE);
+                    guardarPuntuacion(nombre);
+                } else if (this.puntuacion >= listaMejoresPuntuaciones.get(listaMejoresPuntuaciones.size() - 1).getAciertos()) {
+                    cadena += "<h1>Introduce tu nombre: </h1></html>";
+                    String nombre = JOptionPane.showInputDialog(this, cadena, "Clasificación", JOptionPane.PLAIN_MESSAGE);
+                    guardarPuntuacion(nombre);
+                } else {
+                    cadena += "</html>";
+                    JOptionPane.showMessageDialog(this, cadena, "Clasificación", JOptionPane.PLAIN_MESSAGE);
+                }
             }
         } catch (SQLException ex) {
             Logger.getLogger(ControladorRecorrido.class.getName()).log(Level.SEVERE, null, ex);
@@ -135,6 +144,7 @@ public class ControladorRecorrido extends JFrame implements WindowListener {
         try {
             PuntuacionDAO pdao = new PuntuacionDAO();
             pdao.guardarPuntuacion(new Puntuacion(0, nombre, this.puntuacion, this.numPreguntas, Math.round(this.seg)));
+            JOptionPane.showMessageDialog(this, "Puntuación guardada correctamente", "Guardado", JOptionPane.PLAIN_MESSAGE);
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Error al guardar la puntuación", "Error", JOptionPane.ERROR_MESSAGE);
         }

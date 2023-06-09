@@ -160,18 +160,22 @@ public class ControladorPrincipal implements WindowListener, ActionListener {
             PuntuacionDAO pdao = new PuntuacionDAO();
             ArrayList<Puntuacion> listaMejoresPuntuaciones = pdao.obtenerMejoresPuntuaciones(10);
 
-            String cadena = "<html><table><th><td>Nombre</td><td>Aciertos</td><td>Segundos</td></th>";
-            int contador = 1;
-            for (Puntuacion p : listaMejoresPuntuaciones) {
-                cadena += "<tr><td>" + (String.valueOf(contador) + "º." + "</td>"
-                        + "<td>" + p.getNombreUsuario() + "</td>"
-                        + "<td>" + String.valueOf(p.getAciertos()) + "</td><td>"
-                        + String.valueOf(p.getSegundos()) + "</td></tr>");
-                contador++;
-            }
-            cadena += "</table></html>";
+            if (listaMejoresPuntuaciones.isEmpty()) {
+                JOptionPane.showMessageDialog(this.vista, "No hay resultados... Pero puedes ser el primero!!", "Clasificación", JOptionPane.PLAIN_MESSAGE);
+            } else {
+                String cadena = "<html><table><th><td>Nombre</td><td>Aciertos</td><td>Segundos</td></th>";
+                int contador = 1;
+                for (Puntuacion p : listaMejoresPuntuaciones) {
+                    cadena += "<tr><td>" + (String.valueOf(contador) + "º." + "</td>"
+                            + "<td>" + p.getNombreUsuario() + "</td>"
+                            + "<td>" + String.valueOf(p.getAciertos()) + "</td><td>"
+                            + String.valueOf(p.getSegundos()) + "</td></tr>");
+                    contador++;
+                }
+                cadena += "</table></html>";
 
-            JOptionPane.showMessageDialog(this.vista, cadena, "Clasificación", JOptionPane.PLAIN_MESSAGE);
+                JOptionPane.showMessageDialog(this.vista, cadena, "Clasificación", JOptionPane.PLAIN_MESSAGE);
+            }
         } catch (SQLException ex) {
             Logger.getLogger(ControladorRecorrido.class.getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(null, "Error al conectar con la base de datos", "Error", JOptionPane.ERROR_MESSAGE);
